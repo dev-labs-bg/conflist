@@ -1,0 +1,21 @@
+{
+  "name": "conf-list",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "normalize.css": "7.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/dev-labs-bg/conf-list.git"
+  },
+  "author": "Dev Labs",
+  "private": true,
+  "bugs": {
+    "url": "https://gitlab.com/dev-labs-bg/conf-list/issues"
+  },
+  "homepage": "https://gitlab.com/dev-labs-bg/conf-list#README"
+}
