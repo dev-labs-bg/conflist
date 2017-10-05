@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "bootstrap": "4.0.0-beta",
     "normalize.css": "7.0.0"
   },
   "scripts": {
@@ -10,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/dev-labs-bg/conf-list.git"
+    "url": "git@github.com:dev-labs-bg/conf-list.git"
   },
   "author": "Dev Labs",
   "private": true,
   "bugs": {
-    "url": "https://gitlab.com/dev-labs-bg/conf-list/issues"
+    "url": "https://github.com/dev-labs-bg/conf-list/issues"
   },
-  "homepage": "https://gitlab.com/dev-labs-bg/conf-list#README"
+  "homepage": "https://github.com/dev-labs-bg/conf-list"
 }
