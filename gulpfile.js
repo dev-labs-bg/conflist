@@ -15,7 +15,5 @@ gulp.task('styles', function () {
 });
 
 gulp.task('styles:watch', function () {
-  gulp.watch('./sass/**/*.scss', ['styles'], function(){
-      return gulp.pipe(notify('Styles compiled!'));
-  });
+  gulp.watch('./sass/**/*.scss', ['styles']);
 });
