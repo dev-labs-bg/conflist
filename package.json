@@ -4,6 +4,8 @@
   "author": "Dev Labs",
   "private": true,
   "scripts": {
+    "start": "gulp styles:watch",
+    "build": "gulp styles",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
