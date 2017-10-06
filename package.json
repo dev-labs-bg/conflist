@@ -1,21 +1,18 @@
 {
-  "name": "conf-list",
   "version": "1.0.0",
-  "description": "",
-  "dependencies": {
-    "normalize.css": "7.0.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/dev-labs-bg/conf-list.git"
-  },
+  "name": "conf-list",
   "author": "Dev Labs",
   "private": true,
-  "bugs": {
-    "url": "https://gitlab.com/dev-labs-bg/conf-list/issues"
+  "scripts": {
+    "start": "gulp styles:watch",
+    "build": "gulp styles",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://gitlab.com/dev-labs-bg/conf-list#README"
+  "dependencies": {
+    "bootstrap": "4.0.0-beta",
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "4.0.0",
+    "gulp-notify": "3.0.0",
+    "gulp-sass": "3.1.0"
+  }
 }
