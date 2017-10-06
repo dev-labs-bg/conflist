@@ -1,20 +1,11 @@
 {
-  "name": "conf-list",
   "version": "1.0.0",
-  "description": "",
+  "name": "conf-list",
+  "author": "Dev Labs",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:dev-labs-bg/conf-list.git"
-  },
-  "author": "Dev Labs",
-  "private": true,
-  "bugs": {
-    "url": "https://github.com/dev-labs-bg/conf-list/issues"
-  },
-  "homepage": "https://github.com/dev-labs-bg/conf-list",
   "dependencies": {
     "bootstrap": "4.0.0-beta",
     "gulp": "3.9.1",
