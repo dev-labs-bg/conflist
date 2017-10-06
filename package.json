@@ -2,13 +2,6 @@
   "name": "conf-list",
   "version": "1.0.0",
   "description": "",
-  "dependencies": {
-    "bootstrap": "4.0.0-beta",
-    "gulp": "3.9.1",
-    "gulp-autoprefixer": "4.0.0",
-    "gulp-sass": "3.1.0",
-    "normalize.css": "7.0.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,5 +14,13 @@
   "bugs": {
     "url": "https://github.com/dev-labs-bg/conf-list/issues"
   },
-  "homepage": "https://github.com/dev-labs-bg/conf-list"
+  "homepage": "https://github.com/dev-labs-bg/conf-list",
+  "dependencies": {
+    "bootstrap": "4.0.0-beta",
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "4.0.0",
+    "gulp-sass": "3.1.0",
+    "normalize.css": "7.0.0",
+    "gulp-notify": "3.0.0"
+  }
 }
