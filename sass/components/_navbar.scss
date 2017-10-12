@@ -3,7 +3,7 @@
 }
 
 @include media-breakpoint-up(lg) {
-    .form-inline > .form-control {
+    .form-inline .form-control {
         width: 18.25rem;
         margin-right:2.125rem;
     }
@@ -11,20 +11,16 @@
 
 @include media-breakpoint-down(md) {
     .navbar {
-        .form-inline .form-control {
-        width: 100%;
-        }
-    }
-}
-
-@include media-breakpoint-down(md) {
-    .conflist__logo {
-        margin-right: -28px;
-    }
-
-    .navbar {
         padding-top: 0.8125rem;
         padding-bottom: 0.8125rem;
+
+        .conflist__logo {
+            margin-right: -28px;
+        }
+
+        .form-inline .form-control {
+            width: 100%;
+        }
     }
 
 }
