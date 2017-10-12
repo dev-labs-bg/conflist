@@ -1,3 +1,19 @@
 .navbar-toggler:focus {
     outline:none;
 }
+
+@include media-breakpoint-down(md) {
+    .conflist__logo {
+        margin-right: -28px;
+    }
+
+    .navbar {
+        padding-top: 0.8125rem;
+        padding-bottom: 0.8125rem;
+    }
+}
+
+.form-inline > .form-control {
+    width: 18.25rem;
+    margin-right:2.125rem;
+}
