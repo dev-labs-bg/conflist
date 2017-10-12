@@ -9,9 +9,11 @@
     }
 }
 
-@include media-breakpoint-down(lg) {
-    .form-inline > .form-control {
+@include media-breakpoint-down(md) {
+    .navbar {
+        .form-inline .form-control {
         width: 100%;
+        }
     }
 }
 
