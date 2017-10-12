@@ -1,16 +1,16 @@
 /**
  * ITCSS Concept
+ *
+ * TODO: finish comment
  */
-
 
 // Settings layer
 @import "settings/colors";
+@import "settings/variables";
 @import "settings/bootstrap";
 
 // Tools layer
 @import "tools/mixins";
-
-// Generic layer
 
 // Base layer
 @import "base/global";

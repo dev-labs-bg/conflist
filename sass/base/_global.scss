@@ -1,4 +1,4 @@
-nav {
-    @include primary-font();
-    font-size: 16px;
+body {
+    font-family: $font-family-base;
+    font-weight: $font-weight-base;
 }
