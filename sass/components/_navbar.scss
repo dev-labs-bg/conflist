@@ -3,9 +3,11 @@
 }
 
 @include media-breakpoint-up(lg) {
-    .form-inline .form-control {
-        width: 18.25rem;
-        margin-right:2.125rem;
+    .navbar {
+        .form-inline .form-control {
+            width: 18.25rem;
+            margin-right:2.125rem;
+        }
     }
 }
 
