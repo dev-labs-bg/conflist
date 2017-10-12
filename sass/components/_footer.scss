@@ -1,0 +1,10 @@
+.footer {
+    background-color: $footer-background-color;
+    height: $footer-height;
+}
+
+.footer__text {
+    color: $footer-font-color;
+    font-weight: $font-weight-base;
+    font-size: $footer-font-size;
+}
