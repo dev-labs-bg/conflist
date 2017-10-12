@@ -1,0 +1,27 @@
+.navbar-toggler:focus {
+    outline:none;
+}
+
+@include media-breakpoint-up(lg) {
+    .navbar {
+        .form-inline .form-control {
+            width: 18.25rem;
+            margin-right:2.125rem;
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .navbar {
+        padding-top: 0.8125rem;
+        padding-bottom: 0.8125rem;
+
+        .conflist__logo {
+            margin-right: -28px;
+        }
+
+        .form-inline .form-control {
+            width: 100%;
+        }
+    }
+}
