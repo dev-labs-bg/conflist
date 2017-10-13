@@ -1,0 +1,12 @@
+.card {
+    flex-direction: row;
+    width: $card-width;
+}
+
+.card-img {
+    width: 15.1875rem;
+}
+
+.card__dates {
+    font-weight: $font-weight-light;
+}
