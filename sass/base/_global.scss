@@ -1,0 +1,13 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/**
+ * Added margin-bottom for sticky footer
+ *
+ * {@link http://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/}
+ */
+body {
+    margin-bottom: $footer-height;
+}
