@@ -1,0 +1,24 @@
+.card {
+    flex-direction: row;
+    width: $card-width;
+    font-size: $primary-font-size;
+}
+
+.card-img {
+    width: 15.1875rem;
+}
+
+.card__dates {
+    font-weight: $font-weight-light;
+    margin-right: 9.3125rem;
+}
+
+.card-text {
+    width: 25.625rem;
+    font-weight: $font-weight-light;
+}
+
+.badge-light {
+    color: #747474;
+    border: 1px solid #e6e6e6;
+}
