@@ -1,3 +1,7 @@
+.conference__cards {
+    width: 46.8125rem;
+}
+
 .card {
     flex-direction: row;
     width: $card-width;
@@ -10,7 +14,6 @@
 
 .card__dates {
     font-weight: $font-weight-light;
-    margin-right: 9.3125rem;
 }
 
 .card-text {
