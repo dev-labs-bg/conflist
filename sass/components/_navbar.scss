@@ -26,11 +26,19 @@
     }
 }
 
-.btn-danger {
-    color: #fff;
-    cursor:pointer;
-}
-
 .register {
     background-image: linear-gradient(to right, #0d215f 0%, #0e225f 40%, #09174a 100%);
+    color: #fff;
 }
+
+.register__text {
+    width: 49.3125rem;
+    font-size: $secondary-font-size;
+}
+
+.btn-danger {
+    color: #fff;
+    cursor: pointer;
+}
+
+
