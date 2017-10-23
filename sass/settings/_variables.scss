@@ -1,4 +1,3 @@
-$card-width: 46.8125rem;
 $footer-height: 5.625rem;
 $primary-font-size: 0.875rem;
 
@@ -10,3 +9,18 @@ $navbar-light-toggler-border-color: none;
 $card-border-width: 0;
 $badge-pill-border-radius: 0.125rem;
 $badge-font-size: 0.75rem;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 749px,
+  lg: 749px,
+  xl: 749px
+) !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 739px,
+  xl: 739px
+) !default;
