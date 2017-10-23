@@ -1,6 +1,5 @@
 .card {
     flex-direction: row;
-    width: $card-width;
     font-size: $primary-font-size;
 }
 
@@ -8,13 +7,20 @@
     width: 15.1875rem;
 }
 
+.card__info {
+    flex: 6;
+}
+
+.card__button {
+    flex: 1;
+    text-align: right;
+}
+
 .card__dates {
     font-weight: $font-weight-light;
-    margin-right: 9.3125rem;
 }
 
 .card-text {
-    width: 25.625rem;
     font-weight: $font-weight-light;
 }
 
