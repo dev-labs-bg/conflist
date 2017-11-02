@@ -27,8 +27,12 @@
 }
 
 .register {
-    background-image: linear-gradient(to right, #0d215f 0%, #0e225f 40%, #09174a 100%);
+    background-image: url("../images/register-icons.svg"), linear-gradient(to right, #0d215f 0%, #0e225f 40%, #09174a 100%);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
     color: #fff;
+    height: $register-navbar-height;
 }
 
 .register__text {
@@ -40,5 +44,3 @@
     color: #fff;
     cursor: pointer;
 }
-
-
