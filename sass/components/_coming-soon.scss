@@ -24,6 +24,14 @@
   bottom: 60px;
 }
 
+@include media-breakpoint-down(sm) {
+  .coming-soon {
+    .btn-danger {
+      margin-top: $spacer;
+    }
+  }
+}
+
 /**
  * Stars animation from
  * {@link https://codepen.io/lilyus/pen/BmavbR?depth=everything&order=popularity&page=2&q=falling+stars&show_forks=false}
