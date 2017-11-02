@@ -22,8 +22,18 @@
 
         .form-inline .form-control {
             width: 100%;
+            margin-top: $spacer * .5;
         }
     }
+
+    .register {
+        .background-img {
+            .register__text, .register__title {
+                padding: 0 $spacer;
+            }
+        }
+    }
+
 }
 
 .register {
@@ -40,7 +50,7 @@
 }
 
 .register__text {
-    width: 49.3125rem;
+    max-width: 49.3125rem;
     font-size: $secondary-font-size;
 }
 
