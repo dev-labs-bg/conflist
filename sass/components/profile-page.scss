@@ -8,3 +8,13 @@
     width: 26.0625rem;
     height: 32.25rem;
 }
+
+.label {
+    color: $dropdown-link-color;
+    font-size: $secondary-font-size;
+}
+
+.form-input, .form-input::placeholder {
+    color: $gray-900;
+    font-size: $tertiary-font-size;
+}
