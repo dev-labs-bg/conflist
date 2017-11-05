@@ -66,9 +66,15 @@
         <div class="bg-white mt-5 d-flex justify-content-center align-items-center mx-auto profile-card">
 
             <form class="form-group profile-card__content">
-                <img src="images/superKalo-profile.jpg" width="100" height="100" alt="profile picture">
-                <span>Your Avatar</span>
-                <button class="btn btn-danger btn-update">Update</button>
+                <div class="d-flex justify-content-center">
+                    <img class="mr-3" src="images/superKalo-profile.jpg" width="100" height="100" alt="profile picture">
+
+                    <div class="d-flex flex-column w-25 justify-content-around">
+                        <span class="label">Your Avatar</span>
+                    <button class="btn btn-danger btn-outline-danger" type="button">Update</button>
+                    </div>
+
+                </div>
                 <hr />
 
                 <label class="label" for="first-name">First Name:</label> <br>
@@ -83,7 +89,7 @@
                 <input class="border-0 form-input" type="Email" name="email" placeholder="me@superkalo.com">
                 <hr />
 
-                <button class="btn btn-danger">Update Settings</button>
+                <button class="btn btn-danger text-white btn-lg" type="button">Update Settings</button>
             </form>
 
         </div>
