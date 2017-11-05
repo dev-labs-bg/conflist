@@ -1,11 +1,11 @@
 .profile-card {
     border-radius: 0.625rem;
-    width: 41.8125rem;
+    max-width: 41.8125rem;
     height: 39.75rem;
 }
 
 .profile-card__content {
-    width: 26.0625rem;
+    max-width: 26.0625rem;
     height: 32.25rem;
 }
 
@@ -17,4 +17,10 @@
 .form-input, .form-input::placeholder {
     color: $gray-900;
     font-size: $tertiary-font-size;
+}
+
+.btn-update {
+    color: $red;
+    background-color: white;
+    font-size: $secondary-font-size;
 }
