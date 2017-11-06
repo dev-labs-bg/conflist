@@ -1,12 +1,10 @@
 .profile-card {
     border-radius: 0.625rem;
     max-width: 41.8125rem;
-    height: 39.75rem;
 }
 
 .profile-card__content {
     width: 26.0625rem;
-    height: 32.25rem;
 
     @include media-breakpoint-down(sm) {
         width: 80%;
