@@ -18,12 +18,11 @@
 }
 
 .form-input, .form-input::placeholder {
-    color: $gray-900;
     font-size: $tertiary-font-size;
 }
 
-.btn-update {
-    color: $red;
-    background-color: white;
-    font-size: $secondary-font-size;
+.btn-secondary {
+    background-color: $red;
+    border: 0;
+    cursor: pointer;
 }
