@@ -22,6 +22,39 @@
 
         .form-inline .form-control {
             width: 100%;
+            margin-top: $spacer * .5;
         }
     }
+
+    .register {
+        .background-img {
+            .register__text, .register__title {
+                padding: 0 $spacer;
+            }
+        }
+    }
+
+}
+
+.register {
+    background-image: linear-gradient(to right, #0d215f 0%, #0e225f 40%, #09174a 100%);
+    color: #fff;
+}
+
+.background-img {
+    background-image: url("../images/register-icons.svg");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    padding-bottom: 10.5625rem;
+}
+
+.register__text {
+    max-width: 49.3125rem;
+    font-size: $secondary-font-size;
+}
+
+.btn-danger {
+    color: #fff;
+    cursor: pointer;
 }
