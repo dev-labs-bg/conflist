@@ -21,8 +21,28 @@
     font-size: $tertiary-font-size;
 }
 
-.btn-secondary {
+.btn-primary {
     background-color: $red;
     border: 0;
+    color: #fff;
     cursor: pointer;
+}
+
+.btn-primary:hover {
+    color: $red;
+    background-color: #fff;
+    border: 1px solid $red;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: $red;
+    border: 1px solid $red;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    color: #fff;
+    background-color: $red;
+    border: 0;
 }
