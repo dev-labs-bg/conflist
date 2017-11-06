@@ -1,11 +1,12 @@
 $footer-height: 5.625rem;
 $primary-font-size: 0.875rem;
-$secondary-font-size: 1.375rem;
 $register-navbar-height: 33.8125rem;
+$secondary-font-size: 1rem;
+$tertiary-font-size: 1.375rem;
 
 // Bootstrap variables
 $font-family-base: 'Roboto', Arial, sans-serif;
-$h4-font-size: 1.375rem;
+$h4-font-size: $tertiary-font-size;
 
 $navbar-light-toggler-border-color: none;
 $card-border-width: 0;
