@@ -17,6 +17,14 @@
   bottom: 60px;
 }
 
+.devlabs__link {
+  color: inherit;
+}
+
+.devlabs__link:hover {
+  text-decoration: none;
+}
+
 @include media-breakpoint-down(sm) {
   .coming-soon {
     .btn-danger {
