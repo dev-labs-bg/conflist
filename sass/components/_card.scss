@@ -29,7 +29,11 @@
     border: 1px solid #e6e6e6;
 }
 
-.card__subscription {
+.card-subscription {
     max-width: 65.875rem;
     border-radius: 0.625rem;
+}
+
+.card-subscription__content {
+    max-width: 49.75rem;
 }
