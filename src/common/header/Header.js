@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import profilePicture from '../../assets/images/superKalo.jpg';
 
+
 class Header extends Component {
     state = {
         authentication: false
