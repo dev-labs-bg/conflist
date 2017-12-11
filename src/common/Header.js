@@ -13,7 +13,7 @@ class Header extends Component {
     let registerBkg = (
         <div className="background-img">
             <h2 className="register__title mx-auto font-weight-bold mt-4">Discover your next conference you wanna go!</h2>
-            <p className="register__text mx-auto font-weight-normal mt-3">Conf List surfaces the best international conferences, worldwide. It's a place for conference-loving enthusiasts to collect conferences and to subscribe for upcoming events related to the #tags they care about.</p>
+            <p className="register__text mx-auto font-weight-normal mt-3">Conf List surfaces the best international conferences, worldwide. {"It's a place for conference-loving enthusiasts to collect conferences and to subscribe for upcoming events related to the #tags they care about."}</p>
             <button type="button" className="btn btn-primary font-weight-bold mx-auto mt-3">Register</button>
         </div>
     );
