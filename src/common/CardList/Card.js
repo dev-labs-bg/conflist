@@ -1,6 +1,6 @@
 import React from 'react';
 
-import smashing from '../assets/images/smashing-conf.png';
+import smashing from '../../assets/images/smashing-conf.png';
 
 const card = () => (
     <div className="card mb-2">
