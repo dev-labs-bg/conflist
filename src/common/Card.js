@@ -121,8 +121,8 @@ const card = () => (
                         </g>
                     </svg>
                     <span className="card__dates">
-                        12nd-14th June, 2017
-                        <span className="text-info">|</span> New York, USA
+                        12nd&#45;14th June, 2017
+                        <span className="text-info"> | </span> New York, USA
                     </span>
                 </div>
                 <div className="card__button">
