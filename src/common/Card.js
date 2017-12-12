@@ -120,8 +120,7 @@ const card = () => (
                             </g>
                         </g>
                     </svg>
-                    <span className="card__dates">
-                        12nd&#45;14th June, 2017
+                    <span className="card__dates">12nd&#45;14th June, 2017
                         <span className="text-info"> | </span> New York, USA
                     </span>
                 </div>
