@@ -6,12 +6,13 @@
 .profile-card__content {
     width: 26.0625rem;
 
-    @include media-breakpoint-down(sm) {
-        width: 80%;
-    }
-
 }
 
+@include media-breakpoint-down(sm) {
+    .profile-card__content {
+        width: 80%;
+    }
+}
 .label {
     color: $dropdown-link-color;
     font-size: $secondary-font-size;
