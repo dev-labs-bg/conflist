@@ -17,8 +17,20 @@ import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';
 
 class Header extends Component {
-    state = {
-        authentication: false,
+    constructor(props) {
+        super(props);
+
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.state = {
+            collapsed: true,
+            authentication: false,
+        };
+    }
+
+    toggleNavbar() {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
     }
 
     renderNavClass = (isAuthenticated) => {
@@ -60,21 +72,11 @@ class Header extends Component {
                         />
                     </a>
 
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarTogglerDemo02"
-                        aria-controls="navbarTogglerDemo02"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon" />
-                    </button>
-
-                    <div
-                        className="collapse navbar-collapse justify-content-end ml-md-4 text-left"
-                        id="navbarTogglerDemo02"
+                    <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                    <Collapse
+                        className="justify-content-end ml-md-4 text-left"
+                        isOpen={!this.state.collapsed}
+                        navbar
                     >
 
                         <form className="form-inline mt-xs-2 mr-xl-5">
@@ -94,16 +96,16 @@ class Header extends Component {
                                 <a className="nav-link" href="#">Suggest a conference</a>
                             </li>
                             {!this.state.authentication ?
-                                <div className="d-flex">
+                                <div className="d-flex flex-md-row register__navitems">
                                     <NavItem className="nav-item">
                                         <NavLink className="nav-link" href="#">Login</NavLink>
                                     </NavItem>
-
                                     <Button
                                         className="font-weight-bold align-self-start"
                                         color="primary"
                                     >Register
                                     </Button>
+
                                 </div>
                                 :
                                 <NavItem className="nav-item dropdown">
@@ -137,7 +139,7 @@ class Header extends Component {
                                 </NavItem> }
 
                         </Nav>
-                    </div>
+                        </Collapse>
                 </Nav>
 
                 {!this.state.authentication ? registerBkg : null}
