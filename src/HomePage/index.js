@@ -2,7 +2,7 @@ import React from 'react';
 
 import Header from '../common/Header';
 import Footer from '../common/Footer';
-import CardList from '../common/CardList/CardList';
+import CardList from '../EventsHandling/CardList/CardList';
 
 const homePage = () => (
     <div>

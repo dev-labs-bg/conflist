@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Card from '../Card';
+import Card from '../../common/Card';
 
 const cardList = () => (
     <div className="container mx-auto pt-5 pb-5">
