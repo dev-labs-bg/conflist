@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
 
 import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';
 
 class Header extends Component {
     state = {
-        authentication: false,
+        authentication: true,
     }
 
     renderNavClass = (isAuthenticated) => {
@@ -39,7 +51,7 @@ class Header extends Component {
 
         return (
             <div className={!this.state.authentication ? 'register' : null}>
-                <nav
+                <Nav
                     className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(this.state.authentication)}`}
                 >
                     <a className="navbar-brand mx-auto">
@@ -73,7 +85,7 @@ class Header extends Component {
                             />
                         </form>
 
-                        <ul className="nav navbar-nav justify-content-end">
+                        <Nav className="nav navbar-nav justify-content-end">
                             <li className="nav-item">
                                 <a className="nav-link active" href="#">Home</a>
                             </li>
@@ -83,9 +95,9 @@ class Header extends Component {
                             </li>
                             {!this.state.authentication ?
                                 <div className="d-flex">
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Login</a>
-                                    </li>
+                                    <NavItem className="nav-item">
+                                        <NavLink className="nav-link" href="#">Login</NavLink>
+                                    </NavItem>
 
                                     <button
                                         type="button"
@@ -95,42 +107,39 @@ class Header extends Component {
                                     </button>
                                 </div>
                                 :
-                                <li className="nav-item dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle active"
-                                        id="navbarDropdownMenuLink"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                    >
-                                        <img
-                                            className="mr-1"
-                                            src={profilePicture}
-                                            width="28"
-                                            height="28"
-                                            alt="profile avatar"
-                                        />Kaloyan
-                                    </a>
+                                <NavItem className="nav-item dropdown">
+                                    <UncontrolledDropdown nav inNavbar>
+                                        <DropdownToggle nav caret>
+                                            <img
+                                                className="mr-1"
+                                                src={profilePicture}
+                                                width="28"
+                                                height="28"
+                                                alt="profile avatar"
+                                            /> Kaloyan
+                                        </DropdownToggle>
+                                        <DropdownMenu >
+                                            <DropdownItem>
+                                                Profile Settings
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                My Subscriptions
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                Wanna go list
+                                            </DropdownItem>
+                                            <DropdownItem divider />
+                                            <DropdownItem>
+                                                Log out
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
 
-                                    <div className="dropdown-menu">
-                                        <a className="dropdown-item" href="#">
-                                            Profile Settings
-                                        </a>
-                                        <a className="dropdown-item" href="#">
-                                            My Subscriptions
-                                        </a>
-                                        <a className="dropdown-item" href="#">
-                                            Wanna go list
-                                        </a>
-                                        <a className="dropdown-item" href="#">
-                                            Log out
-                                        </a>
-                                    </div>
-                                </li> }
+                                </NavItem> }
 
-                        </ul>
+                        </Nav>
                     </div>
-                </nav>
+                </Nav>
 
                 {!this.state.authentication ? registerBkg : null}
 
