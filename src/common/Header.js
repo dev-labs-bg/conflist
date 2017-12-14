@@ -10,14 +10,15 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem,
+  Button } from 'reactstrap';
 
 import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';
 
 class Header extends Component {
     state = {
-        authentication: true,
+        authentication: false,
     }
 
     renderNavClass = (isAuthenticated) => {
@@ -40,12 +41,11 @@ class Header extends Component {
                     conferences and to subscribe for upcoming events related to the #tags
                     they care about.
                 </p>
-                <button
-                    type="button"
-                    className="btn btn-primary font-weight-bold mx-auto mt-3"
-                >
-                    Register
-                </button>
+                <Button
+                    className="font-weight-bold mx-auto mt-3"
+                    color="primary"
+                >Register
+                </Button>
             </div>
         );
 
@@ -99,12 +99,11 @@ class Header extends Component {
                                         <NavLink className="nav-link" href="#">Login</NavLink>
                                     </NavItem>
 
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary align-self-start font-weight-bold "
-                                    >
-                                            Register
-                                    </button>
+                                    <Button
+                                        className="font-weight-bold align-self-start"
+                                        color="primary"
+                                    >Register
+                                    </Button>
                                 </div>
                                 :
                                 <NavItem className="nav-item dropdown">
