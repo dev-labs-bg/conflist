@@ -139,7 +139,7 @@ class Header extends Component {
                                 </NavItem> }
 
                         </Nav>
-                        </Collapse>
+                    </Collapse>
                 </Nav>
 
                 {!this.state.authentication ? registerBkg : null}
