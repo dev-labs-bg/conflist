@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Button } from 'reactstrap';
+    Collapse,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Button } from 'reactstrap';
 
 import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';
@@ -66,11 +65,11 @@ class Header extends Component {
                 <Nav
                     className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(this.state.authentication)}`}
                 >
-                    <a className="navbar-brand mx-auto">
+                    <NavbarBrand className="mx-auto">
                         <Logo
                             authentication={this.state.authentication}
                         />
-                    </a>
+                    </NavbarBrand>
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                     <Collapse
@@ -88,13 +87,13 @@ class Header extends Component {
                         </form>
 
                         <Nav className="nav navbar-nav justify-content-end">
-                            <li className="nav-item">
-                                <a className="nav-link active" href="#">Home</a>
-                            </li>
+                            <NavItem className="nav-item">
+                                <NavLink className="nav-link active" href="#">Home</NavLink>
+                            </NavItem>
 
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Suggest a conference</a>
-                            </li>
+                            <NavItem className="nav-item">
+                                <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
+                            </NavItem>
                             {!this.state.authentication ?
                                 <div className="d-flex flex-md-row register__navitems">
                                     <NavItem className="nav-item">
