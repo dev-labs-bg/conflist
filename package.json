@@ -15,13 +15,8 @@
     "reactstrap": "5.0.0-alpha.4"
   },
   "scripts": {
-<<<<<<< HEAD
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-=======
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
->>>>>>> 7a327d1e18e1e8bdc30d17e5695a3567a9746a32
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
