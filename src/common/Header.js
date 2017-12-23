@@ -1,11 +1,35 @@
 import React, { Component } from 'react';
+import {
+    Collapse,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Button } from 'reactstrap';
 
 import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';
 
 class Header extends Component {
-    state = {
-        authentication: false,
+    constructor(props) {
+        super(props);
+
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.state = {
+            collapsed: true,
+            authentication: false,
+        };
+    }
+
+    toggleNavbar() {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
     }
 
     renderNavClass = (isAuthenticated) => {
@@ -18,7 +42,7 @@ class Header extends Component {
 
     render() {
         const registerBkg = (
-            <div className="background-img">
+            <div className="background-img text-center">
                 <h2 className="register__title mx-auto font-weight-bold mt-4">
                     Discover your next conference you wanna go!
                 </h2>
@@ -28,41 +52,30 @@ class Header extends Component {
                     conferences and to subscribe for upcoming events related to the #tags
                     they care about.
                 </p>
-                <button
-                    type="button"
-                    className="btn btn-primary font-weight-bold mx-auto mt-3"
-                >
-                    Register
-                </button>
+                <Button
+                    className="font-weight-bold mx-auto mt-3"
+                    color="primary"
+                >Register
+                </Button>
             </div>
         );
 
         return (
             <div className={!this.state.authentication ? 'register' : null}>
-                <nav
+                <Nav
                     className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(this.state.authentication)}`}
                 >
-                    <a className="navbar-brand mx-auto">
+                    <NavbarBrand className="mx-auto">
                         <Logo
                             authentication={this.state.authentication}
                         />
-                    </a>
+                    </NavbarBrand>
 
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarTogglerDemo02"
-                        aria-controls="navbarTogglerDemo02"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon" />
-                    </button>
-
-                    <div
-                        className="collapse navbar-collapse justify-content-end ml-md-4 text-left"
-                        id="navbarTogglerDemo02"
+                    <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                    <Collapse
+                        className="justify-content-end ml-md-4 text-left"
+                        isOpen={!this.state.collapsed}
+                        navbar
                     >
 
                         <form className="form-inline mt-xs-2 mr-xl-5">
@@ -73,64 +86,60 @@ class Header extends Component {
                             />
                         </form>
 
-                        <ul className="nav navbar-nav justify-content-end">
-                            <li className="nav-item">
-                                <a className="nav-link active" href="#">Home</a>
-                            </li>
+                        <Nav className="nav navbar-nav justify-content-end">
+                            <NavItem className="nav-item">
+                                <NavLink className="nav-link active" href="#">Home</NavLink>
+                            </NavItem>
 
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Suggest a conference</a>
-                            </li>
+                            <NavItem className="nav-item">
+                                <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
+                            </NavItem>
                             {!this.state.authentication ?
-                                <div className="d-flex">
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">Login</a>
-                                    </li>
+                                <div className="d-flex flex-md-row register__navitems">
+                                    <NavItem className="nav-item">
+                                        <NavLink className="nav-link" href="#">Login</NavLink>
+                                    </NavItem>
+                                    <Button
+                                        className="font-weight-bold align-self-start"
+                                        color="primary"
+                                    >Register
+                                    </Button>
 
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary align-self-start font-weight-bold "
-                                    >
-                                            Register
-                                    </button>
                                 </div>
                                 :
-                                <li className="nav-item dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle active"
-                                        id="navbarDropdownMenuLink"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                    >
-                                        <img
-                                            className="mr-1"
-                                            src={profilePicture}
-                                            width="28"
-                                            height="28"
-                                            alt="profile avatar"
-                                        />Kaloyan
-                                    </a>
+                                <NavItem className="nav-item dropdown">
+                                    <UncontrolledDropdown nav inNavbar>
+                                        <DropdownToggle nav caret>
+                                            <img
+                                                className="mr-1"
+                                                src={profilePicture}
+                                                width="28"
+                                                height="28"
+                                                alt="profile avatar"
+                                            /> Kaloyan
+                                        </DropdownToggle>
+                                        <DropdownMenu >
+                                            <DropdownItem>
+                                                Profile Settings
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                My Subscriptions
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                Wanna go list
+                                            </DropdownItem>
+                                            <DropdownItem divider />
+                                            <DropdownItem>
+                                                Log out
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
 
-                                    <div className="dropdown-menu">
-                                        <a className="dropdown-item" href="#">
-                                            Profile Settings
-                                        </a>
-                                        <a className="dropdown-item" href="#">
-                                            My Subscriptions
-                                        </a>
-                                        <a className="dropdown-item" href="#">
-                                            Wanna go list
-                                        </a>
-                                        <a className="dropdown-item" href="#">
-                                            Log out
-                                        </a>
-                                    </div>
-                                </li> }
+                                </NavItem> }
 
-                        </ul>
-                    </div>
-                </nav>
+                        </Nav>
+                    </Collapse>
+                </Nav>
 
                 {!this.state.authentication ? registerBkg : null}
 
