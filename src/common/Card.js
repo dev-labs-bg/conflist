@@ -6,9 +6,9 @@ import calendar from '../assets/images/callendar.svg';
 
 
 const Card = ({ event }) => {
-    //import images
+    // import images
     function importAll(r) {
-        let images = {};
+        const images = {};
         r.keys().map((item) => {
             images[item.replace('./', '')] = r(item);
         });
