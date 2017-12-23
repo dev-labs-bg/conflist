@@ -1,10 +1,10 @@
 import Event from './Event';
 
-const smashingConf = new Event({
+export const smashingConf = new Event({
     imageCard: 'smashing-conf.png',
     dates: {
-        start: '12th June',
-        end: '14th June',
+        start: 1497214800000,
+        end: 1497387600000,
     },
     location: 'New York, USA',
     wishListed: 18,
@@ -18,11 +18,11 @@ const smashingConf = new Event({
     ],
 });
 
-const cssDay = new Event({
+export const cssDay = new Event({
     imageCard: 'css-day.png',
     dates: {
-        start: '15th June',
-        end: '16th June',
+        start: 1497474000000,
+        end: 1497560400000,
     },
     location: 'New York, USA',
     wishListed: 56,
@@ -36,11 +36,11 @@ const cssDay = new Event({
     ],
 });
 
-const angular = new Event({
-    imageCard: 'angular-photo.png',
+export const angular = new Event({
+    imageCard: 'angular-logo.png',
     dates: {
-        start: '6th July',
-        end: '7th July',
+        start: 1499288400000,
+        end: 1499374800000,
     },
     location: 'Barcelona,Spain',
     wishListed: 312,
@@ -54,11 +54,11 @@ const angular = new Event({
     ],
 });
 
-const frontend = new Event({
+export const frontend = new Event({
     imageCard: 'front-logo.png',
     dates: {
-        start: '31st Aug',
-        end: '1st Sep',
+        start: 1504126800000,
+        end: 1504213200000,
     },
     location: 'Barcelona,Spain',
     wishListed: 89,
