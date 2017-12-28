@@ -17,6 +17,20 @@ const Card = ({ event }) => {
     }
     const image = importAll(require.context('../assets/images', false, /\.(png)$/));
 
+    const startDate = new Date(event.dates.start).getDate();
+
+    const returnFinishDate = () => {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December',
+        ];
+        const finishDate = new Date(event.dates.end);
+        const finishDay = new Date(event.dates.end).getDate();
+        const finishDateMonth = monthNames[finishDate.getMonth()];
+        const finishDateYear = new Date(event.dates.end).getFullYear();
+
+        return [finishDay, ' ', finishDateMonth, ', ', finishDateYear];
+    };
+
     return (
         <div className="card mb-2">
             <img
@@ -31,7 +45,7 @@ const Card = ({ event }) => {
 
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
-                        <span className="card__dates">{event.dates.start} {event.dates.end}
+                        <span className="card__dates">{startDate}-{returnFinishDate()}
                             <span className="text-info"> | </span> {event.location}
                         </span>
                     </div>
