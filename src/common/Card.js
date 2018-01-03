@@ -6,7 +6,7 @@ import calendar from '../assets/images/callendar.svg';
 
 
 const Card = ({ event }) => {
-    // import images
+    // loop images
     function importAll(r) {
         const images = {};
         r.keys().map((item) => {
@@ -15,11 +15,10 @@ const Card = ({ event }) => {
 
         return images;
     }
+    // import all images from folder
     const image = importAll(require.context('../assets/images', false, /\.(png)$/));
 
-    const startDateDay = new Date(event.dates.start).getDate();
-    const finishDateDay = new Date(event.dates.end).getDate();
-
+    // Return date in nth format
     const nthDate = (date) => {
         if (date % 1) return date;
         const s = date % 100;
@@ -34,15 +33,30 @@ const Card = ({ event }) => {
         }
     };
 
-    const returnFinishDate = () => {
+    const returnMonthFullName = (date) => {
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December',
+            'July', 'Aug', 'Sep', 'October', 'November', 'December',
         ];
-        const finishDate = new Date(event.dates.end);
-        const finishDateMonth = monthNames[finishDate.getMonth()];
-        const finishDateYear = new Date(event.dates.end).getFullYear();
+        const month = monthNames[date.getMonth()];
+        return month;
+    };
 
-        return [' ', finishDateMonth, ', ', finishDateYear];
+    const returnStartDate = () => {
+        const startDate = new Date(event.dates.start);
+
+        switch (startDate.getDate()) {
+        case 30:
+        case 31:
+            return [nthDate(startDate.getDate()), ' ', returnMonthFullName(startDate)];
+        default: return [nthDate(startDate.getDate())];
+        }
+    };
+
+    const returnFinishDate = () => {
+        const finishDate = new Date(event.dates.end);
+        return [' ', nthDate(finishDate.getDate()), ' ',
+            returnMonthFullName(finishDate), ', ',
+            finishDate.getFullYear()];
     };
 
     return (
@@ -59,7 +73,7 @@ const Card = ({ event }) => {
 
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
-                        <span className="card__dates">{nthDate(startDateDay)}-{nthDate(finishDateDay)}{returnFinishDate()}
+                        <span className="card__dates">{returnStartDate()}-{returnFinishDate()}
                             <span className="text-info"> | </span> {event.location}
                         </span>
                     </div>
