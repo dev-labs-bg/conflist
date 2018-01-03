@@ -60,7 +60,7 @@ export const frontend = new Event({
         start: 1504126800000,
         end: 1504213200000,
     },
-    location: 'Barcelona,Spain',
+    location: 'Zurich, Switzerland',
     wishListed: 89,
     title: 'Frontend Conference Zurich',
     description:
