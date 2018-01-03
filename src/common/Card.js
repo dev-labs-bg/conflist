@@ -41,9 +41,7 @@ const Card = ({ event }) => {
         return month;
     };
 
-    const returnStartDate = () => {
-        const startDate = new Date(event.dates.start);
-
+    const returnStartDate = (startDate) => {
         switch (startDate.getDate()) {
         case 30:
         case 31:
@@ -52,12 +50,10 @@ const Card = ({ event }) => {
         }
     };
 
-    const returnFinishDate = () => {
-        const finishDate = new Date(event.dates.end);
-        return [' ', nthDate(finishDate.getDate()), ' ',
-            returnMonthFullName(finishDate), ', ',
-            finishDate.getFullYear()];
-    };
+    const returnFinishDate = finishDate => [' ', nthDate(finishDate.getDate()), ' ',
+        returnMonthFullName(finishDate), ', ',
+        finishDate.getFullYear()];
+
 
     return (
         <div className="card mb-2">
@@ -73,7 +69,9 @@ const Card = ({ event }) => {
 
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
-                        <span className="card__dates">{returnStartDate()}-{returnFinishDate()}
+                        <span className="card__dates">
+                            {returnStartDate(new Date(event.dates.start))}-
+                            {returnFinishDate(new Date(event.dates.end))}
                             <span className="text-info"> | </span> {event.location}
                         </span>
                     </div>
