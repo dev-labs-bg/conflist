@@ -62,7 +62,7 @@ const Card = ({ event }) => {
                 src={image[event.imageCard]}
                 width="243"
                 height="202"
-                alt="Card cap"
+                alt={event.imageCard}
             />
             <div className="card-body">
                 <span className="d-flex justify-content-between">

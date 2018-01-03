@@ -28,7 +28,7 @@ export const cssDay = new Event({
     wishListed: 56,
     title: 'CSSDay 2017',
     description:
-        'CSS Day 2016 was a two-day advanced web development conference, one day about CSS, and one day about HTML. We &#39;ll be back.',
+        'CSS Day 2016 was a two-day advanced web development conference, one day about CSS, and one day about HTML. We \'ll be back.',
     tags: [
         'javascript',
         'css',
