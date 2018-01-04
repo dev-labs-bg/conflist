@@ -42,7 +42,7 @@ class Header extends Component {
 
     render() {
         const registerBkg = (
-            <div className="background-img">
+            <div className="background-img text-center">
                 <h2 className="register__title mx-auto font-weight-bold mt-4">
                     Discover your next conference you wanna go!
                 </h2>

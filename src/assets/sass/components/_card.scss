@@ -7,8 +7,12 @@
     width: 15.1875rem;
 }
 
+.card-body {
+    flex: 2;
+}
+
 .card__info {
-    flex: 6;
+    flex: 7;
 }
 
 .card__button {
