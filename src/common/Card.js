@@ -5,6 +5,7 @@ import calendar from '../assets/images/callendar.svg';
 
 
 const Card = ({ event }) => {
+    // This is temporary and should be removed when the API is ready
     // loop images
     function importAll(r) {
         const images = {};
