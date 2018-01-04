@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import * as images from '../assets/images';
 import calendar from '../assets/images/callendar.svg';
 
 
@@ -113,7 +112,18 @@ const Card = ({ event }) => {
 };
 
 Card.propTypes = {
-    event: PropTypes.object.isRequired,
+    event: PropTypes.shape({
+        imageCard: PropTypes.string,
+        dates: PropTypes.shape({
+            start: PropTypes.number,
+            end: PropTypes.number,
+        }),
+        description: PropTypes.string,
+        location: PropTypes.string,
+        title: PropTypes.string,
+        wishListed: PropTypes.number,
+        tags: PropTypes.arrayOf(PropTypes.string),
+    }),
 };
 
 export default Card;
