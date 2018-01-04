@@ -1,9 +1,13 @@
 import moment from 'moment';
 
+/**
+*
+*/
 const date = (dates) => {
-    const start = dates.start = moment(dates.start).format('Do');
-    const end = dates.end = moment(dates.end).format('Do MMM, YYYY');
-    return [start, '-', end];
+    const startDate = moment(dates.start).format('Do');
+    const endDate = moment(dates.end).format('Do MMM, YYYY');
+
+    return `${startDate}-${endDate}`;
 };
 
 export default date;
