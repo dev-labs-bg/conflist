@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import dates from '../EventsHandling/Dates';
 
 import calendar from '../assets/images/callendar.svg';
