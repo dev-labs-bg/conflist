@@ -1,6 +1,6 @@
 import Event from './Event';
 
-export const smashingConf = new Event({
+const smashingConf = new Event({
     imageCard: 'smashing-conf.png',
     dates: {
         start: 1497214800000,
@@ -18,7 +18,7 @@ export const smashingConf = new Event({
     ],
 });
 
-export const cssDay = new Event({
+const cssDay = new Event({
     imageCard: 'css-day.png',
     dates: {
         start: 1497474000000,
@@ -36,7 +36,7 @@ export const cssDay = new Event({
     ],
 });
 
-export const angular = new Event({
+const angular = new Event({
     imageCard: 'angular-logo.png',
     dates: {
         start: 1499288400000,
@@ -54,7 +54,7 @@ export const angular = new Event({
     ],
 });
 
-export const frontend = new Event({
+const frontend = new Event({
     imageCard: 'front-logo.png',
     dates: {
         start: 1504126800000,
@@ -71,3 +71,5 @@ export const frontend = new Event({
         'web',
     ],
 });
+
+export default [smashingConf, cssDay, angular, frontend];

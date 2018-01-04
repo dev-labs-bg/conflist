@@ -1,20 +1,14 @@
 import React from 'react';
 
 import Card from '../../common/Card';
-import { smashingConf, cssDay, angular, frontend } from '../Events';
+import events from '../Events';
 
 const cardList = () => {
-    let renderCards = [];
-    renderCards.push(smashingConf, cssDay, angular, frontend);
+    let renderCards = events;
     renderCards = renderCards.map(el => {
-        console.log(el);
         return <Card event={el} />;
     });
 
-    const listTitle = renderCards.map(el => {
-        const date = new Date(el.dates.start);
-        console.log(date);
-    });
 
     return (
         <div className="container mx-auto pt-5 pb-5">
