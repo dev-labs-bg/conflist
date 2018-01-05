@@ -6,10 +6,12 @@ import moment from 'moment';
  * @param  {object} with start and end numbers
  * @return {string}
  */
-const formattedDate = (dates) => {
+const returnFormattedDate = (dates) => {
     let startDate;
     const endDate = moment(dates.end).format('Do MMM, YYYY');
-
+    /**
+     * Compares start and end date months
+     */
     const startDateMonth = moment(dates.start).format('MM');
     const endDateMonth = moment(dates.end).format('MM');
     if (startDateMonth !== endDateMonth) {
@@ -21,4 +23,4 @@ const formattedDate = (dates) => {
     return `${startDate}-${endDate}`;
 };
 
-export default formattedDate;
+export default returnFormattedDate;
