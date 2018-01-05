@@ -3,9 +3,9 @@ import moment from 'moment';
 /**
  * Formats the date from UTC format into string
  *
- * @param dates {
- *  start,
- *  end
+ * @param {
+ *  start {number},
+ *  end {number}
  * }
  * @return {string}
  */
