@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getFormattedDate } from '../core/Dates';
 
 import calendar from '../assets/images/callendar.svg';
 
@@ -18,43 +19,6 @@ const Card = ({ event }) => {
     // import all images from folder
     const image = importAll(require.context('../assets/images', false, /\.(png)$/));
 
-    // Return date in nth format
-    const nthDate = (date) => {
-        if (date % 1) return date;
-        const s = date % 100;
-
-        if (s > 3 && s < 21) return date + 'th';
-
-        switch (s % 10) {
-        case 1: return date + 'st';
-        case 2: return date + 'nd';
-        case 3: return date + 'rd';
-        default: return date + 'th';
-        }
-    };
-
-    const returnMonthFullName = (date) => {
-        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'Aug', 'Sep', 'October', 'November', 'December',
-        ];
-        const month = monthNames[date.getMonth()];
-        return month;
-    };
-
-    const returnStartDate = (startDate) => {
-        switch (startDate.getDate()) {
-        case 30:
-        case 31:
-            return [nthDate(startDate.getDate()), ' ', returnMonthFullName(startDate)];
-        default: return [nthDate(startDate.getDate())];
-        }
-    };
-
-    const returnFinishDate = finishDate => [' ', nthDate(finishDate.getDate()), ' ',
-        returnMonthFullName(finishDate), ', ',
-        finishDate.getFullYear()];
-
-
     return (
         <div className="card mb-2">
             <img
@@ -69,9 +33,7 @@ const Card = ({ event }) => {
 
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
-                        <span className="card__dates">
-                            {returnStartDate(new Date(event.dates.start))}-
-                            {returnFinishDate(new Date(event.dates.end))}
+                        <span className="card__dates"> {getFormattedDate(event.dates)}       
                             <span className="text-info"> | </span> {event.location}
                         </span>
                     </div>
