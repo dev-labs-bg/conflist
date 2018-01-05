@@ -10,8 +10,8 @@
     "node-sass-chokidar": "0.0.3",
     "popper.js": "1.12.9",
     "prop-types": "15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
     "react-scripts": "1.0.17",
     "reactstrap": "5.0.0-alpha.4"
   },

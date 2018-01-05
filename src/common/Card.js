@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import dates from '../core/Dates';
+import { getFormattedDate } from '../core/Dates';
 
 import calendar from '../assets/images/callendar.svg';
 
@@ -33,7 +33,7 @@ const Card = ({ event }) => {
 
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
-                        <span className="card__dates"> {dates(event.dates)}       
+                        <span className="card__dates"> {getFormattedDate(event.dates)}       
                             <span className="text-info"> | </span> {event.location}
                         </span>
                     </div>
