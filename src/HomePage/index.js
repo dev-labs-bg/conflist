@@ -5,7 +5,7 @@ import Header from '../common/Header';
 import Footer from '../common/Footer';
 
 import CardList from '../EventsHandling/CardList/CardList';
-import { fetchConferences } from '../core/duck';
+import { fetchConferences } from '../Conferences/conference';
 
 class HomePage extends Component {
     componentDidMount() {
@@ -26,10 +26,10 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
     return {
-        isFetching: state.isFetching,
-        lastFetched: state.lastFetched,
-        conferences: state.conferences,
-        error: state.error,
+        isFetching: state.conference.isFetching,
+        lastFetched: state.conference.lastFetched,
+        conferences: state.conference.data,
+        error: state.conference.error,
     };
 };
 

@@ -1,9 +1,9 @@
-import API from './Api';
+import API from '../core/Api';
 
 const initialState = {
     isFetching: null,
     lastFetched: null,
-    conferences: null,
+    data: null,
     error: null,
 };
 
@@ -19,24 +19,19 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             isFetching: true,
-            lastFetched: null,
-            conferences: null,
-            error: null,
         };
     case RECEIVE:
         return {
             ...state,
             isFetching: false,
             lastFetched: new Date().valueOf(),
-            conferences: action.conferences,
+            data: action.conferences,
             error: false,
         };
     case FAIL:
         return {
             ...state,
             isFetching: false,
-            lastFetched: null,
-            conferences: null,
             error: action.error,
         };
     default: return state;
@@ -53,7 +48,7 @@ export function fetchConferencesRequest() {
 export function fetchConferencesReceived(conferences) {
     return {
         type: RECEIVE,
-        conferences: conferences,
+        data: conferences,
     };
 };
 
