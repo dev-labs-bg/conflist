@@ -8,9 +8,9 @@ const initialState = {
 };
 
 // Actions
-const REQUEST = 'api/REQUEST';
-const RECEIVE = 'api/RECEIVE';
-const FAIL = 'api/FAIL';
+const REQUEST = 'conference/REQUEST';
+const RECEIVE = 'conference/RECEIVE';
+const FAIL = 'conference/FAIL';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {

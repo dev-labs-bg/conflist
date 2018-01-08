@@ -14,7 +14,7 @@ class HomePage extends Component {
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
             data: PropTypes.arrayOf(PropTypes.object),
-            error: PropTypes.string,
+            error: PropTypes.number,
         }),
     };
 
@@ -32,25 +32,37 @@ class HomePage extends Component {
     }
 
     render() {
-        const error = this.props.error ? <div> {this.props.error} </div> : null;
-        const loading = this.props.isFetching ? <div>Loading...</div> : null;
+        const error = this.props.conference.error;
+        const loading = this.props.conference.isFetching;
+
+        if (error !== false) {
+            return (
+                <div>
+                    Error with status { error }
+                </div>
+            );
+        }
+
+        if (loading) {
+            return (
+                <div>
+                Loading...
+                </div>
+            );
+        }
+
         return (
             <div>
                 <Header />
-                {error}
-                {loading}
                 <Footer />
             </div>
         );
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ conference }) => {
     return {
-        isFetching: state.conference.isFetching,
-        lastFetched: state.conference.lastFetched,
-        data: state.conference.data,
-        error: state.conference.error,
+        conference,
     };
 };
 
