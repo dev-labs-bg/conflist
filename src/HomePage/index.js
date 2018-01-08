@@ -13,11 +13,10 @@ class HomePage extends Component {
         conference: PropTypes.shape({
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
-            data: PropTypes.arrayOf(PropTypes.object),
+            data: PropTypes.arrayOf(PropTypes.Event),
             error: PropTypes.number,
         }).isRequired,
     };
-
 
     componentDidMount() {
         this.props.fetchConferences();

@@ -6,27 +6,15 @@ import calendar from '../assets/images/callendar.svg';
 
 
 const Card = ({ event }) => {
-    // This is temporary and should be removed when the API is ready
-    // loop images
-    function importAll(r) {
-        const images = {};
-        r.keys().map((item) => {
-            images[item.replace('./', '')] = r(item);
-        });
-
-        return images;
-    }
-    // import all images from folder
-    const image = importAll(require.context('../assets/images', false, /\.(png)$/));
-
+    console.log(event);
     return (
         <div className="card mb-2">
             <img
                 className="card-img"
-                src={image[event.imageCard]}
+                src={event.pictureUrl}
                 width="243"
                 height="202"
-                alt={event.title}
+                alt={event.name}
             />
             <div className="card-body">
                 <span className="d-flex justify-content-between">
@@ -34,7 +22,7 @@ const Card = ({ event }) => {
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
                         <span className="card__dates"> {getFormattedDate(event.dates)}       
-                            <span className="text-info"> | </span> {event.location}
+                            <span className="text-info"> | </span> {event.venue} {event.city} {event.country}
                         </span>
                     </div>
                     <div className="card__button">
@@ -52,15 +40,15 @@ const Card = ({ event }) => {
                                 </g>
                             </g>
                         </svg>
-                        <span className="font-weight-normal align-top">{event.wishListed}</span>
+                        <span className="font-weight-normal align-top">{event.atendees}</span>
                     </div>
                 </span>
 
                 <h4 className="card-title font-weight-normal mt-3">
-                    {event.title}
+                    {event.name}
                 </h4>
                 <p className="card-text">
-                    {event.description}
+                    {event.shortDescription}
                 </p>
 
                 <div className="d-flex justify-content-end">
