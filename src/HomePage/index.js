@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Header from '../common/Header';
@@ -8,6 +9,24 @@ import CardList from '../EventsHandling/CardList/CardList';
 import { fetchConferences } from '../Conferences/conference';
 
 class HomePage extends Component {
+    static propTypes = {
+        conference: PropTypes.shape({
+            isFetching: PropTypes.bool,
+            lastFetched: PropTypes.number,
+            data: PropTypes.arrayOf(PropTypes.object),
+            error: PropTypes.string,
+        }),
+    };
+
+    static defaultProps = {
+        conference: {
+            isFetching: null,
+            lastFetched: null,
+            data: null,
+            error: null,
+        },
+    }
+
     componentDidMount() {
         this.props.fetchConferences();
     }
@@ -30,7 +49,7 @@ const mapStateToProps = state => {
     return {
         isFetching: state.conference.isFetching,
         lastFetched: state.conference.lastFetched,
-        conferences: state.conference.data,
+        data: state.conference.data,
         error: state.conference.error,
     };
 };
