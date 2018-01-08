@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API = {
     fetchConferences: () =>
-        axios.get('https://api.conflist.devlabs-projects.com/api/v1/confrences'),
+        axios.get('https://api.conflist.devlabs-projects.com/api/v1/conferences'),
     fetchSpeakers: () =>
         axios.get('https://api.conflist.devlabs-projects.com/api/v1/speakers'),
     fetchTags: () =>
