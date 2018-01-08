@@ -15,17 +15,9 @@ class HomePage extends Component {
             lastFetched: PropTypes.number,
             data: PropTypes.arrayOf(PropTypes.object),
             error: PropTypes.number,
-        }),
+        }).isRequired,
     };
 
-    static defaultProps = {
-        conference: {
-            isFetching: null,
-            lastFetched: null,
-            data: null,
-            error: null,
-        },
-    }
 
     componentDidMount() {
         this.props.fetchConferences();
