@@ -26,7 +26,7 @@ export default function reducer(state = initialState, action = {}) {
             isFetching: false,
             lastFetched: new Date().valueOf(),
             data: action.conferences,
-            error: false,
+            error: null,
         };
     case FAIL:
         return {

@@ -35,7 +35,7 @@ class HomePage extends Component {
         const error = this.props.conference.error;
         const loading = this.props.conference.isFetching;
 
-        if (error !== false) {
+        if (error !== null) {
             return (
                 <div>
                     Error with status { error }
