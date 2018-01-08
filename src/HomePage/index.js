@@ -14,10 +14,12 @@ class HomePage extends Component {
 
     render() {
         const error = this.props.error ? <div> {this.props.error} </div> : null;
+        const loading = this.props.isFetching ? <div>Loading...</div> : null;
         return (
             <div>
                 <Header />
                 {error}
+                {loading}
                 <Footer />
             </div>
         );
