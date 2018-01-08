@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-export const fetchConferences = () => {
-    axios.get('https://api.conflist.devlabs-projects.com/api/v1/conferences')
-        .then(response => {
-            console.log(response);
-        })
-        .catch(response => {
-            console.log('error');
-        });
+const API = {
+    fetchConferences: () =>
+        axios.get('https://api.conflist.devlabs-projects.com/api/v1/conferences'),
+    fetchSpeakers: () =>
+        axios.get('https://api.conflist.devlabs-projects.com/api/v1/speakers'),
+    fetchTags: () =>
+        axios.get('https://api.conflist.devlabs-projects.com/api/v1/tags'),
 };
 
-export default fetchConferences;
+export default API;
