@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Card from '../../common/Card';
-import events from '../Events';
 
 const cardList = () => {
     let renderCards = events;

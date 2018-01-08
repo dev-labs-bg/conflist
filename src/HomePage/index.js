@@ -6,7 +6,7 @@ import Header from '../common/Header';
 import Footer from '../common/Footer';
 
 import CardList from '../EventsHandling/CardList/CardList';
-import { fetchConferences } from '../Conferences/conference';
+import { fetchConferences } from '../EventsHandling/conference';
 
 class HomePage extends Component {
     static propTypes = {
@@ -46,6 +46,7 @@ class HomePage extends Component {
         return (
             <div>
                 <Header />
+                <CardList events={this.props.conference.data} />
                 <Footer />
             </div>
         );

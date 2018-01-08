@@ -1,23 +1,34 @@
 class Event {
     constructor({
-        imageCard = null,
-        dates = {
-            start: null,
-            end: null,
-        },
-        location = '',
-        wishListed = null,
-        title = '',
+        id = null,
+        name = '',
+        shortDescription = '',
         description = '',
+        pictureUrl = '',
+        start = null,
+        end = null,
+        country = '',
+        city = '',
+        venue = '',
         tags = [],
+        website = '',
+        speakers = [],
+        atendees = null,
     }) {
-        this.imageCard = imageCard;
-        this.dates = dates;
-        this.location = location;
-        this.wishListed = wishListed;
-        this.title = title;
+        this.id = id;
+        this.name = name;
+        this.shortDescription = shortDescription;
         this.description = description;
+        this.pictureUrl = pictureUrl;
+        this.start = start;
+        this.end = end;
+        this.country = country;
+        this.city = city;
+        this.venue = venue;
         this.tags = tags;
+        this.website = website;
+        this.speakers = speakers;
+        this.atendees = atendees;
     }
 }
 
