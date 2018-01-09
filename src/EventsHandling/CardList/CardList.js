@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import * as _ from 'lodash';
 
 import Card from '../../common/Card';
 import Event from '../Event';
@@ -13,8 +14,9 @@ class CardList extends Component {
 
         // TODO: Delete me :) Just for the test.
         // this.props.events.map( (event, i) => {
-        //     event.start = '2017-0' + (5 + i) + '-11';
+        //     if (i%2) { return event; }
         //
+        //     event.start = '2017-0' + (5 + i) + '-11';
         //     return event;
         // });
 
@@ -29,23 +31,30 @@ class CardList extends Component {
         });
     }
 
-    // TODO: Handle multiple events per month!
+    /**
+     * Get the cards, ordered by month and build the JSX ordering (by month again.)
+     */
     renderCards = () => {
-        const events = this.eventsGroupedByMonth;
-        console.log(events);
-
-        if (!events.length) {
+        if (_.isEmpty(this.eventsGroupedByMonth)) {
             return null;
         }
 
-        return events.map((event => (
-            <div className="mb-5">
-                <h2 className="cards-date font-weight-normal">
-                    
-                </h2>
-                <Card event={event.data} />
-            </div>
-        ));
+        const cards = [];
+
+        _.forEach(this.eventsGroupedByMonth, (group, key) => {
+            cards.push(
+                <div key={key} className="mb-5">
+                    <h2 className="cards-date font-weight-normal">
+                        { group.month }
+                    </h2>
+                    {
+                        group.data.map(event =>
+                            <Card key={event.id} event={event} />)
+                    }
+                </div>);
+        });
+
+        return cards;
     }
 
     render() {
