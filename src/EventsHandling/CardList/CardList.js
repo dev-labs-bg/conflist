@@ -12,14 +12,6 @@ class CardList extends Component {
 
         this.eventsGroupedByMonth = {};
 
-        // TODO: Delete me :) Just for the test.
-        // this.props.events.map( (event, i) => {
-        //     if (i%2) { return event; }
-        //
-        //     event.start = '2017-0' + (5 + i) + '-11';
-        //     return event;
-        // });
-
         this.props.events.forEach((event) => {
             const month = moment(event.start).format('MMMM|YYYY');
 
