@@ -6,7 +6,6 @@ import calendar from '../assets/images/callendar.svg';
 
 
 const Card = ({ event }) => {
-    console.log(event);
     return (
         <div className="card mb-2">
             <img
@@ -74,7 +73,7 @@ Card.propTypes = {
         title: PropTypes.string,
         wishListed: PropTypes.number,
         tags: PropTypes.arrayOf(PropTypes.string),
-    }),
+    }).isRequired,
 };
 
 export default Card;
