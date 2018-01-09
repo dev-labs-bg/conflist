@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import conferenceReducer from './Conferences/conference';
+import conferenceReducer from './EventsHandling/conference';
 
 import './index.css';
 import './assets/sass/style.css';

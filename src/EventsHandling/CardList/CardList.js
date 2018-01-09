@@ -6,9 +6,7 @@ import Event from '../Event';
 
 class CardList extends Component {
     render() {
-        const renderCards = this.props.events.map(el => {
-            return <Card event={el} />;
-        });
+        const renderCards = this.props.events.map(el => <Card event={el} />);
 
         return (
             <div className="container mx-auto pt-5 pb-5">
