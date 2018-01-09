@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import Wrapper from '../common/Wrapper';
 import Event from '../EventsHandling/Event';
 import CardList from '../EventsHandling/CardList/CardList';
 import { fetchConferences } from '../EventsHandling/conference';
@@ -44,9 +43,9 @@ class HomePage extends Component {
 
         return (
             <div>
-                <Header />
-                <CardList events={this.props.conference.data || undefined} />
-                <Footer />
+                <Wrapper>
+                    <CardList events={this.props.conference.data || undefined} />
+                </Wrapper>
             </div>
         );
     }
