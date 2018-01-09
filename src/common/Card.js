@@ -21,7 +21,7 @@ const Card = ({ event }) => {
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
                         <span className="card__dates"> {getFormattedDate(event.start, event.end)}      
-                            <span className="text-info"> | </span> {event.venue} {event.city} {event.country}
+                            <span className="text-info"> | </span> {event.venue}, {event.city}, {event.country}
                         </span>
                     </div>
                     <div className="card__button">
