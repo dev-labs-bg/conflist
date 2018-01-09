@@ -5,7 +5,6 @@ import moment from 'moment';
 import Card from '../../common/Card';
 import Event from '../Event';
 
-// eslint-disable-next-line react/prefer-stateless-function
 class CardList extends Component {
     constructor(props) {
         super(props);
@@ -32,18 +31,19 @@ class CardList extends Component {
 
     // TODO: Handle multiple events per month!
     renderCards = () => {
-        const { events } = this.props;
+        const events = this.eventsGroupedByMonth;
+        console.log(events);
 
         if (!events.length) {
             return null;
         }
 
-        return events.map(event => (
+        return events.map((event => (
             <div className="mb-5">
                 <h2 className="cards-date font-weight-normal">
-                    {moment(event.start).format('MMMM')}
+                    
                 </h2>
-                <Card event={event} />
+                <Card event={event.data} />
             </div>
         ));
     }
