@@ -5,7 +5,6 @@ import Card from '../../common/Card';
 import Event from '../Event';
 
 class CardList extends Component {
-
     render() {
         const renderCards = this.props.events.map(el => {
             return <Card event={el} />;
