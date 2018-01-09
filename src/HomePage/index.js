@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from '../common/Header';
 import Footer from '../common/Footer';
-
+import Event from '../EventsHandling/Event';
 import CardList from '../EventsHandling/CardList/CardList';
 import { fetchConferences } from '../EventsHandling/conference';
 
@@ -13,7 +13,7 @@ class HomePage extends Component {
         conference: PropTypes.shape({
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
-            data: PropTypes.arrayOf(PropTypes.Event),
+            data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
             error: PropTypes.number,
         }).isRequired,
     };
@@ -45,7 +45,7 @@ class HomePage extends Component {
         return (
             <div>
                 <Header />
-                <CardList events={this.props.conference.data} />
+                <CardList events={this.props.conference.data || undefined} />
                 <Footer />
             </div>
         );
