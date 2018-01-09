@@ -60,9 +60,7 @@ class CardList extends Component {
     render() {
         return (
             <div className="container mx-auto pt-5 pb-5">
-                <div className="mb-5">
-                    { this.renderCards() }
-                </div>
+                { this.renderCards() }
             </div>
         );
     }
