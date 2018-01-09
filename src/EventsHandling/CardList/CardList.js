@@ -5,7 +5,6 @@ import moment from 'moment';
 import Card from '../../common/Card';
 import Event from '../Event';
 
-// eslint-disable-next-line react/prefer-stateless-function
 class CardList extends Component {
     constructor(props) {
         super(props);
