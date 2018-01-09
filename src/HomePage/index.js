@@ -4,20 +4,19 @@ import { connect } from 'react-redux';
 
 import Header from '../common/Header';
 import Footer from '../common/Footer';
-
+import Event from '../EventsHandling/Event';
 import CardList from '../EventsHandling/CardList/CardList';
-import { fetchConferences } from '../Conferences/conference';
+import { fetchConferences } from '../EventsHandling/conference';
 
 class HomePage extends Component {
     static propTypes = {
         conference: PropTypes.shape({
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
-            data: PropTypes.arrayOf(PropTypes.object),
+            data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
             error: PropTypes.number,
         }).isRequired,
     };
-
 
     componentDidMount() {
         this.props.fetchConferences();
@@ -46,6 +45,7 @@ class HomePage extends Component {
         return (
             <div>
                 <Header />
+                <CardList events={this.props.conference.data || undefined} />
                 <Footer />
             </div>
         );

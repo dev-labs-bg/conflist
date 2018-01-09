@@ -3,13 +3,12 @@ import moment from 'moment';
 /**
  * Formats the date from UTC format into string
  *
- * @param {
- *  start {number},
- *  end {number}
- * }
+ * @param start {number},
+ *        end {number}
+ *
  * @return {string}
  */
-export const getFormattedDate = ({ start, end }) => {
+export const getFormattedDate = (start, end) => {
     const endDate = moment(end).format('Do MMM, YYYY');
     let startDate;
     /**
