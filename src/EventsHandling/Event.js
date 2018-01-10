@@ -2,6 +2,7 @@ class Event {
     constructor({
         id = null,
         name = '',
+        alias = '',
         shortDescription = '',
         description = '',
         pictureUrl = '',
@@ -17,6 +18,7 @@ class Event {
     }) {
         this.id = id;
         this.name = name;
+        this.alias = alias;
         this.shortDescription = shortDescription;
         this.description = description;
         this.pictureUrl = pictureUrl;

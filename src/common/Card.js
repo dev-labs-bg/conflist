@@ -69,10 +69,9 @@ const Card = ({ event }) => {
 Card.propTypes = {
     event: PropTypes.shape({
         imageCard: PropTypes.string,
-        dates: PropTypes.shape({
-            start: PropTypes.number,
-            end: PropTypes.number,
-        }),
+        alias: PropTypes.string,
+        start: PropTypes.string,
+        end: PropTypes.string,
         description: PropTypes.string,
         location: PropTypes.string,
         title: PropTypes.string,
