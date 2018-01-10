@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Wrapper from '../common/Wrapper';
 import Event from '../EventsHandling/Event';
 import CardList from '../EventsHandling/CardList/CardList';
 import { fetchConferences } from '../EventsHandling/conference';
@@ -42,10 +41,8 @@ class HomePage extends Component {
         }
 
         return (
-            <div>
-                <Wrapper>
-                    <CardList events={this.props.conference.data || undefined} />
-                </Wrapper>
+            <div> 
+                <CardList events={this.props.conference.data || undefined} />
             </div>
         );
     }

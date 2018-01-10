@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -19,5 +20,13 @@ const reducer = combineReducers({
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
-ReactDOM.render(<Provider store={store} ><App /></Provider>, document.getElementById('root'));
+const app = (
+    <Provider store={store}>
+        <BrowserRouter>
+            <Route path="/" component={App} />
+        </BrowserRouter>
+    </Provider>
+);
+
+ReactDOM.render( app, document.getElementById('root'));
 registerServiceWorker();
