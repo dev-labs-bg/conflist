@@ -2,16 +2,14 @@ import API from '../core/Api';
 import Event from '../EventsHandling/Event';
 
 const initialState = {
-    isFetching: null,
-    lastFetched: null,
-    data: null,
     error: null,
+    data: null,
 };
 
 // Actions
-const REQUEST = 'conferences/REQUEST';
-const RECEIVE = 'conferences/RECEIVE';
-const FAIL = 'conferences/FAIL';
+const REQUEST = 'event/REQUEST';
+const RECEIVE = 'event/RECEIVE';
+const FAIL = 'event/FAIL';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -19,14 +17,14 @@ export default function reducer(state = initialState, action = {}) {
     case REQUEST:
         return {
             ...state,
-            isFetching: true,
+            data: { isFetching: true },
         };
     case RECEIVE: {
-        const events = action.data.map(ev => new Event(ev));
+        const events = [];
+        const event = new Event(action.data);
+        events.push({ event, lastFetched: new Date().valueOf(), isFetching: false });
         return {
             ...state,
-            isFetching: false,
-            lastFetched: new Date().valueOf(),
             data: events,
             error: null,
         };
@@ -34,43 +32,43 @@ export default function reducer(state = initialState, action = {}) {
     case FAIL:
         return {
             ...state,
-            isFetching: false,
             error: action.error,
         };
     default: return state;
     }
 }
 
-// Action Creators
-export function fetchConferencesRequest() {
+// Action Creaters
+export function fetchConferenceRequest() {
     return {
         type: REQUEST,
     };
 }
 
-export function fetchConferencesReceived(conferences) {
+export function fetchConferenceReceive(event) {
     return {
         type: RECEIVE,
-        data: conferences,
+        data: event,
     };
 }
 
-export function fetchConferencesFailed(error) {
+export function fetchConferenceFail(error) {
     return {
         type: FAIL,
         error: error,
     };
 }
 
-export function fetchConferences(state, action) {
+export function searchConference() {
     return dispatch => {
-        dispatch(fetchConferencesRequest());
-        API.fetchConferences()
+        dispatch(fetchConferenceRequest());
+        API.searchConference()
             .then(response => {
-                dispatch(fetchConferencesReceived(response.data));
+                dispatch(fetchConferenceReceive(response.data));
             })
             .catch(error => {
-                dispatch(fetchConferencesFailed(error.response.status));
+                dispatch(fetchConferenceFail(error));
             });
     };
 }
+

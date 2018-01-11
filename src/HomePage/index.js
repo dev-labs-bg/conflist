@@ -41,7 +41,7 @@ class HomePage extends Component {
         }
 
         return (
-            <div> 
+            <div>
                 <CardList events={this.props.conference.data || undefined} />
             </div>
         );

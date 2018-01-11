@@ -8,7 +8,7 @@ import calendar from '../assets/images/callendar.svg';
 const Card = ({ event }) => {
     return (
         <div className="card mb-2">
-            <Link to={`/event/${event.id}`}>
+            <Link to={`/event/${event.alias}`}>
                 <img
                     className="card-img"
                     src={event.pictureUrl}
@@ -45,7 +45,7 @@ const Card = ({ event }) => {
                     </div>
                 </span>
 
-                <Link className="text-dark" to={`/event/${event.id}`}>
+                <Link className="text-dark" to={`/event/${event.alias}`}>
                     <h4 className="card-title font-weight-normal mt-3">
                         {event.name}
                     </h4>
