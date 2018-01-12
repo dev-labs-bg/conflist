@@ -44,12 +44,23 @@ class InsidePage extends Component {
     }
 
     render() {
-        const loading = this.props.event.data;
-        console.log(loading);
+        const error = this.props.event.error;
+        const events = this.props.event.data;
+
+        // events.map( ev => {
+        //     loading = ev.isFetching;
+        // });
+        // console.log(loading);
+        if (error !== null) {
+            return (
+                <div>
+                    Error with status { error }
+                </div>
+            );
+        }
 
         return (
-            <div className="container__register mx-auto pt-5 pb-5 d-flex flex-column">
-               
+            <div className="container__register mx-auto pt-5 pb-5 d-flex flex-column">       
             </div>
         );
     }

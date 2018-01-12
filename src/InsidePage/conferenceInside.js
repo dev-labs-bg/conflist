@@ -1,5 +1,6 @@
 import API from '../core/Api';
 import Event from '../EventsHandling/Event';
+import * as _ from 'lodash';
 
 const initialState = {
     error: null,
@@ -20,9 +21,9 @@ export default function reducer(state = initialState, action = {}) {
             data: { isFetching: true },
         };
     case RECEIVE: {
-        const events = [];
+        const events = {};
         const event = new Event(action.data);
-        events.push({ event, lastFetched: new Date().valueOf(), isFetching: false });
+        _.assign({ event, lastFetched: new Date().valueOf(), isFetching: false }, events);
         return {
             ...state,
             data: events,
@@ -33,6 +34,7 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             error: action.error,
+            data: { isFetching: false },
         };
     default: return state;
     }
@@ -67,7 +69,7 @@ export function searchConference() {
                 dispatch(fetchConferenceReceive(response.data));
             })
             .catch(error => {
-                dispatch(fetchConferenceFail(error));
+                dispatch(fetchConferenceFail(error.response.status));
             });
     };
 }
