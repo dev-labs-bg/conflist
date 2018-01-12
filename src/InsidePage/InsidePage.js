@@ -33,17 +33,22 @@ class InsidePage extends Component {
     renderSpeakers() {
         const renderImages = [];
         this.props.event.data.speakers.map((speaker) => {
-            renderImages.push(<img
-                key={speaker.id}
-                src={speaker.pictureUrl}
-                width="40"
-                height="40"
-                alt={speaker.name}
-            />);
+            renderImages.push(
+                <img
+                    key={speaker.id}
+                    src={speaker.pictureUrl}
+                    width="40"
+                    height="40"
+                    alt={speaker.name}
+                />);
         });
         return renderImages;
     }
 
+    /**
+     * Render tags
+     * @return {array}
+     */
     renderTags() {
         const renderTags = [];
         this.props.event.data.tags.map((tag) => {
@@ -56,16 +61,24 @@ class InsidePage extends Component {
         return renderTags;
     }
 
+    /**
+     * Render description
+     * @return {object}
+     */
+    renderDescription() {
+        return { __html: this.props.event.data.description };
+    }
+
     render() {
-        const { error, isFetching, data } = this.props.event;
+        const { error, isFetching, data } = this.props.event;       
 
         if (typeof isFetching === 'undefined') {
             // nothing.
-            return null;
+            return 'Loading!';
         }
 
         if (isFetching) {
-            return (<p>'Loading!'</p>);
+            return (<p>Loading!</p>);
         }
 
         if (error !== null) {
@@ -75,22 +88,7 @@ class InsidePage extends Component {
                 </div>
             );
         }
-
-        // const error = this.props.event.error;
-        // const events = this.props.event.data;
-
-        // // events.map( ev => {
-        // //     loading = ev.isFetching;
-        // // });
-        // // console.log(loading);
-        // if (error !== null) {
-        //     return (
-        //         <div>
-        //             Error with status { error }
-        //         </div>
-        //     );
-        // }
-        //
+   
         return (
             <div className="container__register mx-auto pt-5 pb-5 d-flex flex-column">
                 <img
@@ -127,7 +125,7 @@ class InsidePage extends Component {
                         </svg>
                         <h5 className="font-weight-normal d-inline">Going: <span className="text-secondary">{data.atendees}</span></h5>
                     </div>
-                    {data.description}
+                    <div dangerouslySetInnerHTML={this.renderDescription()} />                    
 
                 </div>
 

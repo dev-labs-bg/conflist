@@ -8,7 +8,7 @@ import { fetchConferences } from '../EventsHandling/conference';
 
 class HomePage extends Component {
     static propTypes = {
-        conference: PropTypes.shape({
+        events: PropTypes.shape({
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
@@ -21,8 +21,8 @@ class HomePage extends Component {
     }
 
     render() {
-        const error = this.props.conference.error;
-        const loading = this.props.conference.isFetching;
+        const error = this.props.events.error;
+        const loading = this.props.events.isFetching;
 
         if (error !== null) {
             return (
@@ -42,15 +42,15 @@ class HomePage extends Component {
 
         return (
             <div>
-                <CardList events={this.props.conference.data || undefined} />
+                <CardList events={this.props.events.data || undefined} />
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ conference }) => {
+const mapStateToProps = ({ events }) => {
     return {
-        conference,
+        events,
     };
 };
 
