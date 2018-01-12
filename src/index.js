@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, } from 'react-router-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import logger from 'redux-logger'
 import thunk from 'redux-thunk';
-import conferenceReducer from './EventsHandling/conference';
-import eventReducer from './InsidePage/conferenceInside';
+import eventsReducer from './EventsHandling/conference';
+import eventReducer from './InsidePage/duck';
 
 import './index.css';
 import './assets/sass/style.css';
@@ -16,11 +17,11 @@ import registerServiceWorker from './registerServiceWorker';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducer = combineReducers({
-    conference: conferenceReducer,
+    events: eventsReducer,
     event: eventReducer,
 });
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk,logger)));
 
 const app = (
     <Provider store={store}>
