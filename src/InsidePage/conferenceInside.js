@@ -1,11 +1,7 @@
 import API from '../core/Api';
 import Event from '../EventsHandling/Event';
-import * as _ from 'lodash';
 
-const initialState = {
-    error: null,
-    data: null,
-};
+const initialState = {};
 
 // Actions
 const REQUEST = 'event/REQUEST';
@@ -18,59 +14,68 @@ export default function reducer(state = initialState, action = {}) {
     case REQUEST:
         return {
             ...state,
-            data: { isFetching: true },
+            [action.alias]: {
+                ...state[action.alias],
+                isFetching: true,
+                error: null,
+            },
         };
     case RECEIVE: {
-        const events = {};
-        const event = new Event(action.data);
-        _.assign({ event, lastFetched: new Date().valueOf(), isFetching: false }, events);
         return {
             ...state,
-            data: events,
-            error: null,
+            [action.event.alias]: {
+                ...state[action.event.alias],
+                isFetching: false,
+                lastFetched: new Date().valueOf(),
+                data: new Event(action.event),
+            },
         };
     }
     case FAIL:
         return {
             ...state,
-            error: action.error,
-            data: { isFetching: false },
+            [action.alias]: {
+                ...state[action.alias],
+                isFetching: false,
+                error: action.error,
+            },
         };
     default: return state;
     }
 }
 
 // Action Creaters
-export function fetchConferenceRequest() {
+export function fetchConferenceRequest(alias) {
     return {
         type: REQUEST,
+        alias,
     };
 }
 
 export function fetchConferenceReceive(event) {
     return {
         type: RECEIVE,
-        data: event,
+        event,
     };
 }
 
-export function fetchConferenceFail(error) {
+export function fetchConferenceFail(alias, error) {
     return {
         type: FAIL,
-        error: error,
+        error,
+        alias,
     };
 }
 
-export function searchConference() {
+export function searchConference(alias) {
     return dispatch => {
-        dispatch(fetchConferenceRequest());
+        dispatch(fetchConferenceRequest(alias));
         API.searchConference()
             .then(response => {
                 dispatch(fetchConferenceReceive(response.data));
             })
             .catch(error => {
-                dispatch(fetchConferenceFail(error.response.status));
+                dispatch(fetchConferenceFail(alias, error.response.status));
             });
     };
 }
-
