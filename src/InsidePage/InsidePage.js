@@ -44,31 +44,46 @@ class InsidePage extends Component {
     }
 
     render() {
-        const error = this.props.event.error;
-        const events = this.props.event.data;
+        const { isFetching, data } = this.props.event;
 
-        // events.map( ev => {
-        //     loading = ev.isFetching;
-        // });
-        // console.log(loading);
-        if (error !== null) {
-            return (
-                <div>
-                    Error with status { error }
-                </div>
-            );
+        if (typeof isFetching === 'undefined') {
+            // nothing.
+            return null;
         }
 
-        return (
-            <div className="container__register mx-auto pt-5 pb-5 d-flex flex-column">       
-            </div>
-        );
+        if (isFetching) {
+            return (<p>'Loading!'</p>);
+        }
+
+        return (<p>{ data.alias }</p>);
+
+        // const error = this.props.event.error;
+        // const events = this.props.event.data;
+
+        // // events.map( ev => {
+        // //     loading = ev.isFetching;
+        // // });
+        // // console.log(loading);
+        // if (error !== null) {
+        //     return (
+        //         <div>
+        //             Error with status { error }
+        //         </div>
+        //     );
+        // }
+        //
+        // return (
+        //     <div className="container__register mx-auto pt-5 pb-5 d-flex flex-column">
+        //     </div>
+        // );
     }
 }
 
-const mapStateToProps = ({ event }) => {
+const mapStateToProps = ({ event }, { location }) => {
+    const pathnameArray = location.pathname.split('/');
+
     return {
-        event,
+        event: event[pathnameArray[pathnameArray.length - 1]],
     };
 };
 
