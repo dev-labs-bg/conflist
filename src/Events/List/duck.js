@@ -1,5 +1,5 @@
-import API from '../core/Api';
-import Event from '../EventsHandling/Event';
+import API from '../../core/Api';
+import Event from '../Event';
 
 const initialState = {
     isFetching: null,

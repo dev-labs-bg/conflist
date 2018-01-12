@@ -2,29 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Event from '../EventsHandling/Event';
-import { getFormattedDate } from '../core/Dates';
+import Event from '../Event';
+import { getFormattedDate } from '../../core/Dates';
 import { searchConference } from './duck';
 
 class InsidePage extends Component {
     static propTypes = {
         event: PropTypes.shape({
-            data: PropTypes.shape({
-                event: PropTypes.instanceOf(Event),
-            }),
+            data: PropTypes.instanceOf(Event),
             error: PropTypes.number,
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
         }),
+        alias: PropTypes.string.isRequired,
+        searchConference: PropTypes.func.isRequired,
     };
     static defaultProps = {
         event: {},
     };
 
     componentDidMount() {
-        const pathnameArray = this.props.location.pathname.split('/');
-        const eventAlias = pathnameArray[pathnameArray.length - 1];
-        this.props.searchConference(eventAlias);
+        this.props.searchConference(this.props.alias);
     }
     /**
      * Render speaker images
@@ -70,7 +68,7 @@ class InsidePage extends Component {
     }
 
     render() {
-        const { error, isFetching, data } = this.props.event;       
+        const { error, isFetching, data } = this.props.event;     
 
         if (typeof isFetching === 'undefined') {
             // nothing.
@@ -125,7 +123,7 @@ class InsidePage extends Component {
                         </svg>
                         <h5 className="font-weight-normal d-inline">Going: <span className="text-secondary">{data.atendees}</span></h5>
                     </div>
-                    <div dangerouslySetInnerHTML={this.renderDescription()} />                    
+                    <div dangerouslySetInnerHTML={this.renderDescription()} />                 
 
                 </div>
 
@@ -148,6 +146,7 @@ const mapStateToProps = ({ event }, { location }) => {
 
     return {
         event: event[pathnameArray[pathnameArray.length - 1]],
+        alias: pathnameArray[pathnameArray.length - 1],
     };
 };
 

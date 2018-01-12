@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Event from '../EventsHandling/Event';
-import CardList from '../EventsHandling/CardList/CardList';
-import { fetchConferences } from '../EventsHandling/conference';
+import Event from '../Events/Event';
+import EventsList from '../Events/List';
+import { fetchConferences } from '../Events/List/duck';
 
 class HomePage extends Component {
     static propTypes = {
@@ -14,6 +14,7 @@ class HomePage extends Component {
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
             error: PropTypes.number,
         }).isRequired,
+        fetchConferences: PropTypes.func.isRequired,
     };
 
     componentDidMount() {
@@ -42,7 +43,7 @@ class HomePage extends Component {
 
         return (
             <div>
-                <CardList events={this.props.events.data || undefined} />
+                <EventsList events={this.props.events.data || undefined} />
             </div>
         );
     }

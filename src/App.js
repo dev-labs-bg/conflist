@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Wrapper from './common/Wrapper';
-import InsidePage from './InsidePage/InsidePage';
-import HomePage from './HomePage';
+import EventDetails from './Events/Details';
+import HomePage from './Home';
 
 class App extends Component {
     render() {
@@ -12,7 +12,7 @@ class App extends Component {
                 <Wrapper>
                     <Switch>
                         <Route path="/" exact component={HomePage} />
-                        <Route path="/event" component={InsidePage} />
+                        <Route path="/event" component={EventDetails} />
                     </Switch>
                 </Wrapper>
             </div>
