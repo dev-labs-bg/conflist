@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import PopoverItem from '../../common/PopoverItem';
 import Event from '../Event';
 import { getFormattedDate } from '../../core/Dates';
 import { fetchConferenceDeatails } from './duck';
@@ -27,16 +28,21 @@ class InsidePage extends Component {
 
     renderSpeakers() {
         const renderImages = [];
-        this.props.event.data.speakers.map((speaker) => {
+        this.props.event.data.speakers.map((speaker, i) => {
             renderImages.push(
-                <img
-                    className="rounded-circle mr-2"
-                    key={speaker.id}
-                    src={speaker.pictureUrl}
-                    width="40"
-                    height="40"
-                    alt={speaker.name}
-                />);
+                <div className="d-inline" key={speaker.id} >
+                    <PopoverItem key={speaker.id} item={speaker} id={i}>
+                        <img
+                            className="rounded-circle mr-2"
+                            key={speaker.id}
+                            src={speaker.pictureUrl}
+                            width="40"
+                            height="40"
+                            alt={speaker.name}
+                            id={'Popover-' + i}
+                        />
+                    </PopoverItem>
+                </div>);
         });
         return renderImages;
     }
@@ -126,7 +132,7 @@ class InsidePage extends Component {
 
                 <div className="text-center">
                     <button className="btn btn-primary mr-5">Wanna go</button>
-                    <button className="btn btn-secondary">Go to website</button>
+                    <a className="btn btn-secondary" href={data.website}>Go to website</a>
                 </div>
             </div>
         );
