@@ -33,6 +33,7 @@ class InsidePage extends Component {
         this.props.event.data.speakers.map((speaker) => {
             renderImages.push(
                 <img
+                    className="rounded-circle mr-2"
                     key={speaker.id}
                     src={speaker.pictureUrl}
                     width="40"
