@@ -10,6 +10,7 @@ class PopoverItem extends Component {
             pictureUrl: PropTypes.string,
         }).isRequired,
         id: PropTypes.string.isRequired,
+        children: PropTypes.object.isRequired,
     }
 
     constructor(props) {
