@@ -1,27 +1,29 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getFormattedDate } from '../core/Dates';
 
 import calendar from '../assets/images/callendar.svg';
 
-
 const Card = ({ event }) => {
     return (
         <div className="card mb-2">
-            <img
-                className="card-img"
-                src={event.pictureUrl}
-                width="243"
-                height="202"
-                alt={event.name}
-            />
+            <Link to={`/event/${event.alias}`}>
+                <img
+                    className="card-img"
+                    src={event.pictureUrl}
+                    width="243"
+                    height="202"
+                    alt={event.name}
+                />
+            </Link>
+
             <div className="card-body">
                 <span className="d-flex justify-content-between">
-
                     <div className="card__info">
                         <img src={calendar} className="mr-1" alt="small calendar" />
-                        <span className="card__dates"> {getFormattedDate(event.start, event.end)}      
-                            <span className="text-info"> | </span> {event.venue} {event.city} {event.country}
+                        <span className="card__dates"> {getFormattedDate(event.start, event.end)}    
+                            <span className="text-info"> | </span> {event.venue}, {event.city}, {event.country}
                         </span>
                     </div>
                     <div className="card__button">
@@ -43,9 +45,12 @@ const Card = ({ event }) => {
                     </div>
                 </span>
 
-                <h4 className="card-title font-weight-normal mt-3">
-                    {event.name}
-                </h4>
+                <Link className="text-dark" to={`/event/${event.alias}`}>
+                    <h4 className="card-title font-weight-normal mt-3">
+                        {event.name}
+                    </h4>
+                </Link>
+
                 <p className="card-text">
                     {event.shortDescription}
                 </p>
@@ -64,10 +69,9 @@ const Card = ({ event }) => {
 Card.propTypes = {
     event: PropTypes.shape({
         imageCard: PropTypes.string,
-        dates: PropTypes.shape({
-            start: PropTypes.number,
-            end: PropTypes.number,
-        }),
+        alias: PropTypes.string,
+        start: PropTypes.string,
+        end: PropTypes.string,
         description: PropTypes.string,
         location: PropTypes.string,
         title: PropTypes.string,

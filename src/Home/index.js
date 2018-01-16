@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Wrapper from '../common/Wrapper';
-import Event from '../EventsHandling/Event';
-import CardList from '../EventsHandling/CardList/CardList';
-import { fetchConferences } from '../EventsHandling/conference';
+import Event from '../Events/Event';
+import EventsList from '../Events/List';
+import { fetchConferences } from '../Events/List/duck';
 
 class HomePage extends Component {
     static propTypes = {
-        conference: PropTypes.shape({
+        events: PropTypes.shape({
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
             error: PropTypes.number,
         }).isRequired,
+        fetchConferences: PropTypes.func.isRequired,
     };
 
     componentDidMount() {
@@ -22,8 +22,8 @@ class HomePage extends Component {
     }
 
     render() {
-        const error = this.props.conference.error;
-        const loading = this.props.conference.isFetching;
+        const error = this.props.events.error;
+        const loading = this.props.events.isFetching;
 
         if (error !== null) {
             return (
@@ -43,17 +43,15 @@ class HomePage extends Component {
 
         return (
             <div>
-                <Wrapper>
-                    <CardList events={this.props.conference.data || undefined} />
-                </Wrapper>
+                <EventsList events={this.props.events.data || undefined} />
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ conference }) => {
+const mapStateToProps = ({ events }) => {
     return {
-        conference,
+        events,
     };
 };
 

@@ -1,5 +1,5 @@
-import API from '../core/Api';
-import Event from '../EventsHandling/Event';
+import API from '../../core/Api';
+import Event from '../Event';
 
 const initialState = {
     isFetching: null,
@@ -9,9 +9,9 @@ const initialState = {
 };
 
 // Actions
-const REQUEST = 'conference/REQUEST';
-const RECEIVE = 'conference/RECEIVE';
-const FAIL = 'conference/FAIL';
+const REQUEST = 'eventsList/REQUEST';
+const RECEIVE = 'eventsList/RECEIVE';
+const FAIL = 'eventsList/FAIL';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -42,20 +42,20 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function fetchConferencesRequest() {
+export function requestEventsList() {
     return {
         type: REQUEST,
     };
 }
 
-export function fetchConferencesReceived(conferences) {
+export function receiveEventsList(conferences) {
     return {
         type: RECEIVE,
         data: conferences,
     };
 }
 
-export function fetchConferencesFailed(error) {
+export function failEventsList(error) {
     return {
         type: FAIL,
         error: error,
@@ -64,13 +64,13 @@ export function fetchConferencesFailed(error) {
 
 export function fetchConferences(state, action) {
     return dispatch => {
-        dispatch(fetchConferencesRequest());
+        dispatch(requestEventsList());
         API.fetchConferences()
             .then(response => {
-                dispatch(fetchConferencesReceived(response.data));
+                dispatch(receiveEventsList(response.data));
             })
             .catch(error => {
-                dispatch(fetchConferencesFailed(error.response.status));
+                dispatch(failEventsList(error.response.status));
             });
     };
 }
