@@ -4,9 +4,9 @@ import Event from '../Event';
 const initialState = {};
 
 // Actions
-const REQUEST = 'event/REQUEST';
-const RECEIVE = 'event/RECEIVE';
-const FAIL = 'event/FAIL';
+const REQUEST = 'eventDetails/REQUEST';
+const RECEIVE = 'eventDetails/RECEIVE';
+const FAIL = 'eventDetails/FAIL';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -45,21 +45,21 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creaters
-export function fetchConferenceRequest(alias) {
+export function RequestEventDetails(alias) {
     return {
         type: REQUEST,
         alias,
     };
 }
 
-export function fetchConferenceReceive(event) {
+export function ReceiveEventDetails(event) {
     return {
         type: RECEIVE,
         event,
     };
 }
 
-export function fetchConferenceFail(alias, error) {
+export function FailEventDetails(alias, error) {
     return {
         type: FAIL,
         error,
@@ -67,15 +67,15 @@ export function fetchConferenceFail(alias, error) {
     };
 }
 
-export function searchConference(alias) {
+export function fetchConferenceDeatails(alias) {
     return dispatch => {
-        dispatch(fetchConferenceRequest(alias));
-        API.searchConference()
+        dispatch(RequestEventDetails(alias));
+        API.fetchConferenceDeatails()
             .then(response => {
-                dispatch(fetchConferenceReceive(response.data));
+                dispatch(ReceiveEventDetails(response.data));
             })
             .catch(error => {
-                dispatch(fetchConferenceFail(alias, error.response.status));
+                dispatch(FailEventDetails(alias, error.response.status));
             });
     };
 }

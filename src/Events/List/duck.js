@@ -9,9 +9,9 @@ const initialState = {
 };
 
 // Actions
-const REQUEST = 'events/REQUEST';
-const RECEIVE = 'events/RECEIVE';
-const FAIL = 'events/FAIL';
+const REQUEST = 'eventsList/REQUEST';
+const RECEIVE = 'eventsList/RECEIVE';
+const FAIL = 'eventsList/FAIL';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -42,20 +42,20 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function fetchConferencesRequest() {
+export function RequestEventsList() {
     return {
         type: REQUEST,
     };
 }
 
-export function fetchConferencesReceived(conferences) {
+export function ReceiveEventsList(conferences) {
     return {
         type: RECEIVE,
         data: conferences,
     };
 }
 
-export function fetchConferencesFailed(error) {
+export function FailEventsList(error) {
     return {
         type: FAIL,
         error: error,
@@ -64,13 +64,13 @@ export function fetchConferencesFailed(error) {
 
 export function fetchConferences(state, action) {
     return dispatch => {
-        dispatch(fetchConferencesRequest());
+        dispatch(RequestEventsList());
         API.fetchConferences()
             .then(response => {
-                dispatch(fetchConferencesReceived(response.data));
+                dispatch(ReceiveEventsList(response.data));
             })
             .catch(error => {
-                dispatch(fetchConferencesFailed(error.response.status));
+                dispatch(FailEventsList(error.response.status));
             });
     };
 }
