@@ -28,10 +28,10 @@ class InsidePage extends Component {
 
     renderSpeakers() {
         const renderImages = [];
-        this.props.event.data.speakers.map((speaker, i) => {
+        this.props.event.data.speakers.map((speaker) => {
             renderImages.push(
                 <div className="d-inline" key={speaker.id} >
-                    <PopoverItem key={speaker.id} item={speaker} id={i}>
+                    <PopoverItem key={speaker.id} item={speaker} id={speaker.id}>
                         <img
                             className="rounded-circle mr-2"
                             key={speaker.id}
@@ -39,7 +39,6 @@ class InsidePage extends Component {
                             width="40"
                             height="40"
                             alt={speaker.name}
-                            id={'Popover-' + i}
                         />
                     </PopoverItem>
                 </div>);

@@ -9,7 +9,7 @@ class PopoverItem extends Component {
             name: PropTypes.string,
             pictureUrl: PropTypes.string,
         }).isRequired,
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
     }
 
     constructor(props) {
@@ -28,7 +28,6 @@ class PopoverItem extends Component {
     }
 
     render() {
-      console.log(this.props);
         return (
             <span>
                 <span role="button" id={'Popover-' + this.props.id} onClick={this.toggle}>
