@@ -42,20 +42,20 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function RequestEventsList() {
+export function requestEventsList() {
     return {
         type: REQUEST,
     };
 }
 
-export function ReceiveEventsList(conferences) {
+export function receiveEventsList(conferences) {
     return {
         type: RECEIVE,
         data: conferences,
     };
 }
 
-export function FailEventsList(error) {
+export function failEventsList(error) {
     return {
         type: FAIL,
         error: error,
@@ -64,13 +64,13 @@ export function FailEventsList(error) {
 
 export function fetchConferences(state, action) {
     return dispatch => {
-        dispatch(RequestEventsList());
+        dispatch(requestEventsList());
         API.fetchConferences()
             .then(response => {
-                dispatch(ReceiveEventsList(response.data));
+                dispatch(receiveEventsList(response.data));
             })
             .catch(error => {
-                dispatch(FailEventsList(error.response.status));
+                dispatch(failEventsList(error.response.status));
             });
     };
 }

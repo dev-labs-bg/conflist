@@ -45,21 +45,21 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creaters
-export function RequestEventDetails(alias) {
+export function requestEventDetails(alias) {
     return {
         type: REQUEST,
         alias,
     };
 }
 
-export function ReceiveEventDetails(event) {
+export function receiveEventDetails(event) {
     return {
         type: RECEIVE,
         event,
     };
 }
 
-export function FailEventDetails(alias, error) {
+export function failEventDetails(alias, error) {
     return {
         type: FAIL,
         error,
@@ -69,13 +69,13 @@ export function FailEventDetails(alias, error) {
 
 export function fetchConferenceDeatails(alias) {
     return dispatch => {
-        dispatch(RequestEventDetails(alias));
+        dispatch(requestEventDetails(alias));
         API.fetchConferenceDeatails()
             .then(response => {
-                dispatch(ReceiveEventDetails(response.data));
+                dispatch(receiveEventDetails(response.data));
             })
             .catch(error => {
-                dispatch(FailEventDetails(alias, error.response.status));
+                dispatch(failEventDetails(alias, error.response.status));
             });
     };
 }
