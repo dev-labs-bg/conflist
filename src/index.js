@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import logger from 'redux-logger'
+import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import eventsReducer from './EventsHandling/conference';
-import eventReducer from './InsidePage/duck';
+import eventsReducer from './Events/List/duck';
+import eventReducer from './Events/Details/duck';
 
 import './index.css';
 import './assets/sass/style.css';
