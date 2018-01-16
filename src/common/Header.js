@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Link from 'react-router-dom';
 import {
     Collapse,
     NavbarToggler,
@@ -52,11 +53,11 @@ class Header extends Component {
                     conferences and to subscribe for upcoming events related to the #tags
                     they care about.
                 </p>
-                <Button
-                    className="font-weight-bold mx-auto mt-3"
-                    color="primary"
+                <a
+                    href="/login"
+                    className="btn btn-primary font-weight-bold mx-auto mt-3"
                 >Register
-                </Button>
+                </a>
             </div>
         );
 
@@ -88,7 +89,7 @@ class Header extends Component {
 
                         <Nav className="nav navbar-nav justify-content-end">
                             <NavItem className="nav-item">
-                                <NavLink className="nav-link active" href="#">Home</NavLink>
+                                <NavLink className="nav-link" href="/home">Home</NavLink>
                             </NavItem>
 
                             <NavItem className="nav-item">
@@ -97,13 +98,15 @@ class Header extends Component {
                             {!this.state.authentication ?
                                 <div className="d-flex flex-md-row register__navitems">
                                     <NavItem className="nav-item">
-                                        <NavLink className="nav-link" href="#">Login</NavLink>
+                                        <NavLink className="nav-link" href="/login">
+                                            Login
+                                        </NavLink>
                                     </NavItem>
-                                    <Button
-                                        className="font-weight-bold align-self-start"
-                                        color="primary"
+                                    <a
+                                        href="/login"
+                                        className="btn btn-primary font-weight-bold align-self-start"
                                     >Register
-                                    </Button>
+                                    </a>
 
                                 </div>
                                 :

@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Wrapper from './common/Wrapper';
 import EventDetails from './Events/Details';
 import HomePage from './Home';
+import Login from './Login';
 
 class App extends Component {
     render() {
@@ -13,6 +14,7 @@ class App extends Component {
                     <Switch>
                         <Route path="/" exact component={HomePage} />
                         <Route path="/event" component={EventDetails} />
+                        <Route path="/login" component={Login} />
                     </Switch>
                 </Wrapper>
             </div>
