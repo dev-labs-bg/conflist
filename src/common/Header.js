@@ -18,7 +18,7 @@ import profilePicture from '../assets/images/superKalo.jpg';
 class Header extends Component {
     constructor(props) {
         super(props);
-
+        console.log(props);
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
             collapsed: true,

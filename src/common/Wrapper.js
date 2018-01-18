@@ -3,9 +3,10 @@ import Header from './Header';
 import Footer from './Footer';
 
 const Wrapper = (props) => {
+    console.log(props);
     return (
         <div>
-            <Header />
+            <Header isAuthenticated={props.auth} />
             {props.children}
             <Footer />
         </div>
