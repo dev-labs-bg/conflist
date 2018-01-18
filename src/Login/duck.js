@@ -54,12 +54,19 @@ export function jwtTokenRequest() {
         dispatch(tokenRequest());
         API.requestToken()
             .then(response => {
-                console.log(response);
-                dispatch(tokenReceive(response.data));
+                if (response.status < 200 || response.status >= 300) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
             })
-            .catch(error => {
-                console.log(error);
-                dispatch(tokenFail(error.response));
+            .then(data => {
+                console.log(data);
+                localStorage.setItem('token', data.token);
+                dispatch(tokenReceive(data.token));
+            })
+            .catch( (e) => {
+                console.log(e);
+                dispatch(tokenFail(e));
             });
     };
 }

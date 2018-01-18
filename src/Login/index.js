@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { jwtTokenRequest } from './duck';
@@ -7,10 +6,6 @@ import diskette from '../assets/images/diskette.svg';
 import subscribe from '../assets/images/subscribe.svg';
 
 class Login extends Component {
-    componentDidUpdate() {
-        this.props.jwtTokenRequest();
-    }
-
     render() {
         return (
             <div className="mx-auto pt-5 pb-5 container__register">
@@ -36,7 +31,15 @@ class Login extends Component {
                     <g>
                         <g transform="translate(-198 -224)">
                             <g>
-                                <use fill="#fff" fillOpacity="0" stroke="#f2706d" strokeMiterlimit="50" strokeWidth="4" clipPath="url(&quot;#duwgb&quot;)" xlinkHref="#duwga" />
+                                <use
+                                    fill="#fff"
+                                    fillOpacity="0"
+                                    stroke="#f2706d"
+                                    strokeMiterlimit="50"
+                                    strokeWidth="4"
+                                    clipPath="url(&quot;#duwgb&quot;)"
+                                    xlinkHref="#duwga"
+                                />
                             </g>
                             <g>
                                 <use fill="#f2706d" xlinkHref="#duwgc" />
@@ -119,7 +122,9 @@ class Login extends Component {
                         Login to conflist
                     </h2>
                     <a
-                        href="https://api.conflist.devlabs-projects.com/auth/twitter?returnUrl=http://localhost:3000/login"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href="https://api.conflist.devlabs-projects.com/auth/twitter?returnUrl=http://localhost:3000/loading"
                         className="btn btn-primary btn-twitter"
                     >
                         Log in with Twitter
