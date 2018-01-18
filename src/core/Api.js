@@ -9,6 +9,10 @@ const API = {
         axios.get('https://api.conflist.devlabs-projects.com/api/v1/tags'),
     fetchConferenceDeatails: confAlias =>
         axios.get('https://api.conflist.devlabs-projects.com/api/v1/conferences/' + confAlias),
+    requestToken: () =>
+        axios.post('https://api.conflist.devlabs-projects.com/auth/request-jwt', {
+            credentials: 'include',
+        }),
 };
 
 export default API;

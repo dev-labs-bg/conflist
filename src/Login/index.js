@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import { jwtTokenRequest } from './duck';
 import diskette from '../assets/images/diskette.svg';
 import subscribe from '../assets/images/subscribe.svg';
 
 class Login extends Component {
+    componentDidUpdate() {
+        this.props.jwtTokenRequest();
+    }
+
     render() {
         return (
             <div className="mx-auto pt-5 pb-5 container__register">
@@ -65,35 +72,35 @@ class Login extends Component {
                     viewBox="0 0 43 34"
                 >
                     <defs>
-                        <path id="i4kla" d="M242.64 365.09l-3.69 3.6-1.04-5.05-3.6-3.69 5.05-1.04 3.69-3.6 1.04 5.05 3.6 3.69z"/>
-                        <path id="i4klb" d="M259 386a3 3 0 1 1 6 0 3 3 0 0 1-6 0z"/>
-                        <path id="i4kle" d="M248 379a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
-                        <path id="i4klf" d="M262 363a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
-                        <path id="i4klg" d="M222 372.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0z"/>
-                        <clipPath id="i4klc"><use fill="#fff" xlinkHref="#i4kla"/>
+                        <path id="i4kla" d="M242.64 365.09l-3.69 3.6-1.04-5.05-3.6-3.69 5.05-1.04 3.69-3.6 1.04 5.05 3.6 3.69z" />
+                        <path id="i4klb" d="M259 386a3 3 0 1 1 6 0 3 3 0 0 1-6 0z" />
+                        <path id="i4kle" d="M248 379a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
+                        <path id="i4klf" d="M262 363a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
+                        <path id="i4klg" d="M222 372.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0z" />
+                        <clipPath id="i4klc"><use fill="#fff" xlinkHref="#i4kla" />
                         </clipPath>
                         <clipPath id="i4kld">
-                            <use fill="#fff" xlinkHref="#i4klb"/>
+                            <use fill="#fff" xlinkHref="#i4klb" />
                         </clipPath>
                     </defs>
-                        <g>
-                        <g transform="translate(-222 -355)">
-                        <g>
-                        <use fill="#fff" fillоpacity="0" stroke="#f2706d" strokeMiterlimit="50" strokeWidth="4" clipPath="url(&quot;#i4klc&quot;)" xlinkHref="#i4kla"/>
-                        </g>
-                        <g>
-                        <use fill="#fff" fillоpacity="0" stroke="#f2706d" strokeMiterlimit="50" strokeWidth="4" clipPath="url(&quot;#i4kld&quot;)" xlinkHref="#i4klb"/>
-                        </g>
-                        <g>
-                        <use fill="#f2706d" xlinkHref="#i4kle"/>
-                        </g>
-                        <g>
-                        <use fill="#f2706d" xlinkHref="#i4klf"/>
-                    </g>
                     <g>
-                    <use fill="#f2706d" xlinkHref="#i4klg"/>
-                    </g>
-                    </g>
+                        <g transform="translate(-222 -355)">
+                            <g>
+                                <use fill="#fff" fillоpacity="0" stroke="#f2706d" strokeMiterlimit="50" strokeWidth="4" clipPath="url(&quot;#i4klc&quot;)" xlinkHref="#i4kla" />
+                            </g>
+                            <g>
+                                <use fill="#fff" fillоpacity="0" stroke="#f2706d" strokeMiterlimit="50" strokeWidth="4" clipPath="url(&quot;#i4kld&quot;)" xlinkHref="#i4klb" />
+                            </g>
+                            <g>
+                                <use fill="#f2706d" xlinkHref="#i4kle" />
+                            </g>
+                            <g>
+                                <use fill="#f2706d" xlinkHref="#i4klf" />
+                            </g>
+                            <g>
+                                <use fill="#f2706d" xlinkHref="#i4klg" />
+                            </g>
+                        </g>
                     </g>
                 </svg>
 
@@ -112,7 +119,7 @@ class Login extends Component {
                         Login to conflist
                     </h2>
                     <a
-                        href="https://twitter.com/"
+                        href="https://api.conflist.devlabs-projects.com/auth/twitter?returnUrl=http://localhost:3000/login"
                         className="btn btn-primary btn-twitter"
                     >
                         Log in with Twitter
@@ -125,4 +132,14 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = ({ token }) => {
+    return {
+        token,
+    };
+};
+
+const mapDispatchToProps = {
+    jwtTokenRequest,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
