@@ -124,7 +124,7 @@ class Login extends Component {
                     <a
                         target="_blank"
                         rel="noreferrer noopener"
-                        href="https://api.conflist.devlabs-projects.com/auth/twitter?returnUrl=http://localhost:3000/loading"
+                        href="https://api.conflist.devlabs-projects.com/auth/twitter?returnUrl=http://localhost:3000/gate"
                         className="btn btn-primary btn-twitter"
                     >
                         Log in with Twitter
