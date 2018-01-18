@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Link from 'react-router-dom';
 import {
     Collapse,
     NavbarToggler,
@@ -11,7 +10,7 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Button } from 'reactstrap';
+} from 'reactstrap';
 
 import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';

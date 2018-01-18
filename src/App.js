@@ -14,6 +14,7 @@ class App extends Component {
                 <Wrapper>
                     <Switch>
                         <Route path="/" exact component={HomePage} />
+                        <Route path="/home" exact component={HomePage} />
                         <Route path="/event" component={EventDetails} />
                         <Route path="/login" component={Login} />
                         <Route path="/loading" component={Loading} />

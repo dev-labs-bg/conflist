@@ -1,6 +1,10 @@
 import API from '../core/Api';
 
-const initialState = {};
+const initialState = {
+    isAuthenticated: false,
+    error: null,
+    token: null,
+};
 
 // Actions
 const REQUEST = 'jwtToken/REQUEST';
@@ -18,11 +22,13 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             token: action.token,
+            isAuthenticated: true,
         };
     case FAIL:
         return {
             ...state,
             error: action.error,
+            isAuthenticated: false,
         };
     default: return state;
     }
@@ -54,18 +60,10 @@ export function jwtTokenRequest() {
         dispatch(tokenRequest());
         API.requestToken()
             .then(response => {
-                if (response.status < 200 || response.status >= 300) {
-                    throw new Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                localStorage.setItem('token', data.token);
-                dispatch(tokenReceive(data.token));
+                localStorage.setItem('token', response.data.token);
+                dispatch(tokenReceive(response.data.token));
             })
             .catch( (e) => {
-                console.log(e);
                 dispatch(tokenFail(e));
             });
     };
