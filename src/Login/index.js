@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import { jwtTokenRequest } from './duck';
 import diskette from '../assets/images/diskette.svg';
 import subscribe from '../assets/images/subscribe.svg';
 
@@ -137,14 +135,4 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = ({ token }) => {
-    return {
-        token,
-    };
-};
-
-const mapDispatchToProps = {
-    jwtTokenRequest,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
