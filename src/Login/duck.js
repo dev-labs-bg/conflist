@@ -2,7 +2,7 @@ import API from '../core/Api';
 
 const initialState = {
     isAuthenticated: false,
-    isLoading: false,
+    isLoading: null,
     error: null,
     token: null,
 };
@@ -20,12 +20,13 @@ export default function reducer(state = initialState, action = {}) {
     case REQUEST:
         return {
             ...state,
+            isLoading: true,
         };
     case RECEIVE:
         return {
             ...state,
             token: action.token,
-            isLoading: true,
+            isLoading: false,
             isAuthenticated: true,
         };
     case FAIL:
