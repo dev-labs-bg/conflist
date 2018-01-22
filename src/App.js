@@ -12,11 +12,12 @@ class App extends Component {
     render() {
         const isAuthenticated = this.props.auth.isAuthenticated;
         console.log(isAuthenticated);
+        console.log(this.props.auth.isAuthenticated);
 
         if (isAuthenticated) {
             return (
                 <div>
-                    <Wrapper auth={this.props.auth.isAuthenticated || undefined}>
+                    <Wrapper auth={this.props.auth.isAuthenticated}>
                         <Switch>
                             <Route path="/home" component={HomePage} />
                             <Route path="/event" component={EventDetails} />
@@ -28,7 +29,7 @@ class App extends Component {
 
         return (
             <div>
-                <Wrapper auth={this.props.auth.isAuthenticated || undefined}>
+                <Wrapper auth={this.props.auth.isAuthenticated}>
                     <Switch>
                         <Route path="/" exact component={HomePage} />
                         <Route path="/home" component={HomePage} />

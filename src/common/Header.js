@@ -19,6 +19,7 @@ class Header extends Component {
     constructor(props) {
         super(props);
         console.log(props);
+        this.isAuthenticated = props.isAuthenticated;
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
             collapsed: true,
@@ -32,8 +33,8 @@ class Header extends Component {
         });
     }
 
-    renderNavClass = (isAuthenticated) => {
-        if (isAuthenticated) {
+    renderNavClass = () => {
+        if (this.isAuthenticated) {
             return 'navbar-light bg-white';
         }
 
@@ -59,15 +60,16 @@ class Header extends Component {
                 </a>
             </div>
         );
+        console.log(this.isAuthenticated);
 
         return (
-            <div className={!this.state.authentication ? 'register' : null}>
+            <div className={!this.isAuthenticated ? 'register' : null}>
                 <Nav
-                    className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(this.state.authentication)}`}
+                    className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(this.isAuthenticated)}`}
                 >
                     <NavbarBrand className="mx-auto">
                         <Logo
-                            authentication={this.state.authentication}
+                            authentication={this.isAuthenticated}
                         />
                     </NavbarBrand>
 
@@ -94,7 +96,7 @@ class Header extends Component {
                             <NavItem className="nav-item">
                                 <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
                             </NavItem>
-                            {!this.state.authentication ?
+                            {!this.isAuthenticated ?
                                 <div className="d-flex flex-md-row register__navitems">
                                     <NavItem className="nav-item">
                                         <NavLink className="nav-link" href="/login">
@@ -143,7 +145,7 @@ class Header extends Component {
                     </Collapse>
                 </Nav>
 
-                {!this.state.authentication ? registerBkg : null}
+                {!this.isAuthenticated ? registerBkg : null}
 
             </div>
         );
