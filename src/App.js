@@ -11,8 +11,6 @@ import Gate from './Gate';
 class App extends Component {
     render() {
         const isAuthenticated = this.props.auth.isAuthenticated;
-        console.log(isAuthenticated);
-        console.log(this.props.auth.isAuthenticated);
 
         if (isAuthenticated) {
             return (
