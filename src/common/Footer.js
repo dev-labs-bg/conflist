@@ -5,7 +5,7 @@ const footer = () => (
         <span
             className="footer__text my-auto mx-auto font-weight-normal"
         >
-            © 2017 conf<span className="font-weight-bold">list</span>
+            © {new Date().getFullYear()} conf<span className="font-weight-bold">list</span>
             . All rights reserved.
         </span>
     </footer>
