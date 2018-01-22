@@ -120,8 +120,7 @@ class Login extends Component {
                         Login to conflist
                     </h2>
                     <a
-                        target="_blank"
-                        rel="noreferrer noopener"
+                        target="_self"
                         href="https://api.conflist.devlabs-projects.com/auth/twitter?returnUrl=http://localhost:3000/gate"
                         className="btn btn-primary btn-twitter"
                     >
