@@ -8,6 +8,7 @@ import EventDetails from './Events/Details';
 import HomePage from './Home';
 import Login from './Login';
 import Gate from './Gate';
+import { getToken } from './Login/duck';
 
 class App extends Component {
     static propTypes = {
@@ -16,7 +17,12 @@ class App extends Component {
             isAuthenticated: PropTypes.bool,
             token: PropTypes.string,
         }).isRequired,
+        getToken: PropTypes.func.isRequired,
     };
+
+    componentDidMount() {
+        this.props.getToken();
+    }
 
     render() {
         const { isAuthenticated } = this.props.auth;
@@ -56,4 +62,8 @@ const mapStateToProps = ({ auth }) => {
     };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = {
+    getToken,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
