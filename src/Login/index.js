@@ -23,7 +23,8 @@ class Login extends Component {
                         <path id="duwgc" d="M252 247a3 3 0 1 1 6 0 3 3 0 0 1-6 0z" />
                         <path id="duwgd" d="M208 225a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
                         <path id="duwge" d="M230.43 228.96a.52.52 0 1 1 .7-.76l2.68 2.5a.52.52 0 1 1-.7.76zm5.65-.2a.52.52 0 1 1 .7-.76l2.69 2.5a.52.52 0 1 1-.71.76zm-.53 4.97a.52.52 0 1 1 .7-.76l2.68 2.5a.52.52 0 1 1-.7.76zm-4.24.15a.52.52 0 1 1 .7-.76l2.68 2.5a.52.52 0 1 1-.7.76z" />
-                        <clipPath id="duwgb"><use fill="#fff" xlinkHref="#duwga" />
+                        <clipPath id="duwgb">
+                            <use fill="#fff" xlinkHref="#duwga" />
                         </clipPath>
                     </defs>
                     <g>
