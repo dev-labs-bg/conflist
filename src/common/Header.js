@@ -18,12 +18,10 @@ import profilePicture from '../assets/images/superKalo.jpg';
 class Header extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
-        this.isAuthenticated = props.isAuthenticated;
+
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
             collapsed: true,
-            authentication: false,
         };
     }
 
@@ -33,8 +31,8 @@ class Header extends Component {
         });
     }
 
-    renderNavClass = () => {
-        if (this.isAuthenticated) {
+    renderNavClass = (isAuthenticated) => {
+        if (isAuthenticated) {
             return 'navbar-light bg-white';
         }
 
@@ -60,16 +58,17 @@ class Header extends Component {
                 </a>
             </div>
         );
-        console.log(this.isAuthenticated);
+
+        const { isAuthenticated } = this.props;
 
         return (
-            <div className={!this.isAuthenticated ? 'register' : null}>
+            <div className={!isAuthenticated ? 'register' : null}>
                 <Nav
-                    className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(this.isAuthenticated)}`}
+                    className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
                     <NavbarBrand className="mx-auto">
                         <Logo
-                            authentication={this.isAuthenticated}
+                            authentication={isAuthenticated}
                         />
                     </NavbarBrand>
 
@@ -96,7 +95,7 @@ class Header extends Component {
                             <NavItem className="nav-item">
                                 <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
                             </NavItem>
-                            {!this.isAuthenticated ?
+                            {!isAuthenticated ?
                                 <div className="d-flex flex-md-row register__navitems">
                                     <NavItem className="nav-item">
                                         <NavLink className="nav-link" href="/login">
@@ -145,7 +144,7 @@ class Header extends Component {
                     </Collapse>
                 </Nav>
 
-                {!this.isAuthenticated ? registerBkg : null}
+                {!isAuthenticated ? registerBkg : null}
 
             </div>
         );
