@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
     Collapse,
     NavbarToggler,
@@ -10,19 +11,22 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Button } from 'reactstrap';
+} from 'reactstrap';
 
 import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';
 
 class Header extends Component {
+    static propTypes = {
+        isAuthenticated: PropTypes.bool.isRequired,
+    };
+
     constructor(props) {
         super(props);
 
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
             collapsed: true,
-            authentication: false,
         };
     }
 
@@ -52,22 +56,24 @@ class Header extends Component {
                     conferences and to subscribe for upcoming events related to the #tags
                     they care about.
                 </p>
-                <Button
-                    className="font-weight-bold mx-auto mt-3"
-                    color="primary"
+                <a
+                    href="/login"
+                    className="btn btn-primary font-weight-bold mx-auto mt-3"
                 >Register
-                </Button>
+                </a>
             </div>
         );
 
+        const { isAuthenticated } = this.props;
+
         return (
-            <div className={!this.state.authentication ? 'register' : null}>
+            <div className={!isAuthenticated ? 'register' : null}>
                 <Nav
-                    className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(this.state.authentication)}`}
+                    className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
                     <NavbarBrand className="mx-auto">
                         <Logo
-                            authentication={this.state.authentication}
+                            authentication={isAuthenticated}
                         />
                     </NavbarBrand>
 
@@ -88,22 +94,24 @@ class Header extends Component {
 
                         <Nav className="nav navbar-nav justify-content-end">
                             <NavItem className="nav-item">
-                                <NavLink className="nav-link active" href="#">Home</NavLink>
+                                <NavLink className="nav-link" href="/home">Home</NavLink>
                             </NavItem>
 
                             <NavItem className="nav-item">
                                 <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
                             </NavItem>
-                            {!this.state.authentication ?
+                            {!isAuthenticated ?
                                 <div className="d-flex flex-md-row register__navitems">
                                     <NavItem className="nav-item">
-                                        <NavLink className="nav-link" href="#">Login</NavLink>
+                                        <NavLink className="nav-link" href="/login">
+                                            Login
+                                        </NavLink>
                                     </NavItem>
-                                    <Button
-                                        className="font-weight-bold align-self-start"
-                                        color="primary"
+                                    <a
+                                        href="/login"
+                                        className="btn btn-primary font-weight-bold align-self-start"
                                     >Register
-                                    </Button>
+                                    </a>
 
                                 </div>
                                 :
@@ -141,7 +149,7 @@ class Header extends Component {
                     </Collapse>
                 </Nav>
 
-                {!this.state.authentication ? registerBkg : null}
+                {!isAuthenticated ? registerBkg : null}
 
             </div>
         );

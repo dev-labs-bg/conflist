@@ -7,6 +7,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import eventsReducer from './Events/List/duck';
 import eventReducer from './Events/Details/duck';
+import authReducer from './Login/duck';
 
 import './index.css';
 import './assets/sass/style.css';
@@ -19,6 +20,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = combineReducers({
     events: eventsReducer,
     event: eventReducer,
+    auth: authReducer,
 });
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk,logger)));

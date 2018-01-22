@@ -70,7 +70,7 @@ export function fetchConferences(state, action) {
                 dispatch(receiveEventsList(response.data));
             })
             .catch(error => {
-                dispatch(failEventsList(error.response.status));
+                dispatch(failEventsList(error.response));
             });
     };
 }

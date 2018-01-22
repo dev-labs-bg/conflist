@@ -1,18 +1,48 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Wrapper from './common/Wrapper';
 import EventDetails from './Events/Details';
 import HomePage from './Home';
+import Login from './Login';
+import Gate from './Gate';
 
 class App extends Component {
+    static propTypes = {
+        auth: PropTypes.shape({
+            error: PropTypes.string,
+            isAuthenticated: PropTypes.bool,
+            token: PropTypes.string,
+        }).isRequired,
+    };
+
     render() {
+        const { isAuthenticated } = this.props.auth;
+
+        if (isAuthenticated) {
+            return (
+                <div>
+                    <Wrapper auth={isAuthenticated}>
+                        <Switch>
+                            <Route path="/home" component={HomePage} />
+                            <Route path="/event" component={EventDetails} />
+                        </Switch>
+                    </Wrapper>
+                </div>
+            );
+        }
+
         return (
-            <div className="App">
-                <Wrapper>
+            <div>
+                <Wrapper auth={isAuthenticated}>
                     <Switch>
                         <Route path="/" exact component={HomePage} />
+                        <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/gate" component={Gate} />
                     </Switch>
                 </Wrapper>
             </div>
@@ -20,4 +50,10 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = ({ auth }) => {
+    return {
+        auth,
+    };
+};
+
+export default connect(mapStateToProps)(App);
