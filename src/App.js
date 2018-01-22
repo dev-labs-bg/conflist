@@ -16,6 +16,7 @@ class App extends Component {
             error: PropTypes.string,
             isAuthenticated: PropTypes.bool,
             token: PropTypes.string,
+            isLoading: PropTypes.bool,
         }).isRequired,
         getToken: PropTypes.func.isRequired,
     };
@@ -26,6 +27,20 @@ class App extends Component {
 
     render() {
         const { isAuthenticated } = this.props.auth;
+        const { isLoading } = this.props.auth;
+        const { error } = this.props.auth;
+
+        if (isLoading) {
+            return (<p>Loading!</p>);
+        }
+
+        if (error !== null) {
+            return (
+                <div>
+                    {error}
+                </div>
+            );
+        }
 
         if (isAuthenticated) {
             return (
