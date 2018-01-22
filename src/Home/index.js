@@ -22,8 +22,8 @@ class HomePage extends Component {
     }
 
     render() {
-        const error = this.props.events.error;
-        const loading = this.props.events.isFetching;
+        const { error } = this.props.events;
+        const { isFetching } = this.props.events;
 
         if (error !== null) {
             return (
@@ -33,7 +33,7 @@ class HomePage extends Component {
             );
         }
 
-        if (loading) {
+        if (isFetching) {
             return (
                 <div>
                 Loading...
