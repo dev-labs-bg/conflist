@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
     Collapse,
+    Navbar,
     NavbarToggler,
     NavbarBrand,
     Nav,
@@ -68,7 +69,7 @@ class Header extends Component {
 
         return (
             <div className={!isAuthenticated ? 'register' : null}>
-                <Nav
+                <Navbar
                     className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
                     <NavbarBrand className="mx-auto">
@@ -115,39 +116,37 @@ class Header extends Component {
 
                                 </div>
                                 :
-                                <NavItem className="nav-item dropdown">
-                                    <UncontrolledDropdown nav inNavbar>
-                                        <DropdownToggle nav caret>
-                                            <img
-                                                className="mr-1"
-                                                src={profilePicture}
-                                                width="28"
-                                                height="28"
-                                                alt="profile avatar"
-                                            /> Kaloyan
-                                        </DropdownToggle>
-                                        <DropdownMenu >
-                                            <DropdownItem>
-                                                Profile Settings
-                                            </DropdownItem>
-                                            <DropdownItem>
-                                                My Subscriptions
-                                            </DropdownItem>
-                                            <DropdownItem>
-                                                Wanna go list
-                                            </DropdownItem>
-                                            <DropdownItem divider />
-                                            <DropdownItem>
-                                                Log out
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
-
-                                </NavItem> }
+                                <UncontrolledDropdown nav>
+                                    <DropdownToggle nav caret>
+                                        <img
+                                            className="mr-1"
+                                            src={profilePicture}
+                                            width="28"
+                                            height="28"
+                                            alt="profile avatar"
+                                        /> Kaloyan
+                                    </DropdownToggle>
+                                    <DropdownMenu >
+                                        <DropdownItem>
+                                            Profile Settings
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            My Subscriptions
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            Wanna go list
+                                        </DropdownItem>
+                                        <DropdownItem divider />
+                                        <DropdownItem>
+                                            Log out
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                            }
 
                         </Nav>
                     </Collapse>
-                </Nav>
+                </Navbar>
 
                 {!isAuthenticated ? registerBkg : null}
 
