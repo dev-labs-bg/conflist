@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
     Collapse,
     NavbarToggler,
@@ -16,6 +17,10 @@ import Logo from './Logo';
 import profilePicture from '../assets/images/superKalo.jpg';
 
 class Header extends Component {
+    static propTypes = {
+        isAuthenticated: PropTypes.bool.isRequired,
+    };
+
     constructor(props) {
         super(props);
 
