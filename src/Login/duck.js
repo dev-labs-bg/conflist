@@ -2,6 +2,7 @@ import API from '../core/Api';
 
 const initialState = {
     isAuthenticated: false,
+    isLoading: false,
     error: null,
     token: null,
 };
@@ -10,6 +11,8 @@ const initialState = {
 const REQUEST = 'jwtToken/REQUEST';
 const RECEIVE = 'jwtToken/RECEIVE';
 const FAIL = 'jwtToken/FAIL';
+const SET = 'jwtToken/SET';
+const GET = 'jwtToken/GET';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -22,13 +25,27 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             token: action.token,
+            isLoading: true,
             isAuthenticated: true,
         };
     case FAIL:
         return {
             ...state,
             error: action.error,
+            isLoading: false,
             isAuthenticated: false,
+        };
+    case SET:
+        localStorage.setItem('token', action.token);
+        return {
+            ...state,
+        };
+    case GET:
+        const token = localStorage.getItem('token');
+        return {
+            ...state,
+            isAuthenticated: !!token,
+            token,
         };
     default: return state;
     }
@@ -55,15 +72,28 @@ export function tokenFail(error) {
     };
 }
 
+export function setToken(token) {
+    return {
+        type: SET,
+        token,
+    };
+}
+
+export function getToken() {
+    return {
+        type: GET,
+    };
+}
+
 export function jwtTokenRequest() {
     return dispatch => {
         dispatch(tokenRequest());
         API.requestToken()
             .then(response => {
-                localStorage.setItem('token', response.data.token);
                 dispatch(tokenReceive(response.data.token));
+                dispatch(setToken(response.data.token));
             })
-            .catch( (e) => {
+            .catch((e) => {
                 dispatch(tokenFail(e));
             });
     };
