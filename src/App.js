@@ -8,6 +8,7 @@ import EventDetails from './Events/Details';
 import HomePage from './Home';
 import Login from './Login';
 import Gate from './Gate';
+import WishList from './Events/WishList';
 import { getToken } from './Login/duck';
 
 class App extends Component {
@@ -49,6 +50,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/home" component={HomePage} />
                             <Route path="/event" component={EventDetails} />
+                            <Route path="/my-subscriptions" component={WishList} />
                         </Switch>
                     </Wrapper>
                 </div>
