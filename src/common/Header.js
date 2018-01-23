@@ -130,7 +130,7 @@ class Header extends Component {
                                         <DropdownItem>
                                             Profile Settings
                                         </DropdownItem>
-                                        <DropdownItem>
+                                        <DropdownItem href="/my-subscriptions">
                                             My Subscriptions
                                         </DropdownItem>
                                         <DropdownItem>
