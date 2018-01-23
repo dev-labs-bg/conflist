@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Popover, PopoverHeader } from 'reactstrap';
+import { Popover, PopoverBody } from 'reactstrap';
 
 class PopoverItem extends Component {
     static propTypes = {
@@ -40,7 +40,7 @@ class PopoverItem extends Component {
                     target={'Popover-' + this.props.id}
                     toggle={this.toggle}
                 >
-                    <PopoverHeader>{this.props.item.name}</PopoverHeader>
+                    <PopoverBody>{this.props.item.name}</PopoverBody>
                 </Popover>
             </span>
         );
