@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { setWishListEvent } from '../Events/WishList/duck';
+import Attend from '../Events/WishList/Attend';
+import { attendConference } from '../Events/WishList/duck';
 import { getFormattedDate } from '../core/Dates';
 import calendar from '../assets/images/callendar.svg';
-
 
 class Card extends Component {
     static propTypes = {
@@ -27,8 +27,18 @@ class Card extends Component {
             atendees: PropTypes.number,
             tags: PropTypes.arrayOf(PropTypes.string),
         }).isRequired,
-        setWishListEvent: PropTypes.func.isRequired,
     };
+
+    /**
+     * Using dangerouslySetInnerHTML
+     *
+     * {@link https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml}
+     *
+     * @return {object}
+     */
+    eventDescription() {
+        return { __html: this.props.event.shortDescription };
+    }
 
     render() {
         const { event } = this.props;
@@ -53,29 +63,10 @@ class Card extends Component {
                             </span>
                         </div>
                         <div className="card__button">
-                            <svg
-                                className="card__heart mr-1"
-                                width="20"
-                                height="19"
-                                viewBox="0 0 20 19"
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                onClick={() => this.props.setWishListEvent(event)}
-                            >
-                                <title>Heart shape svg</title>
-                                <desc>Heart shape with red border</desc>
-                                <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                                    <g id="conflist-home-page-logged-in" transform="translate(-986.000000, -889.000000)">
-                                        <g id="conf-card" transform="translate(309.000000, 866.000000)">
-                                            <g id="ic_favorite_border_black_24px-copy" transform="translate(675.000000, 20.000000)">
-                                                <polygon id="Shape" points="0 0 24 0 24 24 0 24" />
-                                                <path d="M16.5,3 C14.76,3 13.09,3.81 12,5.09 C10.91,3.81 9.24,3 7.5,3 C4.42,3 2,5.42 2,8.5 C2,12.28 5.4,15.36 10.55,20.04 L12,21.35 L13.45,20.03 C18.6,15.36 22,12.28 22,8.5 C22,5.42 19.58,3 16.5,3 Z M12.1,18.55 L12,18.65 L11.9,18.55 C7.14,14.24 4,11.39 4,8.5 C4,6.5 5.5,5 7.5,5 C9.04,5 10.54,5.99 11.07,7.36 L12.94,7.36 C13.46,5.99 14.96,5 16.5,5 C18.5,5 20,6.5 20,8.5 C20,11.39 16.86,14.24 12.1,18.55 Z" id="Shape" fill="#F2706D" fillRule="nonzero" />
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
+                            <Attend
+                                id={event.id}
+                                token={this.props.auth.token}
+                            />
                             <span className="font-weight-normal align-top">{event.atendees}</span>
                         </div>
                     </span>
@@ -86,9 +77,10 @@ class Card extends Component {
                         </h4>
                     </Link>
 
-                    <p className="card-text">
-                        {event.shortDescription}
-                    </p>
+                    <div
+                        className="card-text"
+                        dangerouslySetInnerHTML={this.eventDescription()}
+                    />
 
                     <div className="d-flex justify-content-end">
                         <span className="badge badge-pill badge-light mr-2">{event.tags[0]}</span>
@@ -102,8 +94,14 @@ class Card extends Component {
     }
 }
 
-const mapDispatchToProps = {
-    setWishListEvent,
+const mapStateToProps = ({ auth }) => {
+    return {
+        auth,
+    };
 };
 
-export default connect(null, mapDispatchToProps)(Card);
+const mapDispatchToProps = {
+    attendConference,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
