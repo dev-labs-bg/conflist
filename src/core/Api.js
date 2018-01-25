@@ -17,7 +17,7 @@ const API = {
         }),
     attendConference: (eventId, token) =>
         axios.post(
-            `https://api.conflist.devlabs-projects.com/api/v1/conferences/:${eventId}/attend`,
+            `https://api.conflist.devlabs-projects.com/api/v1/conferences/${eventId}/attend`,
             {},
             {
                 headers: {
