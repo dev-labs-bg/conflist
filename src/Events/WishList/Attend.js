@@ -21,13 +21,17 @@ class Attend extends Component {
         };
     }
 
-
     handleToggleActive = () => {
         this.setState({
             isActive: !this.state.isActive,
         });
     }
 
+    /**
+     * Change Icon on isActive state change
+     * @param  {Boolean}
+     * @return {svg icon}
+     */
     renderIcon = (isActive) => {
         if (isActive) {
             return (
@@ -44,6 +48,7 @@ class Attend extends Component {
         if (this.state.isActive) {
             this.props.attendConference(this.props.id, this.props.token);
         }
+
         return (
             <PopoverItem
                 id={this.props.id}
