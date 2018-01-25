@@ -10,7 +10,14 @@ class PopoverItem extends Component {
             pictureUrl: PropTypes.string,
         }).isRequired,
         id: PropTypes.string.isRequired,
+        onClick: PropTypes.func,
+        isActive: PropTypes.bool,
         children: PropTypes.object.isRequired,
+    }
+
+    static defaultProps = {
+        onClick: () => {},
+        isActive: true,
     }
 
     constructor(props) {
@@ -23,9 +30,19 @@ class PopoverItem extends Component {
     }
 
     toggle() {
-        this.setState({
-            popoverOpen: !this.state.popoverOpen,
-        });
+        if (!this.state.popoverOpen) {
+            this.props.onClick();
+        } else {
+            this.setState({
+                popoverOpen: false,
+            });
+        }
+
+        if (!this.props.isActive) {
+            this.setState({
+                popoverOpen: !this.state.popoverOpen,
+            });
+        }
     }
 
     render() {
