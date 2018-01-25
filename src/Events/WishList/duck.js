@@ -63,15 +63,15 @@ export function setWishListEventFail(error) {
 }
 
 
-export function attendConference() {
-    return dispatch => {
+export function attendConference(_eventId, _token) {
+    return (dispatch) => {
         dispatch(requestWishListEvent());
-        API.attendConference()
-            .then(response => {
+        API.attendConference(_eventId, _token)
+            .then((response) => {
                 console.log(response);
                 dispatch(setWishListEvent(response.data));
             })
-            .catch(error => {
+            .catch((error) => {
                 dispatch(setWishListEventFail(error.response.data.message));
             });
     };

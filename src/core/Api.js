@@ -16,11 +16,15 @@ const API = {
             withCredentials: true,
         }),
     attendConference: (eventId, token) =>
-        axios({
-            url: `https://api.conflist.devlabs-projects.com/api/v1/conferences/:${eventId}/attend`,
-            method: 'post',
-            auth: `Bearer ${token}`,
-        }),
+        axios.post(
+            `https://api.conflist.devlabs-projects.com/api/v1/conferences/:${eventId}/attend`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        ),
 };
 
 export default API;
