@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Attend from '../Events/WishList/Attend';
-import { attendConference } from '../Events/WishList/duck';
 import { getFormattedDate } from '../core/Dates';
 import calendar from '../assets/images/callendar.svg';
 
@@ -100,8 +99,4 @@ const mapStateToProps = ({ auth }) => {
     };
 };
 
-const mapDispatchToProps = {
-    attendConference,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(mapStateToProps)(Card);
