@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
 
+import { fetchCurrentUser } from './duck';
 class ProfileSettings extends Component {
     render() {
         return (
@@ -74,4 +76,8 @@ class ProfileSettings extends Component {
     }
 }
 
-export default ProfileSettings;
+const mapDispatchToProps = {
+    fetchCurrentUser,
+};
+
+export default connect(null, mapDispatchToProps)(ProfileSettings);

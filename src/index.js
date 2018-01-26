@@ -9,6 +9,7 @@ import eventsReducer from './Events/List/duck';
 import eventReducer from './Events/Details/duck';
 import authReducer from './Login/duck';
 import wishListReducer from './Events/WishList/duck';
+import currentUserReducer from './ProfileSettings/duck';
 
 import './index.css';
 import './assets/sass/style.css';
@@ -23,6 +24,7 @@ const reducer = combineReducers({
     event: eventReducer,
     auth: authReducer,
     wishList: wishListReducer,
+    currentUser: currentUserReducer,
 });
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk, logger)));

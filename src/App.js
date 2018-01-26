@@ -45,30 +45,26 @@ class App extends Component {
 
         if (isAuthenticated) {
             return (
-                <div>
-                    <Wrapper auth={isAuthenticated}>
-                        <Switch>
-                            <Route path="/home" component={HomePage} />
-                            <Route path="/event" component={EventDetails} />
-                            <Route path="/profile-settings" component={ProfileSettings} />
-                        </Switch>
-                    </Wrapper>
-                </div>
+                <Wrapper auth={isAuthenticated}>
+                    <Switch>
+                        <Route path="/home" component={HomePage} />
+                        <Route path="/event" component={EventDetails} />
+                        <Route path="/profile-settings" component={ProfileSettings} />
+                    </Switch>
+                </Wrapper>
             );
         }
 
         return (
-            <div>
-                <Wrapper auth={isAuthenticated}>
-                    <Switch>
-                        <Route path="/" exact component={HomePage} />
-                        <Route path="/home" component={HomePage} />
-                        <Route path="/event" component={EventDetails} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/gate" component={Gate} />
-                    </Switch>
-                </Wrapper>
-            </div>
+            <Wrapper auth={isAuthenticated}>
+                <Switch>
+                    <Route path="/" exact component={HomePage} />
+                    <Route path="/home" component={HomePage} />
+                    <Route path="/event" component={EventDetails} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/gate" component={Gate} />
+                </Switch>
+            </Wrapper>
         );
     }
 }
