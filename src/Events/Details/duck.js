@@ -44,7 +44,7 @@ export default function reducer(state = initialState, action = {}) {
     }
 }
 
-// Action Creaters
+// Action Creators
 export function requestEventDetails(alias) {
     return {
         type: REQUEST,

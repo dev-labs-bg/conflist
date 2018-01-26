@@ -1,10 +1,12 @@
 import API from '../../core/Api';
 
 // Actions
-const REQUEST = 'wishList/REQUEST';
-const SET = 'wishList/SET';
-const FAIL = 'wishList/FAIL';
-const DELETE = 'wishList/DELETE';
+const attendRequest = 'attendEvent/REQUEST';
+const attendSet = 'attendEvent/SET';
+const attendFail = 'attendEvent/FAIL';
+const cancelAttendRequest = 'cancelAttend/REQUEST';
+const cancelAttendSuccess = 'cancelAttend/SUCCESS';
+const cancelAttendFail = 'cancelAttend/FAIL';
 
 const initialState = {
     lastFetched: null,
@@ -16,63 +18,106 @@ const initialState = {
 // Reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-    case REQUEST:
+    case attendRequest:
         return {
             ...state,
             isFetching: true,
         };
-    case SET:
+    case attendSet:
         return {
             ...state,
             isFetching: false,
             lastFetched: new Date().valueOf(),
             data: [
                 ...state.data,
-                action.id,
+                action.event,
             ],
         };
-    case FAIL:
+    case attendFail:
         return {
             ...state,
             isFetching: false,
             error: action.error,
         };
+    case cancelAttendRequest:
+        return {
+            ...state,
+
+        };
+    case cancelAttendSuccess:
+        return {
+            ...state,
+        };
+    case cancelAttendFail:
+        return {
+            ...state,
+        };
     default: return state;
     }
 }
 
-// Action Creaters
-export function requestWishListEvent() {
+// Action Creators
+export function attendEventRequest() {
     return {
-        type: SET,
+        type: attendRequest,
     };
 }
 
-export function setWishListEvent(id) {
+export function attendEventSet(event) {
     return {
-        type: SET,
-        id,
+        type: attendSet,
+        event,
     };
 }
 
-export function setWishListEventFail(error) {
+export function attendEventFail(error) {
     return {
-        type: FAIL,
+        type: attendFail,
         error,
     };
 }
 
+export function cancelAttendEventRequest() {
+    return {
+        type: cancelAttendRequest,
+    };
+}
+
+export function cancelAttendEventSuccess() {
+    return {
+        type: cancelAttendSuccess,
+    };
+}
+
+export function cancelAttendEventFail(error) {
+    return {
+        type: cancelAttendFail,
+        error,
+    };
+}
 
 export function attendConference(_eventId, _token) {
     return (dispatch) => {
-        dispatch(requestWishListEvent());
+        dispatch(attendEventRequest());
         API.attendConference(_eventId, _token)
             .then((response) => {
-                console.log(response);
-                dispatch(setWishListEvent(response.data));
+                dispatch(attendEventSet(response.data));
             })
             .catch((error) => {
-                dispatch(setWishListEventFail(error.response.data.message));
+                dispatch(attendEventFail(error.response.data.message));
+            });
+    };
+}
+
+export function cancelAttendConference(_eventId, _token) {
+    return (dispatch) => {
+        dispatch(cancelAttendEventRequest());
+        API.cancelAttendConference(_eventId, _token)
+            .then((response) => {
+                dispatch(cancelAttendEventSuccess(response.data));
+            })
+            .catch((error) => {
+                dispatch(cancelAttendEventFail(error.response.data.message));
             });
     };
 }
