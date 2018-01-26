@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action = {}) {
             lastFetched: new Date().valueOf(),
             data: [
                 ...state.data,
-                action.event,
+                action.id,
             ],
         };
     case attendFail:
@@ -42,15 +42,20 @@ export default function reducer(state = initialState, action = {}) {
     case cancelAttendRequest:
         return {
             ...state,
-
+            isFetching: true,
         };
     case cancelAttendSuccess:
+        const data = state.data.filter(id => id !== action.id);
         return {
             ...state,
+            isFetching: false,
+            data: data,
         };
     case cancelAttendFail:
         return {
             ...state,
+            isFetching: true,
+            error: action.error,
         };
     default: return state;
     }
@@ -63,10 +68,10 @@ export function attendEventRequest() {
     };
 }
 
-export function attendEventSet(event) {
+export function attendEventSet(id) {
     return {
         type: attendSet,
-        event,
+        id,
     };
 }
 
@@ -83,9 +88,10 @@ export function cancelAttendEventRequest() {
     };
 }
 
-export function cancelAttendEventSuccess() {
+export function cancelAttendEventSuccess(id) {
     return {
         type: cancelAttendSuccess,
+        id,
     };
 }
 
@@ -101,7 +107,7 @@ export function attendConference(_eventId, _token) {
         dispatch(attendEventRequest());
         API.attendConference(_eventId, _token)
             .then((response) => {
-                dispatch(attendEventSet(response.data));
+                dispatch(attendEventSet(response.data[0]._id));
             })
             .catch((error) => {
                 dispatch(attendEventFail(error.response.data.message));
@@ -114,7 +120,7 @@ export function cancelAttendConference(_eventId, _token) {
         dispatch(cancelAttendEventRequest());
         API.cancelAttendConference(_eventId, _token)
             .then((response) => {
-                dispatch(cancelAttendEventSuccess(response.data));
+                dispatch(cancelAttendEventSuccess(response.data[0]._id));
             })
             .catch((error) => {
                 dispatch(cancelAttendEventFail(error.response.data.message));
