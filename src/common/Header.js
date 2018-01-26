@@ -127,7 +127,7 @@ class Header extends Component {
                                         /> Kaloyan
                                     </DropdownToggle>
                                     <DropdownMenu >
-                                        <DropdownItem>
+                                        <DropdownItem href="/profile-settings">
                                             Profile Settings
                                         </DropdownItem>
                                         <DropdownItem href="/my-subscriptions">

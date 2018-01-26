@@ -8,6 +8,7 @@ import EventDetails from './Events/Details';
 import HomePage from './Home';
 import Login from './Login';
 import Gate from './Gate';
+import ProfileSettings from './ProfileSettings';
 import { getToken } from './Login/duck';
 
 class App extends Component {
@@ -49,6 +50,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/home" component={HomePage} />
                             <Route path="/event" component={EventDetails} />
+                            <Route path="/profile-settings" component={ProfileSettings} />
                         </Switch>
                     </Wrapper>
                 </div>
