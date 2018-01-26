@@ -54,7 +54,7 @@ export default function reducer(state = initialState, action = {}) {
     case cancelAttendFail:
         return {
             ...state,
-            isFetching: true,
+            isFetching: false,
             error: action.error,
         };
     default: return state;
