@@ -40,6 +40,16 @@ const API = {
                 },
             },
         ),
+    fetchCurrentUser: token =>
+        instance.get(
+            'users/me',
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        ),
 };
 
 export default API;
