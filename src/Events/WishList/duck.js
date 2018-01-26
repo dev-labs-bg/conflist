@@ -44,7 +44,7 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function attendEventSet(id) {
+export function attendEventSuccess(id) {
     return {
         type: ATTEND_SUCCEESS,
         id,
@@ -76,7 +76,7 @@ export function attendConference(_eventId, _token) {
     return (dispatch) => {
         API.attendConference(_eventId, _token)
             .then((response) => {
-                dispatch(attendEventSet(response.data[0]._id));
+                dispatch(attendEventSuccess(response.data[0]._id));
             })
             .catch((error) => {
                 dispatch(attendEventFail(error.response.data));
