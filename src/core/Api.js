@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const baseUrl = 'https://api.conflist.devlabs-projects.com/';
 const instance = axios.create({
-    baseURL: 'https://api.conflist.devlabs-projects.com/api/v1/',
+    baseURL: `${baseUrl}api/v1/`,
 });
 
 const API = {
@@ -15,7 +16,7 @@ const API = {
         instance.get(`conferences/${confAlias}`),
     requestToken: () =>
         axios({
-            url: 'https://api.conflist.devlabs-projects.com/auth/request-jwt',
+            url: `${baseUrl}auth/request-jwt`,
             method: 'post',
             withCredentials: true,
         }),
