@@ -1,16 +1,15 @@
 import API from '../../core/Api';
 
 // Actions
-const attendRequest = 'attendEvent/REQUEST';
-const attendSet = 'attendEvent/SET';
-const attendFail = 'attendEvent/FAIL';
-const cancelAttendRequest = 'cancelAttend/REQUEST';
-const cancelAttendSuccess = 'cancelAttend/SUCCESS';
-const cancelAttendFail = 'cancelAttend/FAIL';
+const ATTEND_REQUEST = 'attendEvent/REQUEST';
+const ATTEND_SUCCEESS = 'attendEvent/SUCCESS';
+const ATTEND_FAIL = 'attendEvent/FAIL';
+
+const UNATTEND_REQUEST = 'unAttend/REQUEST';
+const UNATTEND_SUCCESS = 'unAttend/SUCCESS';
+const UNATTEND_FAIL = 'unAttend/FAIL';
 
 const initialState = {
-    lastFetched: null,
-    isFetching: null,
     data: [],
     error: null,
 };
@@ -18,43 +17,36 @@ const initialState = {
 // Reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-    case attendRequest:
+    case ATTEND_REQUEST:
         return {
             ...state,
-            isFetching: true,
         };
-    case attendSet:
+    case ATTEND_SUCCEESS:
         return {
             ...state,
-            isFetching: false,
-            lastFetched: new Date().valueOf(),
             data: [
                 ...state.data,
                 action.id,
             ],
         };
-    case attendFail:
+    case ATTEND_FAIL:
         return {
             ...state,
-            isFetching: false,
             error: action.error,
         };
-    case cancelAttendRequest:
+    case UNATTEND_REQUEST:
         return {
             ...state,
-            isFetching: true,
         };
-    case cancelAttendSuccess:
+    case UNATTEND_SUCCESS:
         const data = state.data.filter(id => id !== action.id);
         return {
             ...state,
-            isFetching: false,
             data: data,
         };
-    case cancelAttendFail:
+    case UNATTEND_FAIL:
         return {
             ...state,
-            isFetching: false,
             error: action.error,
         };
     default: return state;
@@ -64,40 +56,40 @@ export default function reducer(state = initialState, action = {}) {
 // Action Creators
 export function attendEventRequest() {
     return {
-        type: attendRequest,
+        type: ATTEND_REQUEST,
     };
 }
 
 export function attendEventSet(id) {
     return {
-        type: attendSet,
+        type: ATTEND_SUCCEESS,
         id,
     };
 }
 
 export function attendEventFail(error) {
     return {
-        type: attendFail,
+        type: ATTEND_FAIL,
         error,
     };
 }
 
-export function cancelAttendEventRequest() {
+export function unattendEventRequest() {
     return {
-        type: cancelAttendRequest,
+        type: UNATTEND_REQUEST,
     };
 }
 
-export function cancelAttendEventSuccess(id) {
+export function unattendEventSuccess(id) {
     return {
-        type: cancelAttendSuccess,
+        type: UNATTEND_SUCCESS,
         id,
     };
 }
 
-export function cancelAttendEventFail(error) {
+export function unattendEventFail(error) {
     return {
-        type: cancelAttendFail,
+        type: UNATTEND_FAIL,
         error,
     };
 }
@@ -115,15 +107,15 @@ export function attendConference(_eventId, _token) {
     };
 }
 
-export function cancelAttendConference(_eventId, _token) {
+export function unattendConference(_eventId, _token) {
     return (dispatch) => {
-        dispatch(cancelAttendEventRequest());
-        API.cancelAttendConference(_eventId, _token)
+        dispatch(unattendEventRequest());
+        API.unattendConference(_eventId, _token)
             .then((response) => {
-                dispatch(cancelAttendEventSuccess(response.data[0]._id));
+                dispatch(unattendEventSuccess(response.data[0]._id));
             })
             .catch((error) => {
-                dispatch(cancelAttendEventFail(error.response.data.message));
+                dispatch(unattendEventFail(error.response.data.message));
             });
     };
 }

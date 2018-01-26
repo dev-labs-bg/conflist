@@ -29,7 +29,7 @@ const API = {
                 },
             },
         ),
-    cancelAttendConference: (eventId, token) =>
+    unattendConference: (eventId, token) =>
         instance.post(
             `conferences/${eventId}/cancel-attend`,
             {},

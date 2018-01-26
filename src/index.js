@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import eventsReducer from './Events/List/duck';
 import eventReducer from './Events/Details/duck';
 import authReducer from './Login/duck';
-import attendEventReducer from './Events/WishList/duck';
+import wishListReducer from './Events/WishList/duck';
 
 import './index.css';
 import './assets/sass/style.css';
@@ -22,10 +22,10 @@ const reducer = combineReducers({
     events: eventsReducer,
     event: eventReducer,
     auth: authReducer,
-    attendEvents: attendEventReducer,
+    wishList: wishListReducer,
 });
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk,logger)));
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk, logger)));
 
 const app = (
     <Provider store={store}>

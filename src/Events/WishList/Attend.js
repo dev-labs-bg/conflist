@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import HeartFullIcon from '../../common/HeartFullIcon';
 import HeartIcon from '../../common/HeartIcon';
-import { attendConference, cancelAttendConference } from './duck';
+import { attendConference, unattendConference } from './duck';
 import PopoverItem from '../../common/PopoverItem';
 
 class Attend extends Component {
@@ -12,7 +12,7 @@ class Attend extends Component {
         id: PropTypes.string.isRequired,
         token: PropTypes.string.isRequired,
         attendConference: PropTypes.func,
-        cancelAttendConference: PropTypes.func,
+        unattendConference: PropTypes.func,
     }
 
     constructor(props) {
@@ -30,7 +30,7 @@ class Attend extends Component {
         if (!this.state.isActive) {
             this.props.attendConference(this.props.id, this.props.token);
         } else {
-            this.props.cancelAttendConference(this.props.id, this.props.token);
+            this.props.unattendConference(this.props.id, this.props.token);
         }
     }
 
@@ -67,7 +67,7 @@ class Attend extends Component {
 
 const mapDispatchToProps = {
     attendConference,
-    cancelAttendConference,
+    unattendConference,
 };
 
 export default connect(null, mapDispatchToProps)(Attend);
