@@ -5,9 +5,9 @@ const ATTEND_REQUEST = 'attendEvent/REQUEST';
 const ATTEND_SUCCEESS = 'attendEvent/SUCCESS';
 const ATTEND_FAIL = 'attendEvent/FAIL';
 
-const UNATTEND_REQUEST = 'unAttend/REQUEST';
-const UNATTEND_SUCCESS = 'unAttend/SUCCESS';
-const UNATTEND_FAIL = 'unAttend/FAIL';
+const UNATTEND_REQUEST = 'unattend/REQUEST';
+const UNATTEND_SUCCESS = 'unattend/SUCCESS';
+const UNATTEND_FAIL = 'unattend/FAIL';
 
 const initialState = {
     data: [],
@@ -102,7 +102,8 @@ export function attendConference(_eventId, _token) {
                 dispatch(attendEventSet(response.data[0]._id));
             })
             .catch((error) => {
-                dispatch(attendEventFail(error.response.data.message));
+                console.log(error);
+                dispatch(attendEventFail(error.response.data));
             });
     };
 }
@@ -115,7 +116,7 @@ export function unattendConference(_eventId, _token) {
                 dispatch(unattendEventSuccess(response.data[0]._id));
             })
             .catch((error) => {
-                dispatch(unattendEventFail(error.response.data.message));
+                dispatch(unattendEventFail(error.response.data));
             });
     };
 }

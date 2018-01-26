@@ -10,9 +10,11 @@ class PopoverItem extends Component {
             pictureUrl: PropTypes.string,
         }).isRequired,
         id: PropTypes.string.isRequired,
+        children: PropTypes.object,
+
+        // received from parent component Attend
         onClick: PropTypes.func,
         isActive: PropTypes.bool,
-        children: PropTypes.object,
     };
 
     static defaultProps = {
@@ -29,16 +31,9 @@ class PopoverItem extends Component {
         };
     }
 
-    /**
-     * Popover toggle
-     *
-     * @param  {popOverOpen}
-     * @param  isActive {bool} - from parent component Attend received as props
-     * @param  onClick {func} - from parent component received as props
-     */
     toggle() {
         /**
-         * Call OnClick function from parent component Attend to change heart icon,
+         * Call OnClick function from parent component Attend to change isActive icon,
          * and close Popover
          */
         if (!this.state.popoverOpen) {
@@ -50,7 +45,8 @@ class PopoverItem extends Component {
         }
 
         /**
-         * toggle PopOver based on Attend component state - isActive
+         * When clicking outside the isActive area, popover is closing,
+         * otherwise it stays open
          */
         if (!this.props.isActive) {
             this.setState({
