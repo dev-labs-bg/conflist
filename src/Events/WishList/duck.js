@@ -102,7 +102,6 @@ export function attendConference(_eventId, _token) {
                 dispatch(attendEventSet(response.data[0]._id));
             })
             .catch((error) => {
-                console.log(error);
                 dispatch(attendEventFail(error.response.data));
             });
     };
