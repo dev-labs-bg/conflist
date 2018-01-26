@@ -1,6 +1,6 @@
 class Event {
     constructor({
-        id = null,
+        _id = null,
         name = '',
         alias = '',
         shortDescription = '',
@@ -16,7 +16,7 @@ class Event {
         speakers = [],
         atendees = null,
     }) {
-        this.id = id;
+        this.id = _id;
         this.name = name;
         this.alias = alias;
         this.shortDescription = shortDescription;

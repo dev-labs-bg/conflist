@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Popover, PopoverHeader } from 'reactstrap';
+import { Popover, PopoverBody } from 'reactstrap';
 
 class PopoverItem extends Component {
     static propTypes = {
@@ -10,8 +10,17 @@ class PopoverItem extends Component {
             pictureUrl: PropTypes.string,
         }).isRequired,
         id: PropTypes.string.isRequired,
-        children: PropTypes.object.isRequired,
-    }
+        children: PropTypes.object,
+
+        // received from parent component Attend
+        onClick: PropTypes.func,
+        isActive: PropTypes.bool,
+    };
+
+    static defaultProps = {
+        onClick: () => {},
+        isActive: true,
+    };
 
     constructor(props) {
         super(props);
@@ -23,9 +32,27 @@ class PopoverItem extends Component {
     }
 
     toggle() {
-        this.setState({
-            popoverOpen: !this.state.popoverOpen,
-        });
+        /**
+         * Call OnClick function from parent component Attend to change isActive icon,
+         * and close Popover
+         */
+        if (!this.state.popoverOpen) {
+            this.props.onClick();
+        } else {
+            this.setState({
+                popoverOpen: false,
+            });
+        }
+
+        /**
+         * When clicking outside the isActive area, popover is closing,
+         * otherwise it stays open
+         */
+        if (!this.props.isActive) {
+            this.setState({
+                popoverOpen: !this.state.popoverOpen,
+            });
+        }
     }
 
     render() {
@@ -40,7 +67,7 @@ class PopoverItem extends Component {
                     target={'Popover-' + this.props.id}
                     toggle={this.toggle}
                 >
-                    <PopoverHeader>{this.props.item.name}</PopoverHeader>
+                    <PopoverBody>{this.props.item.name}</PopoverBody>
                 </Popover>
             </span>
         );
