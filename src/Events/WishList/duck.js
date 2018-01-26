@@ -1,11 +1,9 @@
 import API from '../../core/Api';
 
 // Actions
-const ATTEND_REQUEST = 'attendEvent/REQUEST';
 const ATTEND_SUCCEESS = 'attendEvent/SUCCESS';
 const ATTEND_FAIL = 'attendEvent/FAIL';
 
-const UNATTEND_REQUEST = 'unattend/REQUEST';
 const UNATTEND_SUCCESS = 'unattend/SUCCESS';
 const UNATTEND_FAIL = 'unattend/FAIL';
 
@@ -17,10 +15,6 @@ const initialState = {
 // Reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-    case ATTEND_REQUEST:
-        return {
-            ...state,
-        };
     case ATTEND_SUCCEESS:
         return {
             ...state,
@@ -33,10 +27,6 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             error: action.error,
-        };
-    case UNATTEND_REQUEST:
-        return {
-            ...state,
         };
     case UNATTEND_SUCCESS:
         const data = state.data.filter(id => id !== action.id);
@@ -54,12 +44,6 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function attendEventRequest() {
-    return {
-        type: ATTEND_REQUEST,
-    };
-}
-
 export function attendEventSet(id) {
     return {
         type: ATTEND_SUCCEESS,
@@ -71,12 +55,6 @@ export function attendEventFail(error) {
     return {
         type: ATTEND_FAIL,
         error,
-    };
-}
-
-export function unattendEventRequest() {
-    return {
-        type: UNATTEND_REQUEST,
     };
 }
 
@@ -96,7 +74,6 @@ export function unattendEventFail(error) {
 
 export function attendConference(_eventId, _token) {
     return (dispatch) => {
-        dispatch(attendEventRequest());
         API.attendConference(_eventId, _token)
             .then((response) => {
                 dispatch(attendEventSet(response.data[0]._id));
@@ -109,7 +86,6 @@ export function attendConference(_eventId, _token) {
 
 export function unattendConference(_eventId, _token) {
     return (dispatch) => {
-        dispatch(unattendEventRequest());
         API.unattendConference(_eventId, _token)
             .then((response) => {
                 dispatch(unattendEventSuccess(response.data[0]._id));
