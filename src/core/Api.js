@@ -1,14 +1,18 @@
 import axios from 'axios';
 
+const instance = axios.create({
+    baseURL: 'https://api.conflist.devlabs-projects.com/api/v1/',
+});
+
 const API = {
     fetchConferences: () =>
-        axios.get('https://api.conflist.devlabs-projects.com/api/v1/conferences'),
+        instance.get('conferences'),
     fetchSpeakers: () =>
-        axios.get('https://api.conflist.devlabs-projects.com/api/v1/speakers'),
+        instance.get('speakers'),
     fetchTags: () =>
-        axios.get('https://api.conflist.devlabs-projects.com/api/v1/tags'),
+        instance.get('tags'),
     fetchConferenceDeatails: confAlias =>
-        axios.get('https://api.conflist.devlabs-projects.com/api/v1/conferences/' + confAlias),
+        instance.get(`conferences/${confAlias}`),
     requestToken: () =>
         axios({
             url: 'https://api.conflist.devlabs-projects.com/auth/request-jwt',
@@ -16,8 +20,18 @@ const API = {
             withCredentials: true,
         }),
     attendConference: (eventId, token) =>
-        axios.post(
-            `https://api.conflist.devlabs-projects.com/api/v1/conferences/${eventId}/attend`,
+        instance.post(
+            `conferences/${eventId}/attend`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        ),
+    cancelAttendConference: (eventId, token) =>
+        instance.post(
+            `conferences/${eventId}/cancel-attend`,
             {},
             {
                 headers: {
