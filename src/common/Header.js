@@ -58,11 +58,11 @@ class Header extends Component {
                     conferences and to subscribe for upcoming events related to the #tags
                     they care about.
                 </p>
-                <a
-                    href="/login"
-                    className="btn btn-primary font-weight-bold mx-auto mt-3"
+                <Link
+                    to="/login"
+                    className="btn btn-primary font-weight-bold align-self-start"
                 >Register
-                </a>
+                </Link>
             </div>
         );
 
@@ -111,11 +111,11 @@ class Header extends Component {
                                             Login
                                         </Link>
                                     </NavItem>
-                                    <a
-                                        href="/login"
+                                    <Link
+                                        to="/login"
                                         className="btn btn-primary font-weight-bold align-self-start"
                                     >Register
-                                    </a>
+                                    </Link>
 
                                 </div>
                                 :

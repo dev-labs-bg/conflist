@@ -9,20 +9,13 @@ class ProfileSettings extends Component {
     static propTypes = {
         user: PropTypes.shape({
             data: PropTypes.shape({
-                __id: PropTypes.string,
-                url: PropTypes.string,
-                __v: PropTypes.number,
-                twitterId: PropTypes.number,
                 name: PropTypes.string,
-                isAdmin: PropTypes.bool,
-                description: PropTypes.string,
-                accessToken: PropTypes.string,
+                profileImg: PropTypes.string,
             }),
-        }),
+        }).isRequired,
     };
 
     render() {
-        console.log(this.props);
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
@@ -30,8 +23,8 @@ class ProfileSettings extends Component {
                     <Form className=" profile-card__content py-5 mb-0">
                         <div className="d-flex justify-content-center">
                             <img
-                                className="mr-3"
-                                src="{this.props.user.profileImg}"
+                                className="mr-3 rounded-circle"
+                                src={this.props.user.data.profileImg}
                                 width="100"
                                 height="100"
                                 alt="profile picture"
@@ -54,11 +47,11 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100"
                             type="text"
                             name="first-name"
-                            placeholder="Kaloyan"
+                            placeholder="First name"
                         />
 
                         <Label
-                            className=" mt-3"
+                            className="mt-3"
                             for="last-name"
                         >Last Name:
                         </Label>
@@ -67,7 +60,7 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100"
                             type="text"
                             name="last-name"
-                            placeholder="Kosev"
+                            placeholder="Last name"
                         />
 
                         <Label
@@ -80,11 +73,15 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100"
                             type="Email"
                             name="email"
-                            placeholder="me@superkalo.com"
+                            placeholder="Email"
                         />
 
                         <div className="text-center mt-5">
-                            <button className="btn btn-primary btn-lg" type="button">Update Settings</button>
+                            <button
+                                className="btn btn-primary btn-lg"
+                            >
+                            Update Settings
+                            </button>
                         </div>
                     </Form>
 
