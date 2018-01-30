@@ -41,15 +41,13 @@ const API = {
             },
         ),
     fetchCurrentUser: token =>
-        instance.get(
-            'users/me',
-            {},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+        axios({
+            url: `${baseUrl}api/v1/users/me`,
+            method: 'get',
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
-        ),
+        }),
 };
 
 export default API;

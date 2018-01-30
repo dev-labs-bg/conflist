@@ -10,6 +10,7 @@ import Login from './Login';
 import Gate from './Gate';
 import ProfileSettings from './ProfileSettings';
 import { getToken } from './Login/duck';
+import { fetchCurrentUser } from './ProfileSettings/duck';
 
 class App extends Component {
     static propTypes = {
@@ -20,11 +21,15 @@ class App extends Component {
             isLoading: PropTypes.bool,
         }).isRequired,
         getToken: PropTypes.func.isRequired,
+        fetchCurrentUser: PropTypes.func.isRequired,
     };
 
-    componentDidMount() {
-        this.props.getToken();
+    async componentDidMount() {
+        await this.props.getToken();
+
+        this.props.fetchCurrentUser(this.props.auth.token);
     }
+
 
     render() {
         const { isAuthenticated } = this.props.auth;
@@ -69,14 +74,16 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, user }) => {
     return {
         auth,
+        user,
     };
 };
 
 const mapDispatchToProps = {
     getToken,
+    fetchCurrentUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

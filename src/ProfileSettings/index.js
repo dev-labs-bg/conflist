@@ -1,10 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
 
 import { fetchCurrentUser } from './duck';
+
 class ProfileSettings extends Component {
+    static propTypes = {
+        user: PropTypes.shape({
+            data: PropTypes.shape({
+                __id: PropTypes.string,
+                url: PropTypes.string,
+                __v: PropTypes.number,
+                twitterId: PropTypes.number,
+                name: PropTypes.string,
+                isAdmin: PropTypes.bool,
+                description: PropTypes.string,
+                accessToken: PropTypes.string,
+            }),
+        }),
+    };
+
     render() {
+        console.log(this.props);
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
@@ -13,7 +31,7 @@ class ProfileSettings extends Component {
                         <div className="d-flex justify-content-center">
                             <img
                                 className="mr-3"
-                                src="images/superKalo-profile.jpg"
+                                src="{this.props.user.profileImg}"
                                 width="100"
                                 height="100"
                                 alt="profile picture"
@@ -76,8 +94,15 @@ class ProfileSettings extends Component {
     }
 }
 
+const mapStateToProps = ({ auth, user }) => {
+    return {
+        user,
+        auth,
+    };
+};
+
 const mapDispatchToProps = {
     fetchCurrentUser,
 };
 
-export default connect(null, mapDispatchToProps)(ProfileSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings);

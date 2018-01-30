@@ -1,12 +1,17 @@
 import API from '../core/Api';
 
+const initialState = {
+    lastFetched: null,
+    data: null,
+};
+
 // Actions
 const REQUEST = 'user/REQUEST';
 const RECEIVE = 'user/RECEIVE';
 const FAIL = 'user/FAIL';
 
 // Reducer
-export default function reducer(state = {}, action = {}) {
+export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
     case REQUEST:
         return {
@@ -15,14 +20,19 @@ export default function reducer(state = {}, action = {}) {
     case RECEIVE:
         return {
             ...state,
+            lastFetched: new Date().valueOf(),
             data: action.user,
+        };
+    case FAIL:
+        return {
+            ...state,
+            error: action.error,
         };
     default: return state;
     }
 }
 
 // Action Creators
-
 export function requestCurrentUser() {
     return {
         type: REQUEST,
