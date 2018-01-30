@@ -40,6 +40,14 @@ const API = {
                 },
             },
         ),
+    fetchCurrentUser: token =>
+        axios({
+            url: `${baseUrl}api/v1/users/me`,
+            method: 'get',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }),
 };
 
 export default API;

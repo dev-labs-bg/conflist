@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
     Collapse,
@@ -57,11 +58,11 @@ class Header extends Component {
                     conferences and to subscribe for upcoming events related to the #tags
                     they care about.
                 </p>
-                <a
-                    href="/login"
-                    className="btn btn-primary font-weight-bold mx-auto mt-3"
+                <Link
+                    to="/login"
+                    className="btn btn-primary font-weight-bold align-self-start"
                 >Register
-                </a>
+                </Link>
             </div>
         );
 
@@ -94,25 +95,27 @@ class Header extends Component {
                         </form>
 
                         <Nav className="nav navbar-nav justify-content-end">
-                            <NavItem className="nav-item">
-                                <NavLink className="nav-link" href="/home">Home</NavLink>
+                            <NavItem>
+                                <Link className="nav-link" to="/home">
+                                    Home
+                                </Link>
                             </NavItem>
 
-                            <NavItem className="nav-item">
+                            <NavItem>
                                 <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
                             </NavItem>
                             {!isAuthenticated ?
                                 <div className="d-flex flex-md-row register__navitems">
-                                    <NavItem className="nav-item">
-                                        <NavLink className="nav-link" href="/login">
+                                    <NavItem>
+                                        <Link className="nav-link" to="/login">
                                             Login
-                                        </NavLink>
+                                        </Link>
                                     </NavItem>
-                                    <a
-                                        href="/login"
+                                    <Link
+                                        to="/login"
                                         className="btn btn-primary font-weight-bold align-self-start"
                                     >Register
-                                    </a>
+                                    </Link>
 
                                 </div>
                                 :
@@ -127,12 +130,12 @@ class Header extends Component {
                                         /> Kaloyan
                                     </DropdownToggle>
                                     <DropdownMenu >
-                                        <DropdownItem>
+                                        <Link className="dropdown-item" to="/profile-settings">
                                             Profile Settings
-                                        </DropdownItem>
-                                        <DropdownItem href="/my-subscriptions">
-                                            My Subscriptions
-                                        </DropdownItem>
+                                        </Link>
+                                        <Link className="dropdown-item" to="/my-subscriptions">
+                                        My Subscriptions
+                                        </Link>
                                         <DropdownItem>
                                             Wanna go list
                                         </DropdownItem>

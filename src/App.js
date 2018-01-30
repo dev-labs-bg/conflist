@@ -8,7 +8,9 @@ import EventDetails from './Events/Details';
 import HomePage from './Home';
 import Login from './Login';
 import Gate from './Gate';
+import ProfileSettings from './ProfileSettings';
 import { getToken } from './Login/duck';
+import { fetchCurrentUser } from './ProfileSettings/duck';
 
 class App extends Component {
     static propTypes = {
@@ -19,10 +21,17 @@ class App extends Component {
             isLoading: PropTypes.bool,
         }).isRequired,
         getToken: PropTypes.func.isRequired,
+        fetchCurrentUser: PropTypes.func.isRequired,
+        user: PropTypes.shape({
+            isFetching: PropTypes.bool,
+        }).isRequired,
     };
 
-    componentDidMount() {
-        this.props.getToken();
+    async componentDidMount() {
+        await this.props.getToken();
+        if (this.props.auth.isAuthenticated) {
+            this.props.fetchCurrentUser(this.props.auth.token);
+        }
     }
 
     render() {
@@ -32,6 +41,10 @@ class App extends Component {
 
         if (isLoading) {
             return (<p>Loading!</p>);
+        }
+
+        if (this.props.user.isFetching || this.props.user.isFetching === null) {
+            return <p>Loading!</p>;
         }
 
         if (error !== null) {
@@ -44,41 +57,40 @@ class App extends Component {
 
         if (isAuthenticated) {
             return (
-                <div>
-                    <Wrapper auth={isAuthenticated}>
-                        <Switch>
-                            <Route path="/home" component={HomePage} />
-                            <Route path="/event" component={EventDetails} />
-                        </Switch>
-                    </Wrapper>
-                </div>
+                <Wrapper auth={isAuthenticated} user>
+                    <Switch>
+                        <Route path="/home" component={HomePage} />
+                        <Route path="/event" component={EventDetails} />
+                        <Route path="/profile-settings" component={ProfileSettings} />
+                    </Switch>
+                </Wrapper>
             );
         }
 
         return (
-            <div>
-                <Wrapper auth={isAuthenticated}>
-                    <Switch>
-                        <Route path="/" exact component={HomePage} />
-                        <Route path="/home" component={HomePage} />
-                        <Route path="/event" component={EventDetails} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/gate" component={Gate} />
-                    </Switch>
-                </Wrapper>
-            </div>
+            <Wrapper auth={isAuthenticated}>
+                <Switch>
+                    <Route path="/" exact component={HomePage} />
+                    <Route path="/home" component={HomePage} />
+                    <Route path="/event" component={EventDetails} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/gate" component={Gate} />
+                </Switch>
+            </Wrapper>
         );
     }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, user }) => {
     return {
         auth,
+        user,
     };
 };
 
 const mapDispatchToProps = {
     getToken,
+    fetchCurrentUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
