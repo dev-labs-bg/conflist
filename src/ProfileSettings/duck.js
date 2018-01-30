@@ -2,6 +2,7 @@ import API from '../core/Api';
 
 const initialState = {
     lastFetched: null,
+    isFetching: null,
     data: null,
 };
 
@@ -16,16 +17,19 @@ export default function reducer(state = initialState, action = {}) {
     case REQUEST:
         return {
             ...state,
+            isFetching: true,
         };
     case RECEIVE:
         return {
             ...state,
+            isFetching: false,
             lastFetched: new Date().valueOf(),
             data: action.user,
         };
     case FAIL:
         return {
             ...state,
+            isFetching: false,
             error: action.error,
         };
     default: return state;
