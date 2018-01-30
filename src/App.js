@@ -22,6 +22,9 @@ class App extends Component {
         }).isRequired,
         getToken: PropTypes.func.isRequired,
         fetchCurrentUser: PropTypes.func.isRequired,
+        user: PropTypes.shape({
+            isFetching: PropTypes.bool,
+        }).isRequired,
     };
 
     async componentDidMount() {
@@ -40,6 +43,10 @@ class App extends Component {
             return (<p>Loading!</p>);
         }
 
+        if (this.props.user.isFetching || this.props.user.isFetching === null) {
+            return <p>Loading!</p>;
+        }
+
         if (error !== null) {
             return (
                 <div>
@@ -50,7 +57,7 @@ class App extends Component {
 
         if (isAuthenticated) {
             return (
-                <Wrapper auth={isAuthenticated}>
+                <Wrapper auth={isAuthenticated} user>
                     <Switch>
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />

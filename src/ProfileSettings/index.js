@@ -27,7 +27,7 @@ class ProfileSettings extends Component {
                                 src={this.props.user.data.profileImg}
                                 width="100"
                                 height="100"
-                                alt="profile picture"
+                                alt={`${this.props.user.data.name}'s twitter profile picture`}
                             />
 
                             <div className="d-flex flex-column w-25 justify-content-around">
