@@ -24,7 +24,7 @@ const reducer = combineReducers({
     event: eventReducer,
     auth: authReducer,
     wishList: wishListReducer,
-    currentUser: currentUserReducer,
+    user: currentUserReducer,
 });
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk, logger)));
