@@ -7,7 +7,11 @@ import Footer from './Footer';
 const Wrapper = (props) => {
     return (
         <div>
-            <Header isAuthenticated={props.auth} />
+            <Header
+                isAuthenticated={props.auth}
+                userName={props.userName}
+                profileImg={props.profileImg}
+            />
             {props.children}
             <Footer />
         </div>

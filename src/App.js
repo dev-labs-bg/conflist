@@ -57,7 +57,11 @@ class App extends Component {
 
         if (isAuthenticated) {
             return (
-                <Wrapper auth={isAuthenticated} user>
+                <Wrapper
+                    auth={isAuthenticated}
+                    userName={this.props.user.data.name}
+                    profileImg={this.props.user.data.profileImg}
+                >
                     <Switch>
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
