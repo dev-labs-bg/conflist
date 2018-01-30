@@ -16,11 +16,12 @@ import {
 } from 'reactstrap';
 
 import Logo from './Logo';
-import profilePicture from '../assets/images/superKalo.jpg';
 
 class Header extends Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool.isRequired,
+        profileImg: PropTypes.string.isRequired,
+        userName: PropTypes.string.isRequired,
     };
 
     constructor(props) {
@@ -67,7 +68,6 @@ class Header extends Component {
         );
 
         const { isAuthenticated } = this.props;
-
         return (
             <div className={!isAuthenticated ? 'register' : null}>
                 <Navbar
@@ -122,12 +122,12 @@ class Header extends Component {
                                 <UncontrolledDropdown nav>
                                     <DropdownToggle nav caret>
                                         <img
-                                            className="mr-1"
-                                            src={profilePicture}
+                                            className="mr-1 rounded-circle"
+                                            src={this.props.profileImg}
                                             width="28"
                                             height="28"
                                             alt="profile avatar"
-                                        /> Kaloyan
+                                        /> {this.props.userName}
                                     </DropdownToggle>
                                     <DropdownMenu >
                                         <Link className="dropdown-item" to="/profile-settings">

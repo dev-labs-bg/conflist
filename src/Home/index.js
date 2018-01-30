@@ -42,9 +42,7 @@ class HomePage extends Component {
         }
 
         return (
-            <div>
-                <EventsList events={this.props.events.data || undefined} />
-            </div>
+            <EventsList events={this.props.events.data || undefined} />
         );
     }
 }
