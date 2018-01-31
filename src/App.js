@@ -27,7 +27,12 @@ class App extends Component {
     async componentDidMount() {
         await this.props.getToken();
         if (this.props.auth.isAuthenticated) {
-            debugger;
+            this.props.fetchCurrentUser(this.props.auth.token);
+        }
+    }
+
+    componentWillReceiveProps() {
+        if (this.props.auth.isAuthenticated) {
             this.props.fetchCurrentUser(this.props.auth.token);
         }
     }

@@ -78,7 +78,6 @@ class Header extends Component {
         );
 
         const { isAuthenticated } = this.props;
-        const { isFetching } = this.props.user;
 
         return (
             <div className={!isAuthenticated ? 'register' : null}>
@@ -135,11 +134,11 @@ class Header extends Component {
                                     <DropdownToggle nav caret>
                                         <img
                                             className="mr-1 rounded-circle"
-                                            src='{this.props.user.data.profileImg}'
+                                            src={this.props.user.data.profileImg}
                                             width="28"
                                             height="28"
                                             alt="profile avatar"
-                                        /> 
+                                        />
                                     </DropdownToggle>
                                     <DropdownMenu >
                                         <Link className="dropdown-item" to="/profile-settings">
@@ -167,14 +166,13 @@ class Header extends Component {
 
             </div>
         );
-
     }
 }
 
-const mapStateToProps = ({ auth, user }) => {
+const mapStateToProps = ({ user, auth }) => {
     return {
-        isAuthenticated: auth.isAuthenticated,
         user,
+        isAuthenticated: auth.isAuthenticated,
     };
 };
 
