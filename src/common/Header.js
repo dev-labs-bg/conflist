@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -55,6 +56,59 @@ class Header extends Component {
         }
 
         return 'navbar-dark';
+    }
+
+    renderDropdown = (_isAuthenticated, _userData) => {
+        if (!_isAuthenticated) {
+            return (
+                <div className="d-flex flex-md-row register__navitems">
+                    <NavItem>
+                        <Link className="nav-link" to="/login">
+                            Login
+                        </Link>
+                    </NavItem>
+                    <Link
+                        to="/login"
+                        className="btn btn-primary font-weight-bold align-self-start"
+                    >Register
+                    </Link>
+
+                </div>
+            );
+        }
+
+        if (!_.isEmpty(_userData)) {
+            return (
+                <UncontrolledDropdown nav>
+                    <DropdownToggle nav caret>
+                        <img
+                            className="mr-1 rounded-circle"
+                            src={_userData.profileImg}
+                            width="28"
+                            height="28"
+                            alt="profile avatar"
+                        />
+                    </DropdownToggle>
+                    <DropdownMenu >
+                        <Link className="dropdown-item" to="/profile-settings">
+                            Profile Settings
+                        </Link>
+                        <Link className="dropdown-item" to="/my-subscriptions">
+                        My Subscriptions
+                        </Link>
+                        <DropdownItem>
+                            Wanna go list
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>
+                            Log out
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            );
+        }
+
+        return null;
     }
 
     render() {
@@ -115,48 +169,8 @@ class Header extends Component {
                             <NavItem>
                                 <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
                             </NavItem>
-                            {!isAuthenticated ?
-                                <div className="d-flex flex-md-row register__navitems">
-                                    <NavItem>
-                                        <Link className="nav-link" to="/login">
-                                            Login
-                                        </Link>
-                                    </NavItem>
-                                    <Link
-                                        to="/login"
-                                        className="btn btn-primary font-weight-bold align-self-start"
-                                    >Register
-                                    </Link>
 
-                                </div>
-                                :
-                                <UncontrolledDropdown nav>
-                                    <DropdownToggle nav caret>
-                                        <img
-                                            className="mr-1 rounded-circle"
-                                            src={this.props.user.data.profileImg}
-                                            width="28"
-                                            height="28"
-                                            alt="profile avatar"
-                                        />
-                                    </DropdownToggle>
-                                    <DropdownMenu >
-                                        <Link className="dropdown-item" to="/profile-settings">
-                                            Profile Settings
-                                        </Link>
-                                        <Link className="dropdown-item" to="/my-subscriptions">
-                                        My Subscriptions
-                                        </Link>
-                                        <DropdownItem>
-                                            Wanna go list
-                                        </DropdownItem>
-                                        <DropdownItem divider />
-                                        <DropdownItem>
-                                            Log out
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
-                            }
+                            { this.renderDropdown(isAuthenticated, this.props.user.data) }
 
                         </Nav>
                     </Collapse>
