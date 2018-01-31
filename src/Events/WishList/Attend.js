@@ -10,7 +10,7 @@ import PopoverItem from '../../common/PopoverItem';
 class Attend extends Component {
     static propTypes = {
         id: PropTypes.string.isRequired,
-        token: PropTypes.string.isRequired,
+        token: PropTypes.string,
         attendConference: PropTypes.func,
         unattendConference: PropTypes.func,
     }

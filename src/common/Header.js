@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -20,8 +21,17 @@ import Logo from './Logo';
 class Header extends Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool.isRequired,
-        profileImg: PropTypes.string.isRequired,
-        userName: PropTypes.string.isRequired,
+        user: PropTypes.shape({
+            data: PropTypes.shape({
+                profileImg: PropTypes.string,
+                name: PropTypes.string,
+            }),
+            isFetching: PropTypes.bool,
+        }),
+    };
+
+    static defaultProps = {
+        user: {},
     };
 
     constructor(props) {
@@ -68,6 +78,8 @@ class Header extends Component {
         );
 
         const { isAuthenticated } = this.props;
+        const { isFetching } = this.props.user;
+
         return (
             <div className={!isAuthenticated ? 'register' : null}>
                 <Navbar
@@ -123,11 +135,11 @@ class Header extends Component {
                                     <DropdownToggle nav caret>
                                         <img
                                             className="mr-1 rounded-circle"
-                                            src={this.props.profileImg}
+                                            src='{this.props.user.data.profileImg}'
                                             width="28"
                                             height="28"
                                             alt="profile avatar"
-                                        /> {this.props.userName}
+                                        /> 
                                     </DropdownToggle>
                                     <DropdownMenu >
                                         <Link className="dropdown-item" to="/profile-settings">
@@ -155,7 +167,15 @@ class Header extends Component {
 
             </div>
         );
+
     }
 }
 
-export default Header;
+const mapStateToProps = ({ auth, user }) => {
+    return {
+        isAuthenticated: auth.isAuthenticated,
+        user,
+    };
+};
+
+export default connect(mapStateToProps)(Header);

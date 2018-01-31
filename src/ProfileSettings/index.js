@@ -12,10 +12,15 @@ class ProfileSettings extends Component {
                 name: PropTypes.string,
                 profileImg: PropTypes.string,
             }),
+            isFetching: PropTypes.bool,
         }).isRequired,
     };
 
     render() {
+        if (this.props.user.isFetching || this.props.user.isFetching === null) {
+            return <p>Loading!</p>;
+        }
+
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
@@ -27,6 +32,7 @@ class ProfileSettings extends Component {
                                 src={this.props.user.data.profileImg}
                                 width="100"
                                 height="100"
+                                aria-hidden
                                 alt={`${this.props.user.data.name}'s twitter profile picture`}
                             />
 
