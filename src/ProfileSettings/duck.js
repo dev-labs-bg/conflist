@@ -4,6 +4,7 @@ const initialState = {
     lastFetched: null,
     isFetching: null,
     data: null,
+    error: null,
 };
 
 // Actions
@@ -91,7 +92,7 @@ export function updateCurrentUser(_token, _name) {
                 dispatch(successUpdateUser(response.data));
             })
             .catch((error) => {
-                dispatch(failUpdateUser(error.response));
+                dispatch(failUpdateUser(error.response.status));
             });
     };
 }
@@ -104,7 +105,7 @@ export function fetchCurrentUser(_token) {
                 dispatch(receiveCurrentUser(response.data));
             })
             .catch((error) => {
-                dispatch(failCurrentUser(error.response));
+                dispatch(failCurrentUser(error.response.status));
             });
     };
 }

@@ -37,6 +37,14 @@ class ProfileSettings extends Component {
         event.preventDefault();
     }
 
+    renderMessage(_user) {
+        if (_user.error) {
+            return (<p className="text-danger">
+            Error with status {_user.error}. Try again!
+                </p>);
+        }
+    }
+
     render() {
         if (this.props.user.isFetching || this.props.user.isFetching === null) {
             return <p>Loading!</p>;
@@ -46,6 +54,7 @@ class ProfileSettings extends Component {
 
         return (
             <div className="container mx-auto pt-5 pb-5">
+                {this.renderMessage(this.props.user)}
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
 
                     <Form
@@ -58,7 +67,7 @@ class ProfileSettings extends Component {
                                 src={profileImg}
                                 width="100"
                                 height="100"
-                                alt={`${name}'s twitter profile avatar`}
+                                alt="profile avatar"
                             />
 
                             <div className="d-flex flex-column w-25 justify-content-around">
@@ -78,7 +87,7 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100 pl-0"
                             type="text"
                             name="name"
-                            placeholder={name}
+                            value={name}
                             onChange={this.handleChange}
                         />
 
@@ -92,7 +101,7 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0"
                             type="Email"
                             name="email"
-                            placeholder={email}
+                            value={email}
                             disabled
                         />
 
