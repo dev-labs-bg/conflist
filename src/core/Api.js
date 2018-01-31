@@ -48,6 +48,18 @@ const API = {
                 Authorization: `Bearer ${token}`,
             },
         }),
+    updateCurrentUser: (token, _name) =>
+        instance.post(
+            'users/me',
+            {
+                name: _name,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        ),
 };
 
 export default API;

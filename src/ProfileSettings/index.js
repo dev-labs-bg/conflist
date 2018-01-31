@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
 
-import { fetchCurrentUser } from './duck';
+import { updateCurrentUser } from './duck';
 
 class ProfileSettings extends Component {
     static propTypes = {
@@ -11,10 +11,31 @@ class ProfileSettings extends Component {
             data: PropTypes.shape({
                 name: PropTypes.string,
                 profileImg: PropTypes.string,
+                email: PropTypes.string,
             }),
             isFetching: PropTypes.bool,
         }).isRequired,
+        updateCurrentUser: PropTypes.func,
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.updateSettings = this.updateSettings.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ name: event.target.value });
+    }
+
+    updateSettings(event) {
+        this.props.updateCurrentUser(this.props.auth.token, this.state.name);
+        event.preventDefault();
+    }
 
     render() {
         if (this.props.user.isFetching || this.props.user.isFetching === null) {
@@ -27,7 +48,10 @@ class ProfileSettings extends Component {
             <div className="container mx-auto pt-5 pb-5">
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
 
-                    <Form className=" profile-card__content py-5 mb-0">
+                    <Form
+                        className=" profile-card__content py-5 mb-0"
+                        onSubmit={this.updateSettings}
+                    >
                         <div className="d-flex justify-content-center">
                             <img
                                 className="mr-3 rounded-circle"
@@ -53,8 +77,9 @@ class ProfileSettings extends Component {
                         <Input
                             className="border-top-0 border-right-0 border-left-0 w-100 pl-0"
                             type="text"
-                            name="first-name"
+                            name="name"
                             placeholder={name}
+                            onChange={this.handleChange}
                         />
 
                         <Label
@@ -74,6 +99,7 @@ class ProfileSettings extends Component {
                         <div className="text-center mt-5">
                             <button
                                 className="btn btn-primary btn-lg"
+                                type="submit"
                             >
                             Update Settings
                             </button>
@@ -94,7 +120,7 @@ const mapStateToProps = ({ auth, user }) => {
 };
 
 const mapDispatchToProps = {
-    fetchCurrentUser,
+    updateCurrentUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings);
