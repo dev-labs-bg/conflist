@@ -51,7 +51,7 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100"
+                            className="border-top-0 border-right-0 border-left-0 w-100 pl-0"
                             type="text"
                             name="first-name"
                             placeholder={name}
@@ -64,7 +64,7 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white"
+                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0"
                             type="Email"
                             name="email"
                             placeholder={email}
