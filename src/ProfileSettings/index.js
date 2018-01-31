@@ -21,6 +21,8 @@ class ProfileSettings extends Component {
             return <p>Loading!</p>;
         }
 
+        const { profileImg, name, email } = this.props.user.data;
+
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
@@ -29,11 +31,10 @@ class ProfileSettings extends Component {
                         <div className="d-flex justify-content-center">
                             <img
                                 className="mr-3 rounded-circle"
-                                src={this.props.user.data.profileImg}
+                                src={profileImg}
                                 width="100"
                                 height="100"
-                                aria-hidden
-                                alt={`${this.props.user.data.name}'s twitter profile picture`}
+                                alt={`${name}'s twitter profile avatar`}
                             />
 
                             <div className="d-flex flex-column w-25 justify-content-around">
@@ -46,27 +47,14 @@ class ProfileSettings extends Component {
 
                         <Label
                             for="first-name"
-                        >First Name:
+                        >Name:
                         </Label>
                         <br />
                         <Input
                             className="border-top-0 border-right-0 border-left-0 w-100"
                             type="text"
                             name="first-name"
-                            placeholder="First name"
-                        />
-
-                        <Label
-                            className="mt-3"
-                            for="last-name"
-                        >Last Name:
-                        </Label>
-                        <br />
-                        <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100"
-                            type="text"
-                            name="last-name"
-                            placeholder="Last name"
+                            placeholder={name}
                         />
 
                         <Label
@@ -76,10 +64,11 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100"
+                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white"
                             type="Email"
                             name="email"
-                            placeholder="Email"
+                            placeholder={email}
+                            disabled
                         />
 
                         <div className="text-center mt-5">

@@ -87,7 +87,7 @@ class Header extends Component {
                             width="28"
                             height="28"
                             alt="profile avatar"
-                        />
+                        /> {_userData.name}
                     </DropdownToggle>
                     <DropdownMenu >
                         <Link className="dropdown-item" to="/profile-settings">
