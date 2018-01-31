@@ -38,10 +38,12 @@ export default function reducer(state = initialState, action = {}) {
     case UPDATE_SUCCESS:
         return {
             ...state,
+            data: action.user,
         };
     case UPDATE_FAIL:
         return {
             ...state,
+            error: action.error,
         };
     default: return state;
     }
@@ -71,12 +73,14 @@ export function failCurrentUser(error) {
 export function successUpdateUser(user) {
     return {
         type: UPDATE_SUCCESS,
+        user,
     };
 }
 
 export function failUpdateUser(error) {
     return {
         type: UPDATE_FAIL,
+        error,
     };
 }
 
@@ -84,7 +88,6 @@ export function updateCurrentUser(_token, _name) {
     return (dispatch) => {
         API.updateCurrentUser(_token, _name)
             .then((response) => {
-                console.log(response);
                 dispatch(successUpdateUser(response.data));
             })
             .catch((error) => {
