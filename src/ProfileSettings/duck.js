@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action = {}) {
             ...state,
             isFetching: false,
             lastFetched: new Date().valueOf(),
-            data: data,
+            data,
         };
     }
     case FAIL:
@@ -45,7 +45,7 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             isUpdated: true,
-            data: data,
+            data,
         };
     }
     case UPDATE_FAIL:
