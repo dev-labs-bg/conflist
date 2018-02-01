@@ -38,12 +38,21 @@ class ProfileSettings extends Component {
     }
 
     renderMessage(_user) {
-        if (_user.error) {
-            return (<h4 className="text-danger text-center">
-            Error with status {_user.error}. Try again!
-          </h4>);
+        if (_user.isUpdated) {
+            return (
+                <h4 className="text-danger text-center">
+                    You updated your profile successfully!
+                </h4>);
         }
 
+        if (_user.isUpdated === false) {
+            return (
+                <h4 className="text-danger text-center">
+                    Error with status {_user.error}. Try again!
+                </h4>);
+        }
+
+        return null;
     }
 
     render() {
@@ -59,7 +68,7 @@ class ProfileSettings extends Component {
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
 
                     <Form
-                        className=" profile-card__content py-5 mb-0"
+                        className="profile-card__content py-5 mb-0"
                         onSubmit={this.updateSettings}
                     >
                         <div className="d-flex justify-content-center">
@@ -88,7 +97,7 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100 pl-0"
                             type="text"
                             name="name"
-                            value={name}
+                            placeholder={name}
                             onChange={this.handleChange}
                         />
 
@@ -102,7 +111,7 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0"
                             type="Email"
                             name="email"
-                            value={email}
+                            placeholder={email}
                             disabled
                         />
 
