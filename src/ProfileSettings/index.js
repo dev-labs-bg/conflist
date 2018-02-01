@@ -39,10 +39,11 @@ class ProfileSettings extends Component {
 
     renderMessage(_user) {
         if (_user.error) {
-            return (<p className="text-danger">
+            return (<h4 className="text-danger text-center">
             Error with status {_user.error}. Try again!
-                </p>);
+          </h4>);
         }
+
     }
 
     render() {
