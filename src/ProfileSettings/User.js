@@ -4,11 +4,13 @@ class User {
         profileImg = '',
         name = '',
         email = '',
+        twitterId = '',
     }) {
         this.id = _id;
         this.profileImg = profileImg;
         this.name = name;
         this.email = email;
+        this.twitterId = twitterId;
     }
 }
 

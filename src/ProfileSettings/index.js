@@ -29,10 +29,19 @@ class ProfileSettings extends Component {
         super(props);
         this.state = {
             name: '',
+            isUpdated: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.user.isFetching === false) {
+            if (nextProps.user.data.name !== this.props.user.data.name) {
+                this.setState({ isUpdated: true });
+            }
+        }
     }
 
     handleChange(event) {
@@ -45,14 +54,14 @@ class ProfileSettings extends Component {
     }
 
     renderMessage(_user) {
-        if (_user.isUpdated) {
+        if (this.state.isUpdated) {
             return (
                 <h4 className="text-danger text-center">
                     You updated your profile successfully!
                 </h4>);
         }
 
-        if (_user.isUpdated === false) {
+        if (_user.error !== null) {
             return (
                 <h4 className="text-danger text-center">
                     Error with status {_user.error}. Try again!

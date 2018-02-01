@@ -6,7 +6,6 @@ const initialState = {
     isFetching: null,
     data: null,
     error: null,
-    isUpdated: null,
 };
 
 // Actions
@@ -44,14 +43,12 @@ export default function reducer(state = initialState, action = {}) {
         const data = new User(action.user);
         return {
             ...state,
-            isUpdated: true,
             data,
         };
     }
     case UPDATE_FAIL:
         return {
             ...state,
-            isUpdated: false,
             error: action.error,
         };
     default: return state;
