@@ -30,6 +30,7 @@ class ProfileSettings extends Component {
         this.state = {
             name: '',
             isUpdated: false,
+            error: null,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -49,8 +50,8 @@ class ProfileSettings extends Component {
     }
 
     updateSettings(event) {
-        const successCallback = () => alert('success');
-        const errorCallback = status => alert(`error ${status}`);
+        const successCallback = () => { this.setState({ isUpdated: true }); };
+        const errorCallback = (status) => { this.setState({ error: status }); };
 
         this.props.updateCurrentUser(
             this.props.auth.token,
@@ -61,18 +62,25 @@ class ProfileSettings extends Component {
         event.preventDefault();
     }
 
-    renderMessage(_user) {
-        if (this.state.isUpdated) {
+    renderMessage(_error, _isUpdated) {
+        if (_isUpdated) {
             return (
                 <h4 className="text-danger text-center">
                     You updated your profile successfully!
                 </h4>);
         }
 
-        if (_user.error !== null) {
+        if (isNaN(_error)) {
             return (
                 <h4 className="text-danger text-center">
-                    Error with status {_user.error}. Try again!
+                    {_error}
+                </h4>);
+        }
+
+        if (_error !== null) {
+            return (
+                <h4 className="text-danger text-center">
+                    Error with status {_error}. Try again!
                 </h4>);
         }
 
@@ -88,7 +96,7 @@ class ProfileSettings extends Component {
 
         return (
             <div className="container mx-auto pt-5 pb-5">
-                {this.renderMessage(this.props.user)}
+                {this.renderMessage(this.state.error, this.state.isUpdated)}
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
 
                     <Form

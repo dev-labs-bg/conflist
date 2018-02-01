@@ -14,7 +14,6 @@ const RECEIVE = 'user/RECEIVE';
 const FAIL = 'user/FAIL';
 
 const UPDATE_SUCCESS = 'userUpdate/SUCCESS';
-const UPDATE_FAIL = 'userUpdate/FAIL';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -46,10 +45,6 @@ export default function reducer(state = initialState, action = {}) {
             data,
         };
     }
-    case UPDATE_FAIL:
-        return {
-            ...state,
-        };
     default: return state;
     }
 }
@@ -82,13 +77,6 @@ export function successUpdateUser(user) {
     };
 }
 
-export function failUpdateUser(error) {
-    return {
-        type: UPDATE_FAIL,
-        error,
-    };
-}
-
 export function updateCurrentUser(_token, _name, _successCb, _errorCb) {
     return (dispatch) => {
         API.updateCurrentUser(_token, _name)
@@ -97,7 +85,9 @@ export function updateCurrentUser(_token, _name, _successCb, _errorCb) {
                 _successCb(response.data);
             })
             .catch((error) => {
-                // TODO: Figure it out.
+                if (error.response === undefined) {
+                    _errorCb('Check your internet connection!');
+                }
                 _errorCb(error.response.status);
             });
     };
