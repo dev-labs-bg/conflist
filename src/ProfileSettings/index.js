@@ -15,7 +15,14 @@ class ProfileSettings extends Component {
             }),
             isFetching: PropTypes.bool,
         }).isRequired,
+        auth: PropTypes.shape({
+            token: PropTypes.string,
+        }).isRequired,
         updateCurrentUser: PropTypes.func,
+    };
+
+    static defaultProps = {
+        updateCurrentUser: () => {},
     };
 
     constructor(props) {
