@@ -49,7 +49,15 @@ class ProfileSettings extends Component {
     }
 
     updateSettings(event) {
-        this.props.updateCurrentUser(this.props.auth.token, this.state.name);
+        const successCallback = () => alert('success');
+        const errorCallback = status => alert(`error ${status}`);
+
+        this.props.updateCurrentUser(
+            this.props.auth.token,
+            this.state.name,
+            successCallback,
+            errorCallback,
+        );
         event.preventDefault();
     }
 

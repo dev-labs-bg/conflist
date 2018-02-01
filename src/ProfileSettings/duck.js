@@ -49,7 +49,6 @@ export default function reducer(state = initialState, action = {}) {
     case UPDATE_FAIL:
         return {
             ...state,
-            error: action.error,
         };
     default: return state;
     }
@@ -90,14 +89,16 @@ export function failUpdateUser(error) {
     };
 }
 
-export function updateCurrentUser(_token, _name) {
+export function updateCurrentUser(_token, _name, _successCb, _errorCb) {
     return (dispatch) => {
         API.updateCurrentUser(_token, _name)
             .then((response) => {
                 dispatch(successUpdateUser(response.data));
+                _successCb(response.data);
             })
             .catch((error) => {
-                dispatch(failUpdateUser(error.response.status));
+                // TODO: Figure it out.
+                _errorCb(error.response.status);
             });
     };
 }
