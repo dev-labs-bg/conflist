@@ -1,10 +1,12 @@
 import API from '../core/Api';
+import User from './User';
 
 const initialState = {
     lastFetched: null,
     isFetching: null,
     data: null,
     error: null,
+    isUpdated: null,
 };
 
 // Actions
@@ -23,27 +25,33 @@ export default function reducer(state = initialState, action = {}) {
             ...state,
             isFetching: true,
         };
-    case RECEIVE:
+    case RECEIVE: {
+        const data = new User(action.user);
         return {
             ...state,
             isFetching: false,
             lastFetched: new Date().valueOf(),
-            data: action.user,
+            data: data,
         };
+    }
     case FAIL:
         return {
             ...state,
             isFetching: false,
             error: action.error,
         };
-    case UPDATE_SUCCESS:
+    case UPDATE_SUCCESS: {
+        const data = new User(action.user);
         return {
             ...state,
-            data: action.user,
+            isUpdated: true,
+            data: data,
         };
+    }
     case UPDATE_FAIL:
         return {
             ...state,
+            isUpdated: false,
             error: action.error,
         };
     default: return state;
