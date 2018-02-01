@@ -78,10 +78,10 @@ class ProfileSettings extends Component {
         }
 
         if (_error !== null) {
-            return (
+            window.setTimeout( () => { return (
                 <h4 className="text-danger text-center">
                     Error with status {_error}. Try again!
-                </h4>);
+                </h4>);}, 2000);
         }
 
         return null;
