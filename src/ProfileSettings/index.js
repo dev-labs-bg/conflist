@@ -78,12 +78,14 @@ class ProfileSettings extends Component {
         }
 
         if (_error !== null) {
-            window.setTimeout( () => { return (
+            return (
                 <h4 className="text-danger text-center">
                     Error with status {_error}. Try again!
-                </h4>);}, 2000);
+                </h4>);
         }
-
+        setTimeout(() => {
+            this.setState({ error: null, isUpdated: null });
+        }, 10000)
         return null;
     }
 
@@ -129,6 +131,7 @@ class ProfileSettings extends Component {
                             className="border-top-0 border-right-0 border-left-0 w-100 pl-0"
                             type="text"
                             name="name"
+                            minLength="4"
                             placeholder={name}
                             onChange={this.handleChange}
                         />
