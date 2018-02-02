@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
 
-import { fetchCurrentUser } from './duck';
+import { updateCurrentUser } from './duck';
 
 class ProfileSettings extends Component {
     static propTypes = {
@@ -11,23 +11,139 @@ class ProfileSettings extends Component {
             data: PropTypes.shape({
                 name: PropTypes.string,
                 profileImg: PropTypes.string,
+                email: PropTypes.string,
             }),
+            error: PropTypes.number,
+            isFetching: PropTypes.bool,
         }).isRequired,
+        auth: PropTypes.shape({
+            token: PropTypes.string,
+        }).isRequired,
+        updateCurrentUser: PropTypes.func,
     };
 
+    static defaultProps = {
+        updateCurrentUser: () => {},
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            isUpdated: false,
+            error: null,
+            isValid: false,
+        };
+        let message;
+        this.handleChange = this.handleChange.bind(this);
+        this.updateSettings = this.updateSettings.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.user.isFetching === false) {
+            if (nextProps.user.data.name !== this.props.user.data.name) {
+                this.setState({ isUpdated: true });
+            }
+        }
+    }
+
+    handleChange(event) {
+        this.setState({ name: event.target.value });
+
+        let isValid = false;
+        if (event.target.value.length >= event.target.minLength) {
+            if (event.target.value.length <= event.target.maxLength) {
+                isValid = true;
+            }
+        }
+
+        this.setState({ isValid: isValid });
+        return isValid;
+    }
+
+    updateSettings(event) {
+        const successCallback = () => {
+            this.setState({ isUpdated: true });
+
+            this.handleDelayedMessageReset();
+        };
+        const errorCallback = (status) => {
+            this.setState({ error: status });
+
+            this.handleDelayedMessageReset();
+        };
+
+        if (this.state.isValid) {
+            this.props.updateCurrentUser(
+                this.props.auth.token,
+                this.state.name,
+                successCallback,
+                errorCallback,
+            );
+        }
+        event.preventDefault();
+    }
+
+    handleDelayedMessageReset = () => {
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
+            this.setState({ error: null, isUpdated: null });
+        }, 10000);
+    }
+
+    renderMessage(_error, _isUpdated) {
+        if (_isUpdated) {
+            return (
+                <h4 className="text-danger text-center">
+                    You updated your profile successfully!
+                </h4>);
+        }
+
+        if (isNaN(_error)) {
+            return (
+                <h4 className="text-danger text-center">
+                    {_error}
+                </h4>);
+        }
+
+        if (_error !== null) {
+            return (
+                <h4 className="text-danger text-center">
+                    Error with status {_error}. Try again!
+                </h4>);
+        }
+
+        return null;
+    }
+
     render() {
+        if (this.props.user.isFetching || this.props.user.isFetching === null) {
+            return <h4 className="text-danger text-center">Loading!</h4>;
+        }
+
+        if (this.props.user.error !== null) {
+            return <h4 className="text-danger text-center">Error fetching user data!</h4>;
+        }
+
+        const { profileImg, name, email } = this.props.user.data;
+
         return (
             <div className="container mx-auto pt-5 pb-5">
+                {this.renderMessage(this.state.error, this.state.isUpdated)}
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
 
-                    <Form className=" profile-card__content py-5 mb-0">
+                    <Form
+                        className="profile-card__content py-5 mb-0"
+                        onSubmit={this.updateSettings}
+                    >
                         <div className="d-flex justify-content-center">
                             <img
                                 className="mr-3 rounded-circle"
-                                src={this.props.user.data.profileImg}
+                                src={profileImg}
                                 width="100"
                                 height="100"
-                                alt={`${this.props.user.data.name}'s twitter profile picture`}
+                                alt="profile avatar"
                             />
 
                             <div className="d-flex flex-column w-25 justify-content-around">
@@ -40,27 +156,20 @@ class ProfileSettings extends Component {
 
                         <Label
                             for="first-name"
-                        >First Name:
+                        >Name:
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100"
+                            className={this.state.isValid ?
+                                'border-top-0 border-right-0 border-left-0 w-100 pl-0'
+                                :
+                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0'}
                             type="text"
-                            name="first-name"
-                            placeholder="First name"
-                        />
-
-                        <Label
-                            className="mt-3"
-                            for="last-name"
-                        >Last Name:
-                        </Label>
-                        <br />
-                        <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100"
-                            type="text"
-                            name="last-name"
-                            placeholder="Last name"
+                            name="name"
+                            minLength="4"
+                            maxLength="15"
+                            placeholder={name}
+                            onChange={this.handleChange}
                         />
 
                         <Label
@@ -70,15 +179,17 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100"
+                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0"
                             type="Email"
                             name="email"
-                            placeholder="Email"
+                            placeholder={email}
+                            disabled
                         />
 
                         <div className="text-center mt-5">
                             <button
                                 className="btn btn-primary btn-lg"
+                                type="submit"
                             >
                             Update Settings
                             </button>
@@ -99,7 +210,7 @@ const mapStateToProps = ({ auth, user }) => {
 };
 
 const mapDispatchToProps = {
-    fetchCurrentUser,
+    updateCurrentUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings);
