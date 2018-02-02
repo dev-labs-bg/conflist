@@ -9,6 +9,7 @@ import HomePage from './Home';
 import Login from './Login';
 import Gate from './Gate';
 import ProfileSettings from './ProfileSettings';
+import WishList from './Events/WishList';
 import { getToken } from './Login/duck';
 import { fetchCurrentUser } from './ProfileSettings/duck';
 
@@ -66,6 +67,7 @@ class App extends Component {
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
                         <Route path="/profile-settings" component={ProfileSettings} />
+                        <Route path="/wanna-go-list" component={WishList} />
                     </Switch>
                 </Wrapper>
             );

@@ -136,9 +136,9 @@ class Header extends Component {
                                         <Link className="dropdown-item" to="/my-subscriptions">
                                         My Subscriptions
                                         </Link>
-                                        <DropdownItem>
+                                        <Link className="dropdown-item" to="/wanna-go-list">
                                             Wanna go list
-                                        </DropdownItem>
+                                        </Link>
                                         <DropdownItem divider />
                                         <DropdownItem>
                                             Log out
