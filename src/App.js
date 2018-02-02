@@ -44,7 +44,6 @@ class App extends Component {
             return (<p>Loading!</p>);
         }
 
-
         if (error !== null) {
             return (
                 <div>

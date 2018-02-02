@@ -87,8 +87,9 @@ export function updateCurrentUser(_token, _name, _successCb, _errorCb) {
             .catch((error) => {
                 if (error.response === undefined) {
                     _errorCb('Check your internet connection!');
+                } else {
+                    _errorCb(error.response.status);
                 }
-                _errorCb(error.response.status);
             });
     };
 }

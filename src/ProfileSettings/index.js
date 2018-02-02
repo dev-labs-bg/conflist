@@ -13,6 +13,7 @@ class ProfileSettings extends Component {
                 profileImg: PropTypes.string,
                 email: PropTypes.string,
             }),
+            error: PropTypes.number,
             isFetching: PropTypes.bool,
         }).isRequired,
         auth: PropTypes.shape({
@@ -50,8 +51,16 @@ class ProfileSettings extends Component {
     }
 
     updateSettings(event) {
-        const successCallback = () => { this.setState({ isUpdated: true }); };
-        const errorCallback = (status) => { this.setState({ error: status }); };
+        const successCallback = () => {
+            this.setState({ isUpdated: true });
+
+            this.handleDelayedMessageReset();
+        };
+        const errorCallback = (status) => {
+            this.setState({ error: status });
+
+            this.handleDelayedMessageReset();
+        };
 
         this.props.updateCurrentUser(
             this.props.auth.token,
@@ -60,6 +69,14 @@ class ProfileSettings extends Component {
             errorCallback,
         );
         event.preventDefault();
+    }
+
+    handleDelayedMessageReset = () => {
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
+            this.setState({ error: null, isUpdated: null });
+        }, 10000);
     }
 
     renderMessage(_error, _isUpdated) {
@@ -84,16 +101,16 @@ class ProfileSettings extends Component {
                 </h4>);
         }
 
-        setTimeout(() => {
-            this.setState({ error: null, isUpdated: null });
-        }, 10000);
-
         return null;
     }
 
     render() {
         if (this.props.user.isFetching || this.props.user.isFetching === null) {
-            return <p>Loading!</p>;
+            return <h4 className="text-danger text-center">Loading!</h4>;
+        }
+
+        if (this.props.user.error !== null) {
+            return <h4 className="text-danger text-center">Error fetching user data!</h4>;
         }
 
         const { profileImg, name, email } = this.props.user.data;
