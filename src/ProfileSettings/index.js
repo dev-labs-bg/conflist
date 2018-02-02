@@ -83,9 +83,11 @@ class ProfileSettings extends Component {
                     Error with status {_error}. Try again!
                 </h4>);
         }
+
         setTimeout(() => {
             this.setState({ error: null, isUpdated: null });
-        }, 10000)
+        }, 10000);
+
         return null;
     }
 
