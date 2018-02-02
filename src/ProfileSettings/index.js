@@ -32,8 +32,9 @@ class ProfileSettings extends Component {
             name: '',
             isUpdated: false,
             error: null,
+            isValid: false,
         };
-
+        let message;
         this.handleChange = this.handleChange.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
     }
@@ -48,6 +49,16 @@ class ProfileSettings extends Component {
 
     handleChange(event) {
         this.setState({ name: event.target.value });
+
+        let isValid = false;
+        if (event.target.value.length >= event.target.minLength) {
+            if (event.target.value.length <= event.target.maxLength) {
+                isValid = true;
+            }
+        }
+
+        this.setState({ isValid: isValid });
+        return isValid;
     }
 
     updateSettings(event) {
@@ -62,12 +73,14 @@ class ProfileSettings extends Component {
             this.handleDelayedMessageReset();
         };
 
-        this.props.updateCurrentUser(
-            this.props.auth.token,
-            this.state.name,
-            successCallback,
-            errorCallback,
-        );
+        if (this.state.isValid) {
+            this.props.updateCurrentUser(
+                this.props.auth.token,
+                this.state.name,
+                successCallback,
+                errorCallback,
+            );
+        }
         event.preventDefault();
     }
 
@@ -147,10 +160,14 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100 pl-0"
+                            className={this.state.isValid ?
+                                'border-top-0 border-right-0 border-left-0 w-100 pl-0'
+                                :
+                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0'}
                             type="text"
                             name="name"
                             minLength="4"
+                            maxLength="15"
                             placeholder={name}
                             onChange={this.handleChange}
                         />
