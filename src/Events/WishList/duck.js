@@ -1,4 +1,5 @@
 import API from '../../core/Api';
+import Event from '../Event';
 
 // Actions
 const ATTEND_SUCCEESS = 'attendEvent/SUCCESS';
@@ -7,9 +8,14 @@ const ATTEND_FAIL = 'attendEvent/FAIL';
 const UNATTEND_SUCCESS = 'unattend/SUCCESS';
 const UNATTEND_FAIL = 'unattend/FAIL';
 
+const WISHLIST_REQUEST = 'wishlist/REQUEST';
+const WISHLIST_RECEIVE = 'wishlist/RECEIVE';
+const WISHLIST_FAIL = 'wishlist/FAIL';
+
 const initialState = {
-    data: [],
+    data: null,
     error: null,
+    isFetching: null,
 };
 
 // Reducer
@@ -38,6 +44,25 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             error: action.error,
+        };
+    case WISHLIST_REQUEST:
+        return {
+            ...state,
+            isFetching: true,
+        };
+    case WISHLIST_RECEIVE: {
+        const events = action.data.map(ev => new Event(ev));
+        return {
+            ...state,
+            data: events,
+            isFetching: false,
+        };
+    }
+    case WISHLIST_FAIL:
+        return {
+            ...state,
+            error: action.error,
+            isFetching: false,
         };
     default: return state;
     }
@@ -69,6 +94,37 @@ export function unattendEventFail(error) {
     return {
         type: UNATTEND_FAIL,
         error,
+    };
+}
+export function requestWishList() {
+    return {
+        type: WISHLIST_REQUEST,
+    };
+}
+
+export function receiveWishList(data) {
+    return {
+        type: WISHLIST_RECEIVE,
+        data,
+    };
+}
+
+export function failWishList(error) {
+    return {
+        type: WISHLIST_FAIL,
+        error,
+    };
+}
+
+export function fetchWishList(_token) {
+    return (dispatch) => {
+        API.fetchWishList(_token)
+            .then((response) => {
+                dispatch(receiveWishList(response.data));
+            })
+            .catch((error) => {
+                dispatch(failWishList(error.response));
+            });
     };
 }
 
