@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as _ from 'lodash';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -20,8 +22,17 @@ import Logo from './Logo';
 class Header extends Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool.isRequired,
-        profileImg: PropTypes.string.isRequired,
-        userName: PropTypes.string.isRequired,
+        user: PropTypes.shape({
+            data: PropTypes.shape({
+                profileImg: PropTypes.string,
+                name: PropTypes.string,
+            }),
+            isFetching: PropTypes.bool,
+        }),
+    };
+
+    static defaultProps = {
+        user: {},
     };
 
     constructor(props) {
@@ -47,6 +58,59 @@ class Header extends Component {
         return 'navbar-dark';
     }
 
+    renderDropdown = (_isAuthenticated, _userData) => {
+        if (!_isAuthenticated) {
+            return (
+                <div className="d-flex flex-md-row register__navitems">
+                    <NavItem>
+                        <Link className="nav-link" to="/login">
+                            Login
+                        </Link>
+                    </NavItem>
+                    <Link
+                        to="/login"
+                        className="btn btn-primary font-weight-bold align-self-start"
+                    >Register
+                    </Link>
+
+                </div>
+            );
+        }
+
+        if (!_.isEmpty(_userData)) {
+            return (
+                <UncontrolledDropdown nav>
+                    <DropdownToggle nav caret>
+                        <img
+                            className="mr-1 rounded-circle"
+                            src={_userData.profileImg}
+                            width="28"
+                            height="28"
+                            alt="profile avatar"
+                        /> {_userData.name}
+                    </DropdownToggle>
+                    <DropdownMenu >
+                        <Link className="dropdown-item" to="/profile-settings">
+                            Profile Settings
+                        </Link>
+                        <Link className="dropdown-item" to="/my-subscriptions">
+                        My Subscriptions
+                        </Link>
+                        <Link className="dropdown-item" to="/wanna-go-list">
+                            Wanna go list
+                        </Link>
+                        <DropdownItem divider />
+                        <DropdownItem>
+                            Log out
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            );
+        }
+
+        return null;
+    }
+
     render() {
         const registerBkg = (
             <div className="background-img text-center">
@@ -68,6 +132,7 @@ class Header extends Component {
         );
 
         const { isAuthenticated } = this.props;
+
         return (
             <div className={!isAuthenticated ? 'register' : null}>
                 <Navbar
@@ -104,49 +169,7 @@ class Header extends Component {
                             <NavItem>
                                 <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
                             </NavItem>
-                            {!isAuthenticated ?
-                                <div className="d-flex flex-md-row register__navitems">
-                                    <NavItem>
-                                        <Link className="nav-link" to="/login">
-                                            Login
-                                        </Link>
-                                    </NavItem>
-                                    <Link
-                                        to="/login"
-                                        className="btn btn-primary font-weight-bold align-self-start"
-                                    >Register
-                                    </Link>
-
-                                </div>
-                                :
-                                <UncontrolledDropdown nav>
-                                    <DropdownToggle nav caret>
-                                        <img
-                                            className="mr-1 rounded-circle"
-                                            src={this.props.profileImg}
-                                            width="28"
-                                            height="28"
-                                            alt="profile avatar"
-                                        /> {this.props.userName}
-                                    </DropdownToggle>
-                                    <DropdownMenu >
-                                        <Link className="dropdown-item" to="/profile-settings">
-                                            Profile Settings
-                                        </Link>
-                                        <Link className="dropdown-item" to="/my-subscriptions">
-                                        My Subscriptions
-                                        </Link>
-                                        <Link className="dropdown-item" to="/wanna-go-list">
-                                            Wanna go list
-                                        </Link>
-                                        <DropdownItem divider />
-                                        <DropdownItem>
-                                            Log out
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
-                            }
-
+                            { this.renderDropdown(isAuthenticated, this.props.user.data) }
                         </Nav>
                     </Collapse>
                 </Navbar>
@@ -158,4 +181,11 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = ({ user, auth }) => {
+    return {
+        user,
+        isAuthenticated: auth.isAuthenticated,
+    };
+};
+
+export default connect(mapStateToProps)(Header);

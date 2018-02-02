@@ -23,9 +23,6 @@ class App extends Component {
         }).isRequired,
         getToken: PropTypes.func.isRequired,
         fetchCurrentUser: PropTypes.func.isRequired,
-        user: PropTypes.shape({
-            isFetching: PropTypes.bool,
-        }).isRequired,
     };
 
     async componentDidMount() {
@@ -35,17 +32,17 @@ class App extends Component {
         }
     }
 
+    componentWillReceiveProps() {
+        if (this.props.auth.isAuthenticated) {
+            this.props.fetchCurrentUser(this.props.auth.token);
+        }
+    }
+
     render() {
-        const { isAuthenticated } = this.props.auth;
-        const { isLoading } = this.props.auth;
-        const { error } = this.props.auth;
+        const { isAuthenticated, isLoading, error } = this.props.auth;
 
         if (isLoading) {
             return (<p>Loading!</p>);
-        }
-
-        if (this.props.user.isFetching || this.props.user.isFetching === null) {
-            return <p>Loading!</p>;
         }
 
         if (error !== null) {
@@ -58,11 +55,7 @@ class App extends Component {
 
         if (isAuthenticated) {
             return (
-                <Wrapper
-                    auth={isAuthenticated}
-                    userName={this.props.user.data.name}
-                    profileImg={this.props.user.data.profileImg}
-                >
+                <Wrapper>
                     <Switch>
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
@@ -74,7 +67,7 @@ class App extends Component {
         }
 
         return (
-            <Wrapper auth={isAuthenticated}>
+            <Wrapper>
                 <Switch>
                     <Route path="/" exact component={HomePage} />
                     <Route path="/home" component={HomePage} />
@@ -87,10 +80,9 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({ auth, user }) => {
+const mapStateToProps = ({ auth }) => {
     return {
         auth,
-        user,
     };
 };
 
