@@ -13,7 +13,12 @@ class WishList extends Component {
         wishList: PropTypes.shape({
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
         }).isRequired,
+        authToken: PropTypes.string.isRequired,
+        fetchWishList: PropTypes.func,
+    };
 
+    static defaultProps = {
+        fetchWishList: () => {},
     };
 
     constructor(props) {
@@ -23,7 +28,7 @@ class WishList extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchWishList(this.props.auth.token);
+        this.props.fetchWishList(this.props.authToken);
     }
 
     renderCards = () => {
@@ -32,19 +37,39 @@ class WishList extends Component {
             this.props.wishList.data.forEach((event) => {
                 const monthYear = moment(event.start).format('MMMM|YYYY');
                 const month = moment(event.start).format('MM');
-                const monthNow = moment().format('MM');
+                const monthpast = moment().isAfter(event.start);
 
-                
-                
-                this.eventsGroupedByMonth[month] = {
-                    monthYear: moment(event.start).format('MMMM'),
-                    data: this.eventsGroupedByMonth[monthYear] ?
-                        [...this.eventsGroupedByMonth[monthYear].data, event] : [event],
+                if (monthpast) {
+                    this.pastConferences[month] = {
+                        month: moment(event.start).format('MMMM'),
+                        data: this.eventsGroupedByMonth[monthYear] ?
+                            [...this.eventsGroupedByMonth[monthYear].data, event] : [event],
                     };
+                } else {
+                    this.eventsGroupedByMonth[month] = {
+                        month: moment(event.start).format('MMMM'),
+                        data: this.eventsGroupedByMonth[monthYear] ?
+                            [...this.eventsGroupedByMonth[monthYear].data, event] : [event],
+                    };
+                }
             });
         }
 
         const cards = [];
+
+         _.forEach(this.pastConferences, (group, key) => {
+            cards.push(
+                <div key={key} className="mb-5">
+                    <h4 className="mb-3">Last
+                        <span className="text-info"> 1 </span>
+                    from all Past conferences
+                    </h4>
+                    {
+                        group.data.map(event =>
+                            <Card key={event.id} event={event} past />)
+                    }
+                </div>);
+        });
 
         _.forEach(this.eventsGroupedByMonth, (group, key) => {
             cards.push(
@@ -59,11 +84,12 @@ class WishList extends Component {
                 </div>);
         });
 
+
         return cards;
     }
 
     render() {
-        if (this.props.auth.isLoading && this.props.auth.isLoading === null) {
+        if (this.props.authToken && this.props.authToken === null) {
             return <h4 className="text-danger text-center">Loading!</h4>;
         }
         if (this.props.wishList.isFetching && this.props.wishList.isFetching === null) {
@@ -74,9 +100,6 @@ class WishList extends Component {
                 <h2 className="text-center mb-5">Wanna Go List</h2>
 
                 <div className="upcoming-conf__container">
-                    <h4 className="mb-2">Upcoming conferences <span className="text-info">(4)
-                        </span>
-                    </h4>
                     {this.renderCards()}
                 </div>
 
@@ -88,7 +111,7 @@ class WishList extends Component {
 const mapStateToProps = ({ wishList, auth }) => {
     return {
         wishList,
-        auth,
+        authToken: auth.token,
     };
 };
 
