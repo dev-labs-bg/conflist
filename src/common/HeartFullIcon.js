@@ -10,7 +10,7 @@ const heartFullIcon = () => {
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
         >
-            <g id="Page-1" stroke="none" strokeWidth="1" fill="" fillRule="evenodd">
+            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="conflist-home-page-logged-in" transform="translate(-986.000000, -677.000000)">
                     <g id="conf-card" transform="translate(309.000000, 639.000000)">
                         <g id="ic_favorite_black_24px-(1)" transform="translate(675.000000, 35.000000)">
@@ -22,7 +22,7 @@ const heartFullIcon = () => {
             </g>
         </svg>
     );
-}
+};
 
 export default heartFullIcon;
 
