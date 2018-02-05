@@ -12,6 +12,8 @@ class WishList extends Component {
     static propTypes = {
         wishList: PropTypes.shape({
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+            isFetching: PropTypes.bool,
+            error: PropTypes.number,
         }).isRequired,
         authToken: PropTypes.string.isRequired,
         fetchWishList: PropTypes.func.isRequired,
@@ -68,12 +70,27 @@ class WishList extends Component {
 
     countEventsByMonth = (_events) => {
         let monthEventsNumber;
-        _.forEach(_events, (group, key) => {
+        _.forEach(_events, (group) => {
             _.forEach(group, (e) => {
-                monthEventsNumber= +_.size(e);
+                monthEventsNumber = +_.size(e);
             });
         });
         return monthEventsNumber;
+    }
+
+    renderAllPastEvents = () => {
+        const hiddenCards = [];
+        if (this.countEventsByMonth(this.pastEvents) > 1) {
+            _.forEach(this.pastEvents, (group, key) => {
+                hiddenCards.push(
+                    <div key={key} className="mb-5">
+                        {
+                            group.data.map(event =>
+                                <Card key={event.id} event={event} past />)
+                        }
+                    </div>);
+            });
+        }
     }
 
     renderPastEvents = () => {
@@ -89,6 +106,17 @@ class WishList extends Component {
             </h4>);
         cards.push(heading);
 
+        let eventsPastLink;
+        if (this.countEventsByMonth(this.pastEvents) > 1) {
+            eventsPastLink = (
+                <span>View all
+                    <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
+                past conferences
+                </span>);
+        } else {
+            eventsPastLink = null;
+        }
+
         _.forEach(this.pastEvents, (group, key) => {
             const firstEvent = _.first(group.data);
             cards.push(
@@ -96,8 +124,10 @@ class WishList extends Component {
                     {
                         <Card key={firstEvent.id} event={firstEvent} past />
                     }
+                    {eventsPastLink}
                 </div>);
         });
+
         return cards;
     }
 
@@ -145,7 +175,6 @@ class WishList extends Component {
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <h2 className="text-center mb-5">Wanna Go List</h2>
-
                 {this.renderPastEvents()}
                 <div className="upcoming-conf__container">
                     {this.renderUpcomingEvents()}
