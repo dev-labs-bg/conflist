@@ -83,7 +83,7 @@ class WishList extends Component {
         const cards = [];
 
         const heading = (
-            <h4 className="mb-3">Last
+            <h4 key="2" className="mb-3">Last
                 <span className="text-info"> 1 </span>
                 from all Past conferences
             </h4>);
@@ -109,7 +109,7 @@ class WishList extends Component {
         const cards = [];
 
         const heading = (
-            <h4 className="mb-2">Upcoming conferences
+            <h4 key="1" className="mb-2">Upcoming conferences
                 <span className="text-info"> ({this.countEventsByMonth(this.pastEvents)}) </span>
             </h4>);
         cards.push(heading);
