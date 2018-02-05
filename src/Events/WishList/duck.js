@@ -135,7 +135,7 @@ export function attendConference(_eventId, _token) {
                 dispatch(attendEventSuccess(response.data[0]._id));
             })
             .catch((error) => {
-                dispatch(attendEventFail(error.response.data));
+                dispatch(attendEventFail(error.response));
             });
     };
 }
@@ -147,7 +147,7 @@ export function unattendConference(_eventId, _token) {
                 dispatch(unattendEventSuccess(response.data[0]._id));
             })
             .catch((error) => {
-                dispatch(unattendEventFail(error.response.data));
+                dispatch(unattendEventFail(error.response));
             });
     };
 }
