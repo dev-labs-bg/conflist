@@ -23,42 +23,84 @@ class WishList extends Component {
 
     constructor(props) {
         super(props);
-        this.eventsGroupedByMonth = {};
-        this.pastConferences = {};
+        this.upcomingEvents = {};
+        this.pastEvents = {};
     }
 
-    async componentDidMount() {
-        await this.props.fetchWishList(this.props.authToken);
+    componentDidMount() {
+        this.props.fetchWishList(this.props.authToken);
+    }
 
-        if (this.props.wishList.data !== null) {
-
-            this.props.wishList.data.forEach((event) => {
-                const monthYear = moment(event.start).format('MMMM|YYYY');
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.wishList.data !== null) {
+            nextProps.wishList.data.forEach((event) => {
                 const month = moment(event.start).format('MM');
-                const monthPast = moment().isAfter(event.start);
+                const monthIsPast = moment().isAfter(event.start);
 
-                if (monthPast) {
-                    this.pastConferences[month] = {
+                if (monthIsPast) {
+                    this.pastEvents[month] = {
                         month: moment(event.start).format('MMMM'),
-                        data: this.eventsGroupedByMonth[monthYear] ?
-                            [...this.eventsGroupedByMonth[monthYear].data, event] : [event],
+                        data: this.pastEvents[month] ?
+                            [...this.pastEvents[month].data, event] : [event],
                     };
                 } else {
-                    this.eventsGroupedByMonth[month] = {
+                    this.upcomingEvents[month] = {
                         month: moment(event.start).format('MMMM'),
-                        data: this.eventsGroupedByMonth[monthYear] ?
-                            [...this.eventsGroupedByMonth[monthYear].data, event] : [event],
+                        data: this.upcomingEvents[month] ?
+                            [...this.upcomingEvents[month].data, event] : [event],
                     };
                 }
             });
         }
-
     }
 
-    renderCards = () => {
+    renderPastEvents = () => {
+        if (_.isEmpty(this.pastEvents)) {
+            return null;
+        }
         const cards = [];
 
-        _.forEach(this.eventsGroupedByMonth, (group, key) => {
+        const heading = (
+            <h4 className="mb-3">Last
+                <span className="text-info"> 1 </span>
+                from all Past conferences
+            </h4>);
+        cards.push(heading);
+
+        _.forEach(this.pastEvents, (group, key) => {
+            const firstEvent = _.first(group.data);
+            cards.push(
+                <div key={key} className="mb-5">
+                    {
+                        <Card key={firstEvent.id} event={firstEvent} past />
+                    }
+                </div>);
+        });
+        return cards;
+    }
+
+    renderUpcomingEvents = () => {
+        if (_.isEmpty(this.upcomingEvents)) {
+            return null;
+        }
+
+        const cards = [];
+
+        let monthEventsNumber;
+        _.forEach(this.pastEvents, (group, key) => {
+            _.forEach(group, (e) => {
+                monthEventsNumber= +_.size(e);
+            });
+        });
+
+        const heading = (
+            <h4 className="mb-2">Upcoming conferences
+                <span className="text-info"> ({monthEventsNumber}) </span>
+            </h4>);
+
+        cards.push(heading);
+
+        _.forEach(this.upcomingEvents, (group, key) => {
             cards.push(
                 <div key={key} className="mb-5">
                     <h2 className="cards-date font-weight-normal">
@@ -71,34 +113,9 @@ class WishList extends Component {
                 </div>);
         });
 
-
         return cards;
     }
 
-    renderPastEvents = () => {
-        if (_.isEmpty(this.pastConferences)) {
-            return null;
-        }
-        const cards = [];
-
-        const heading = (<h4 className="mb-3">Last
-                        <span className="text-info"> 1 </span>
-                    from all Past conferences
-                    </h4>);
-        cards.push(heading);
-
-         _.forEach(this.pastConferences, (group, key) => {
-            cards.push(
-                <div key={key} className="mb-5">
-                    {
-                        group.data.map(event =>
-                            <Card key={event.id} event={event} past />)
-                    }
-                </div>);
-        });
-
-        return cards;
-    }
 
     render() {
         if (this.props.authToken && this.props.authToken === null) {
@@ -113,7 +130,7 @@ class WishList extends Component {
 
                 {this.renderPastEvents()}
                 <div className="upcoming-conf__container">
-                    {this.renderCards()}
+                    {this.renderUpcomingEvents()}
                 </div>
 
             </div>
