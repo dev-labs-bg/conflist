@@ -32,26 +32,24 @@ class WishList extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.wishList.data !== null) {
-            nextProps.wishList.data.forEach((event) => {
-                const month = moment(event.start).format('MM');
-                const monthIsPast = moment().isAfter(event.start);
+        nextProps.wishList.data.forEach((event) => {
+            const month = moment(event.start).format('MM');
+            const monthIsPast = moment().isAfter(event.start);
 
-                if (monthIsPast) {
-                    this.pastEvents[month] = {
-                        month: moment(event.start).format('MMMM'),
-                        data: this.pastEvents[month] ?
-                            [...this.pastEvents[month].data, event] : [event],
-                    };
-                } else {
-                    this.upcomingEvents[month] = {
-                        month: moment(event.start).format('MMMM'),
-                        data: this.upcomingEvents[month] ?
-                            [...this.upcomingEvents[month].data, event] : [event],
-                    };
-                }
-            });
-        }
+            if (monthIsPast) {
+                this.pastEvents[month] = {
+                    month: moment(event.start).format('MMMM'),
+                    data: this.pastEvents[month] ?
+                        [...this.pastEvents[month].data, event] : [event],
+                };
+            } else {
+                this.upcomingEvents[month] = {
+                    month: moment(event.start).format('MMMM'),
+                    data: this.upcomingEvents[month] ?
+                        [...this.upcomingEvents[month].data, event] : [event],
+                };
+            }
+        });
     }
 
     renderPastEvents = () => {
@@ -123,6 +121,10 @@ class WishList extends Component {
         }
         if (this.props.wishList.isFetching && this.props.wishList.isFetching === null) {
             return <h4 className="text-danger text-center">Loading!</h4>;
+        }
+
+        if (this.props.wishList.error !== null) {
+            return <h4 className="text-danger text-center">Error fetching your wanna go list!</h4>;
         }
         return (
             <div className="container mx-auto pt-5 pb-5">

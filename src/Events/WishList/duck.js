@@ -13,7 +13,7 @@ const WISHLIST_RECEIVE = 'wishlist/RECEIVE';
 const WISHLIST_FAIL = 'wishlist/FAIL';
 
 const initialState = {
-    data: null,
+    data: [],
     error: null,
     isFetching: null,
 };
@@ -123,7 +123,7 @@ export function fetchWishList(_token) {
                 dispatch(receiveWishList(response.data));
             })
             .catch((error) => {
-                dispatch(failWishList(error.response));
+                dispatch(failWishList(error.response.status));
             });
     };
 }
