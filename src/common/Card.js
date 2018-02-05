@@ -3,29 +3,21 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Event from '../Events/Event';
 import Attend from '../Events/WishList/Attend';
 import { getFormattedDate } from '../core/Dates';
 import calendar from '../assets/images/callendar.svg';
+import calendarPassed from '../assets/images/calendar-passed.svg';
 
 class Card extends Component {
     static propTypes = {
-        event: PropTypes.shape({
-            id: PropTypes.string,
-            imageCard: PropTypes.string,
-            pictureUrl: PropTypes.string,
-            venue: PropTypes.string,
-            city: PropTypes.string,
-            country: PropTypes.string,
-            name: PropTypes.string,
-            alias: PropTypes.string,
-            start: PropTypes.string,
-            end: PropTypes.string,
-            shortDescription: PropTypes.string,
-            location: PropTypes.string,
-            title: PropTypes.string,
-            atendees: PropTypes.number,
-            tags: PropTypes.arrayOf(PropTypes.string),
-        }).isRequired,
+        event: PropTypes.instanceOf(Event).isRequired,
+        authToken: PropTypes.string.isRequired,
+        past: PropTypes.bool,
+    };
+
+    static defaultProps = {
+        past: false,
     };
 
     /**
@@ -37,6 +29,18 @@ class Card extends Component {
      */
     eventDescription() {
         return { __html: this.props.event.shortDescription };
+    }
+
+    renderTags() {
+        const renderTags = [];
+        this.props.event.tags.map((tag) => {
+            renderTags.push(<span
+                key={tag}
+                className="badge badge-pill badge-light mr-2"
+            >{tag}
+            </span>);
+        });
+        return renderTags;
     }
 
     render() {
@@ -56,7 +60,7 @@ class Card extends Component {
                 <div className="card-body">
                     <span className="d-flex justify-content-between">
                         <div className="card__info">
-                            <img src={calendar} className="mr-1" alt="small calendar" />
+                            <img src={this.props.past ? calendarPassed : calendar} className="mr-1" alt="small calendar" />
                             <span className="card__dates"> {getFormattedDate(event.start, event.end)}
                                 <span className="text-info"> | </span> {event.venue}, {event.city}, {event.country}
                             </span>
@@ -64,7 +68,8 @@ class Card extends Component {
                         <div className="card__button">
                             <Attend
                                 id={event.id}
-                                token={this.props.auth.token}
+                                token={this.props.authToken}
+                                past={this.props.past ? true : false}
                             />
                             <span className="font-weight-normal align-top">{event.atendees}</span>
                         </div>
@@ -82,9 +87,7 @@ class Card extends Component {
                     />
 
                     <div className="d-flex justify-content-end">
-                        <span className="badge badge-pill badge-light mr-2">{event.tags[0]}</span>
-                        <span className="badge badge-pill badge-light mr-2">{event.tags[1]}</span>
-                        <span className="badge badge-pill badge-light">{event.tags[2]}</span>
+                        {this.renderTags()}
                     </div>
 
                 </div>
@@ -95,7 +98,7 @@ class Card extends Component {
 
 const mapStateToProps = ({ auth }) => {
     return {
-        auth,
+        authToken: auth.token,
     };
 };
 

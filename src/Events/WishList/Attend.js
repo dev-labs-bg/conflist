@@ -4,16 +4,22 @@ import { connect } from 'react-redux';
 
 import HeartFullIcon from '../../common/HeartFullIcon';
 import HeartIcon from '../../common/HeartIcon';
+import PastEventIcon from '../../common/PastEventIcon';
 import { attendConference, unattendConference } from './duck';
 import PopoverItem from '../../common/PopoverItem';
 
 class Attend extends Component {
     static propTypes = {
         id: PropTypes.string.isRequired,
-        token: PropTypes.string,
-        attendConference: PropTypes.func,
-        unattendConference: PropTypes.func,
-    }
+        token: PropTypes.string.isRequired,
+        attendConference: PropTypes.func.isRequired,
+        unattendConference: PropTypes.func.isRequired,
+        past: PropTypes.bool,
+    };
+
+    static defaultProps = {
+        past: false,
+    };
 
     constructor(props) {
         super(props);
@@ -43,6 +49,12 @@ class Attend extends Component {
         if (isActive) {
             return (
                 <HeartFullIcon />
+            );
+        }
+
+        if (this.props.past) {
+            return (
+                <PastEventIcon />
             );
         }
 

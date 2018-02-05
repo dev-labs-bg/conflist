@@ -96,9 +96,9 @@ class Header extends Component {
                         <Link className="dropdown-item" to="/my-subscriptions">
                         My Subscriptions
                         </Link>
-                        <DropdownItem>
+                        <Link className="dropdown-item" to="/wanna-go-list">
                             Wanna go list
-                        </DropdownItem>
+                        </Link>
                         <DropdownItem divider />
                         <DropdownItem>
                             Log out
@@ -169,9 +169,7 @@ class Header extends Component {
                             <NavItem>
                                 <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
                             </NavItem>
-
                             { this.renderDropdown(isAuthenticated, this.props.user.data) }
-
                         </Nav>
                     </Collapse>
                 </Navbar>
