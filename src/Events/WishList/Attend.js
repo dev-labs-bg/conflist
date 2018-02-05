@@ -12,15 +12,13 @@ class Attend extends Component {
     static propTypes = {
         id: PropTypes.string.isRequired,
         token: PropTypes.string.isRequired,
-        attendConference: PropTypes.func,
-        unattendConference: PropTypes.func,
+        attendConference: PropTypes.func.isRequired,
+        unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
     };
 
     static defaultProps = {
         past: false,
-        attendConference: () => {},
-        unattendConference: () => {},
     };
 
     constructor(props) {
