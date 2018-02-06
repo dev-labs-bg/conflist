@@ -152,19 +152,24 @@ class WishList extends Component {
      * @return {Array}
      */
     renderAllPastEvents = () => {
-        const hiddenCards = [];
-        if (this.countEventsByMonth(this.pastEvents) > 1) {
-            _.forEach(this.pastEvents, (group, key) => {
-                const lastEvents = _.tail(group.data);
-                hiddenCards.push(
-                    <div key={key} className="mb-5">
-                        {
-                            lastEvents.map(event =>
-                                <Card key={event.id} event={event} past />)
-                        }
-                    </div>);
-            });
+        const isThereOnlyOneEvent = this.countEventsByMonth(this.pastEvents) <= 1;
+
+        if (isThereOnlyOneEvent) {
+            return [];
         }
+
+        const hiddenCards = [];
+        _.forEach(this.pastEvents, (group, key) => {
+            const lastEvents = _.tail(group.data);
+            hiddenCards.push(
+                <div key={key} className="mb-5">
+                    {
+                        lastEvents.map(event =>
+                            <Card key={event.id} event={event} past />)
+                    }
+                </div>);
+        });
+
         return hiddenCards;
     }
 
