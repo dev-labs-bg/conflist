@@ -85,7 +85,7 @@ class WishList extends Component {
         let monthEventsNumber;
         _.forEach(_events, (group) => {
             _.forEach(group, (e) => {
-                monthEventsNumber = +_.size(e);
+                monthEventsNumber = +_.size(group.data);
             });
         });
         return monthEventsNumber;
