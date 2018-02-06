@@ -22,6 +22,10 @@ class WishList extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            pastEventsClicked: false,
+        };
+
         /**
          *
          * Object with upcoming events grouped by each month in object with
@@ -68,6 +72,10 @@ class WishList extends Component {
         });
     }
 
+    changeState = () => {
+        this.setState({ pastEventsClicked: !this.state.pastEventsClicked });
+    }
+
     countEventsByMonth = (_events) => {
         let monthEventsNumber;
         _.forEach(_events, (group) => {
@@ -82,11 +90,15 @@ class WishList extends Component {
         let eventsPastLink;
         if (this.countEventsByMonth(this.pastEvents) > 1) {
             eventsPastLink = (
-                <span>View all
+                <span onClick={this.changeState}>View all
                     <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
                 past conferences
                 </span>);
         } else {
+            eventsPastLink = null;
+        }
+
+        if (this.state.pastEventsClicked) {
             eventsPastLink = null;
         }
         return eventsPastLink;
@@ -96,15 +108,17 @@ class WishList extends Component {
         const hiddenCards = [];
         if (this.countEventsByMonth(this.pastEvents) > 1) {
             _.forEach(this.pastEvents, (group, key) => {
+                const lastEvents = _.tail(group.data);
                 hiddenCards.push(
                     <div key={key} className="mb-5">
                         {
-                            group.data.map(event =>
+                            lastEvents.map(event =>
                                 <Card key={event.id} event={event} past />)
                         }
                     </div>);
             });
         }
+        return hiddenCards;
     }
 
     renderPastEvents = () => {
@@ -171,11 +185,12 @@ class WishList extends Component {
         if (this.props.wishList.error !== null) {
             return <h4 className="text-danger text-center">Error fetching your wanna go list!</h4>;
         }
-
+        console.log(this.state.pastEventsClicked)
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <h2 className="text-center mb-5">Wanna Go List</h2>
                 {this.renderPastEvents()}
+                {this.state.pastEventsClicked ? this.renderAllPastEvents() : null}
                 <div className="upcoming-conf__container">
                     {this.renderUpcomingEvents()}
                 </div>
