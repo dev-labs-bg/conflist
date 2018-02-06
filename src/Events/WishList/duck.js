@@ -118,6 +118,7 @@ export function failWishList(error) {
 
 export function fetchWishList(_token) {
     return (dispatch) => {
+        dispatch(requestWishList());
         API.fetchWishList(_token)
             .then((response) => {
                 dispatch(receiveWishList(response.data));

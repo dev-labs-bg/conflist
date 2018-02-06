@@ -88,6 +88,7 @@ class WishList extends Component {
                 monthEventsNumber = +_.size(group.data);
             });
         });
+
         return monthEventsNumber;
     }
 
@@ -107,7 +108,7 @@ class WishList extends Component {
         }
 
         return (
-            <span onClick={this.changeState}>View all
+            <span onClick={this.changeState} role="button" >View all
                 <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
             past conferences
             </span>
