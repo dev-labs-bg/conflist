@@ -132,6 +132,7 @@ class WishList extends Component {
                 from all Past conferences
             </h4>);
         cards.push(heading);
+
         _.forEach(this.pastEvents, (group, key) => {
             const firstEvent = _.first(group.data);
             cards.push(
@@ -185,7 +186,7 @@ class WishList extends Component {
         if (this.props.wishList.error !== null) {
             return <h4 className="text-danger text-center">Error fetching your wanna go list!</h4>;
         }
-        console.log(this.state.pastEventsClicked)
+
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <h2 className="text-center mb-5">Wanna Go List</h2>
