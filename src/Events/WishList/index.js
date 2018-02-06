@@ -98,21 +98,20 @@ class WishList extends Component {
      * @return {JSX}
      */
     countPastEvents = () => {
-        let togglePastEvents;
-        if (this.countEventsByMonth(this.pastEvents) > 1) {
-            togglePastEvents = (
-                <span onClick={this.changeState}>View all
-                    <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
-                past conferences
-                </span>);
-        } else {
-            togglePastEvents = null;
+        if (this.countEventsByMonth(this.pastEvents) <= 1) {
+            return null;
         }
 
         if (this.state.togglePastEvents) {
-            togglePastEvents = null;
+            return null;
         }
-        return togglePastEvents;
+
+        return (
+            <span onClick={this.changeState}>View all
+                <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
+            past conferences
+            </span>
+        );
     }
 
     /**
