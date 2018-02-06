@@ -23,7 +23,7 @@ class WishList extends Component {
         super(props);
 
         this.state = {
-            pastEventsClicked: false,
+            togglePastEvents: false,
         };
 
         /**
@@ -73,9 +73,14 @@ class WishList extends Component {
     }
 
     changeState = () => {
-        this.setState({ pastEventsClicked: !this.state.pastEventsClicked });
+        this.setState({ togglePastEvents: !this.state.togglePastEvents });
     }
 
+    /**
+     * Count events data in array nested in two objects
+     * @param  {object} _events
+     * @return {number}
+     */
     countEventsByMonth = (_events) => {
         let monthEventsNumber;
         _.forEach(_events, (group) => {
@@ -86,42 +91,35 @@ class WishList extends Component {
         return monthEventsNumber;
     }
 
+    /**
+     * When there is more than one past event -
+     * return past events clickable heading,
+     * otherwise - show nothing.
+     * @return {JSX}
+     */
     countPastEvents = () => {
-        let eventsPastLink;
+        let togglePastEvents;
         if (this.countEventsByMonth(this.pastEvents) > 1) {
-            eventsPastLink = (
+            togglePastEvents = (
                 <span onClick={this.changeState}>View all
                     <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
                 past conferences
                 </span>);
         } else {
-            eventsPastLink = null;
+            togglePastEvents = null;
         }
 
-        if (this.state.pastEventsClicked) {
-            eventsPastLink = null;
+        if (this.state.togglePastEvents) {
+            togglePastEvents = null;
         }
-        return eventsPastLink;
+        return togglePastEvents;
     }
 
-    renderAllPastEvents = () => {
-        const hiddenCards = [];
-        if (this.countEventsByMonth(this.pastEvents) > 1) {
-            _.forEach(this.pastEvents, (group, key) => {
-                const lastEvents = _.tail(group.data);
-                hiddenCards.push(
-                    <div key={key} className="mb-5">
-                        {
-                            lastEvents.map(event =>
-                                <Card key={event.id} event={event} past />)
-                        }
-                    </div>);
-            });
-        }
-        return hiddenCards;
-    }
-
-    renderPastEvents = () => {
+    /**
+     * Render JSX Card with the latest past event from user's Wanna Go List
+     * @return {Array}
+     */
+    renderPastEvent = () => {
         if (_.isEmpty(this.pastEvents)) {
             return null;
         }
@@ -147,6 +145,34 @@ class WishList extends Component {
         return cards;
     }
 
+    /**
+     *
+     * Build JSX Cards with past events from user's Wanna Go List ordered by month,
+     * without the first one
+     * @return {Array}
+     */
+    renderAllPastEvents = () => {
+        const hiddenCards = [];
+        if (this.countEventsByMonth(this.pastEvents) > 1) {
+            _.forEach(this.pastEvents, (group, key) => {
+                const lastEvents = _.tail(group.data);
+                hiddenCards.push(
+                    <div key={key} className="mb-5">
+                        {
+                            lastEvents.map(event =>
+                                <Card key={event.id} event={event} past />)
+                        }
+                    </div>);
+            });
+        }
+        return hiddenCards;
+    }
+
+    /**
+     * Render all JSX Cards with upcoming events ordered by month
+     * in user's Wanna Go List
+     * @return {Array}
+     */
     renderUpcomingEvents = () => {
         if (_.isEmpty(this.upcomingEvents)) {
             return null;
@@ -190,8 +216,8 @@ class WishList extends Component {
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <h2 className="text-center mb-5">Wanna Go List</h2>
-                {this.renderPastEvents()}
-                {this.state.pastEventsClicked ? this.renderAllPastEvents() : null}
+                {this.renderPastEvent()}
+                {this.state.togglePastEvents ? this.renderAllPastEvents() : null}
                 <div className="upcoming-conf__container">
                     {this.renderUpcomingEvents()}
                 </div>
