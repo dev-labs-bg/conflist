@@ -78,6 +78,20 @@ class WishList extends Component {
         return monthEventsNumber;
     }
 
+    countPastEvents = () => {
+        let eventsPastLink;
+        if (this.countEventsByMonth(this.pastEvents) > 1) {
+            eventsPastLink = (
+                <span>View all
+                    <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
+                past conferences
+                </span>);
+        } else {
+            eventsPastLink = null;
+        }
+        return eventsPastLink;
+    }
+
     renderAllPastEvents = () => {
         const hiddenCards = [];
         if (this.countEventsByMonth(this.pastEvents) > 1) {
@@ -98,25 +112,12 @@ class WishList extends Component {
             return null;
         }
         const cards = [];
-
         const heading = (
             <h4 key="2" className="mb-3">Last
                 <span className="text-info"> 1 </span>
                 from all Past conferences
             </h4>);
         cards.push(heading);
-
-        let eventsPastLink;
-        if (this.countEventsByMonth(this.pastEvents) > 1) {
-            eventsPastLink = (
-                <span>View all
-                    <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
-                past conferences
-                </span>);
-        } else {
-            eventsPastLink = null;
-        }
-
         _.forEach(this.pastEvents, (group, key) => {
             const firstEvent = _.first(group.data);
             cards.push(
@@ -124,7 +125,7 @@ class WishList extends Component {
                     {
                         <Card key={firstEvent.id} event={firstEvent} past />
                     }
-                    {eventsPastLink}
+                    {this.countPastEvents()}
                 </div>);
         });
 
@@ -137,7 +138,6 @@ class WishList extends Component {
         }
 
         const cards = [];
-
         const heading = (
             <h4 key="1" className="mb-2">Upcoming conferences
                 <span className="text-info"> ({this.countEventsByMonth(this.pastEvents)}) </span>
@@ -160,7 +160,6 @@ class WishList extends Component {
         return cards;
     }
 
-
     render() {
         if (this.props.authToken && this.props.authToken === null) {
             return <h4 className="text-danger text-center">Loading!</h4>;
@@ -172,6 +171,7 @@ class WishList extends Component {
         if (this.props.wishList.error !== null) {
             return <h4 className="text-danger text-center">Error fetching your wanna go list!</h4>;
         }
+
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <h2 className="text-center mb-5">Wanna Go List</h2>
