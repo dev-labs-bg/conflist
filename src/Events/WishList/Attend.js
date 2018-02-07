@@ -25,7 +25,7 @@ class Attend extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isActive: false,
+            isActive: this.props.wishListed,
         };
 
     }
@@ -40,7 +40,6 @@ class Attend extends Component {
         } else {
             this.props.unattendConference(this.props.id, this.props.token);
         }
-
     }
 
     /**
@@ -53,9 +52,7 @@ class Attend extends Component {
             return <HeartFullIcon />;
         }
 
-        if (this.props.wishListed) {
-            return <HeartFullIcon />;
-        }
+
 
         return <HeartIcon />;
     }
