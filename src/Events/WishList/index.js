@@ -218,6 +218,14 @@ class WishList extends Component {
             return <h4 className="text-danger text-center">Error fetching your wanna go list!</h4>;
         }
 
+        if (this.props.wishList.data.length === 0) {
+            return (
+              <div className="container mx-auto pt-5 pb-5">
+                  <h2 className="text-center mb-5">Wanna Go List</h2>
+                  <h4 className="text-danger text-center">Your list is empty!</h4>
+              </div>
+            );
+        }
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <h2 className="text-center mb-5">Wanna Go List</h2>
