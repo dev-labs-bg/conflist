@@ -21,25 +21,28 @@ const initialState = {
 // Reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-    case ATTEND_SUCCEESS:
+    case ATTEND_SUCCEESS: {
+        const event = new Event(action.event);
         return {
             ...state,
             data: [
                 ...state.data,
-                action.id,
+                event,
             ],
         };
+    }
     case ATTEND_FAIL:
         return {
             ...state,
             error: action.error,
         };
-    case UNATTEND_SUCCESS:
-        const data = state.data.filter(id => id !== action.id);
+    case UNATTEND_SUCCESS: {
+        const data = state.data.filter(ev => ev.id !== action.event._id);
         return {
             ...state,
             data: data,
         };
+    }
     case UNATTEND_FAIL:
         return {
             ...state,
@@ -69,10 +72,10 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function attendEventSuccess(id) {
+export function attendEventSuccess(event) {
     return {
         type: ATTEND_SUCCEESS,
-        id,
+        event,
     };
 }
 
@@ -83,10 +86,10 @@ export function attendEventFail(error) {
     };
 }
 
-export function unattendEventSuccess(id) {
+export function unattendEventSuccess(event) {
     return {
         type: UNATTEND_SUCCESS,
-        id,
+        event,
     };
 }
 
@@ -133,7 +136,7 @@ export function attendConference(_eventId, _token) {
     return (dispatch) => {
         API.attendConference(_eventId, _token)
             .then((response) => {
-                dispatch(attendEventSuccess(response.data[0]._id));
+                dispatch(attendEventSuccess(response.data[0]));
             })
             .catch((error) => {
                 dispatch(attendEventFail(error.response));
@@ -145,7 +148,7 @@ export function unattendConference(_eventId, _token) {
     return (dispatch) => {
         API.unattendConference(_eventId, _token)
             .then((response) => {
-                dispatch(unattendEventSuccess(response.data[0]._id));
+                dispatch(unattendEventSuccess(response.data[0]));
             })
             .catch((error) => {
                 dispatch(unattendEventFail(error.response));
