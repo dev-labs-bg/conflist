@@ -68,6 +68,7 @@ class WishList extends Component {
                     data: this.upcomingEvents[month] ?
                         [...this.upcomingEvents[month].data, event] : [event],
                 };
+
             }
         });
     }
@@ -220,10 +221,10 @@ class WishList extends Component {
 
         if (this.props.wishList.data.length === 0) {
             return (
-              <div className="container mx-auto pt-5 pb-5">
-                  <h2 className="text-center mb-5">Wanna Go List</h2>
-                  <h4 className="text-danger text-center">Your list is empty!</h4>
-              </div>
+                <div className="container mx-auto pt-5 pb-5">
+                    <h2 className="text-center mb-5">Wanna Go List</h2>
+                    <h4 className="text-danger text-center">Your list is empty!</h4>
+                </div>
             );
         }
         return (
