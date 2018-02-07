@@ -28,10 +28,9 @@ class HomePage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         if (nextProps.auth.isAuthenticated && nextProps.wishList.data.length === 0) {
-
-            this.props.fetchWishList(nextProps.auth.token);
+            console.log(nextProps)
+            //this.props.fetchWishList(nextProps.auth.token);
         }
 
     }
