@@ -53,6 +53,10 @@ class Attend extends Component {
             return <HeartFullIcon />;
         }
 
+        if (this.props.wishListed) {
+            return <HeartFullIcon />;
+        }
+
         return <HeartIcon />;
     }
 
