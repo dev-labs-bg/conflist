@@ -11,7 +11,6 @@ class CardList extends Component {
         super(props);
 
         this.eventsGroupedByMonth = {};
-
         this.props.events.forEach((event) => {
             const month = moment(event.start).format('MMMM|YYYY');
 
@@ -40,8 +39,11 @@ class CardList extends Component {
                         { group.month }
                     </h2>
                     {
-                        group.data.map(event =>
-                            <Card key={event.id} event={event} />)
+                        group.data.map((event) => {
+                            return _.indexOf(this.props.wishListIds, event.id) !== -1 ?
+                                <Card key={event.id} event={event} wishListed /> :
+                                <Card key={event.id} event={event} />;
+                        })
                     }
                 </div>);
         });
@@ -60,9 +62,11 @@ class CardList extends Component {
 
 CardList.propTypes = {
     events: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+    wishListIds: PropTypes.arrayOf(PropTypes.string),
 };
 CardList.defaultProps = {
     events: [],
+    wishListIds: [],
 };
 
 export default CardList;
