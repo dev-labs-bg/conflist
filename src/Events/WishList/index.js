@@ -186,7 +186,7 @@ class WishList extends Component {
         const cards = [];
         const heading = (
             <h4 key="1" className="mb-2">Upcoming conferences
-                <span className="text-info"> ({this.countEventsByMonth(this.pastEvents)}) </span>
+                <span className="text-info"> ({this.countEventsByMonth(this.upcomingEvents)}) </span>
             </h4>);
         cards.push(heading);
 
@@ -198,7 +198,7 @@ class WishList extends Component {
                     </h2>
                     {
                         group.data.map(event =>
-                            <Card key={event.id} event={event} />)
+                            <Card key={event.id} event={event} wishListed />)
                     }
                 </div>);
         });
