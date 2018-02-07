@@ -19,9 +19,18 @@ class HomePage extends Component {
             isAuthenticated: PropTypes.bool,
             token: PropTypes.string,
         }).isRequired,
+        wishList: PropTypes.shape({
+            data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+            isFething: PropTypes.bool,
+        }),
         fetchConferences: PropTypes.func.isRequired,
         fetchWishList: PropTypes.func.isRequired,
+
     };
+
+    static defaultProps = {
+        wishList: {},
+    }
 
     componentDidMount() {
         this.props.fetchConferences(() => {
@@ -62,7 +71,7 @@ class HomePage extends Component {
         return (
             <EventsList
                 events={this.props.events.data || undefined}
-                wishListIds={this.props.wishList.data.map(ev => ev.id)}
+                wishList={this.props.wishList.data}
             />
         );
     }
