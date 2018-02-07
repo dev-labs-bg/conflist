@@ -60,7 +60,10 @@ class HomePage extends Component {
         }
 
         return (
-            <EventsList events={this.props.events.data || undefined} />
+            <EventsList
+                events={this.props.events.data || undefined}
+                wishListIds={this.props.wishList.data.map(ev => ev.id)}
+            />
         );
     }
 }
