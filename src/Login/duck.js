@@ -46,6 +46,7 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
             isAuthenticated: !!token,
+            isLoading: false,
             token,
         };
     default: return state;

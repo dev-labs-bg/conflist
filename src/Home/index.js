@@ -24,15 +24,11 @@ class HomePage extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchConferences();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated && nextProps.wishList.data.length === 0) {
-            console.log(nextProps)
-            //this.props.fetchWishList(nextProps.auth.token);
-        }
-
+        this.props.fetchConferences(() => {
+            if (this.props.auth.isAuthenticated) {
+                this.props.fetchWishList(this.props.auth.token);
+            }
+        });
     }
 
     render() {

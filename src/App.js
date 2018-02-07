@@ -41,7 +41,7 @@ class App extends Component {
     render() {
         const { isAuthenticated, isLoading, error } = this.props.auth;
 
-        if (isLoading) {
+        if (isLoading || isLoading === null) {
             return (<p>Loading!</p>);
         }
 
