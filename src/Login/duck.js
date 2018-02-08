@@ -41,7 +41,7 @@ export default function reducer(state = initialState, action = {}) {
         return {
             ...state,
         };
-    case GET:
+    case GET: {
         const token = localStorage.getItem('token');
         return {
             ...state,
@@ -49,6 +49,7 @@ export default function reducer(state = initialState, action = {}) {
             isLoading: false,
             token,
         };
+    }
     default: return state;
     }
 }
@@ -96,7 +97,7 @@ export function jwtTokenRequest() {
                 dispatch(setToken(response.data.token));
             })
             .catch((e) => {
-                dispatch(tokenFail(e));
+                dispatch(tokenFail(e.response.status));
             });
     };
 }
