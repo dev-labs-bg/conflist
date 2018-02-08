@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import * as _ from 'lodash';
 import Event from '../Event';
 
 import Card from '../../common/Card';
 import { fetchWishList } from './duck';
+import { orderEventsByMonth } from '../../service';
 
 class WishList extends Component {
     static propTypes = {
@@ -29,7 +29,8 @@ class WishList extends Component {
     }
 
     componentDidMount() {
-        this.fetchWishListIfNeeded();
+        this.props.fetchWishList(this.props.authToken);
+        // this.fetchWishListIfNeeded();
     }
 
     fetchWishListIfNeeded() {
@@ -43,6 +44,7 @@ class WishList extends Component {
             console.log((new Date().valueOf() - lastFetched));
 
             if ((date - lastFetched) >= 15000) {
+                this.props.wishList.data = 0;
                 this.props.fetchWishList(this.props.authToken);
             }
         }
@@ -216,45 +218,14 @@ class WishList extends Component {
         );
     }
 }
-this.pastEvents = {};
-this.upcomingEvents = {};
-
-const orderEventsByMonth = (_wishList) => {
-    if (_wishList.data.length === 0) {
-        return;
-    }
-    if (_wishList.isFetching && _wishList.isFetching === null) {
-        return;
-    }
-
-    _wishList.data.forEach((event) => {
-        const month = moment(event.start).format('MMMM');
-        const monthIsPast = moment().isAfter(event.start);
-
-        if (monthIsPast) {
-            this.pastEvents[month] = {
-                month: moment(event.start).format('MMMM'),
-                data: this.pastEvents[month] ?
-                    [...this.pastEvents[month].data, event] : [event],
-            };
-        } else {
-            this.upcomingEvents[month] = {
-                month: moment(event.start).format('MMMM'),
-                data: this.upcomingEvents[month] ?
-                    [...this.upcomingEvents[month].data, event] : [event],
-            };
-        }
-    });
-
-};
 
 const mapStateToProps = ({ wishList, auth }) => {
-    orderEventsByMonth(wishList);
+    const { pastEvents, upcomingEvents } = orderEventsByMonth(wishList);
 
     return {
         wishList,
-        upcomingEvents: this.upcomingEvents,
-        pastEvents: this.pastEvents,
+        pastEvents,
+        upcomingEvents,
         authToken: auth.token,
     };
 };
