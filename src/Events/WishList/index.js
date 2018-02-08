@@ -14,6 +14,7 @@ class WishList extends Component {
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
             isFetching: PropTypes.bool,
             error: PropTypes.number,
+            lastFetched: PropTypes.number,
         }).isRequired,
         authToken: PropTypes.string.isRequired,
         fetchWishList: PropTypes.func.isRequired,
@@ -25,52 +26,27 @@ class WishList extends Component {
         this.state = {
             togglePastEvents: false,
         };
-
-        /**
-         *
-         * Object with upcoming events grouped by each month in object with
-         * key = month,
-         * data = events data in array
-         *
-         * @type {Object}
-         */
-        this.upcomingEvents = {};
-        /**
-         *
-         * Object with already past events from the today
-         * grouped by each month in object with
-         * key = month,
-         * data = events data in array
-         *
-         * @type {Object}
-         */
-        this.pastEvents = {};
     }
 
     componentDidMount() {
-        this.props.fetchWishList(this.props.authToken);
+        this.fetchWishListIfNeeded();
     }
 
-    componentWillReceiveProps(nextProps) {
-        nextProps.wishList.data.forEach((event) => {
-            const month = moment(event.start).format('MMMM');
-            const monthIsPast = moment().isAfter(event.start);
+    fetchWishListIfNeeded() {
+        if (this.props.wishList.data.length === 0) {
+            this.props.fetchWishList(this.props.authToken);
+        } else {
+            const { lastFetched } = this.props.wishList;
+            const date = new Date().valueOf();
+            console.log(date)
+            console.log(lastFetched)
+            console.log((new Date().valueOf() - lastFetched));
 
-            if (monthIsPast) {
-                this.pastEvents[month] = {
-                    month: moment(event.start).format('MMMM'),
-                    data: this.pastEvents[month] ?
-                        [...this.pastEvents[month].data, event] : [event],
-                };
-            } else {
-                this.upcomingEvents[month] = {
-                    month: moment(event.start).format('MMMM'),
-                    data: this.upcomingEvents[month] ?
-                        [...this.upcomingEvents[month].data, event] : [event],
-                };
-
+            if ((date - lastFetched) >= 15000) {
+                this.props.fetchWishList(this.props.authToken);
             }
-        });
+        }
+
     }
 
     changeState = () => {
@@ -100,7 +76,7 @@ class WishList extends Component {
      * @return {JSX}
      */
     countPastEvents = () => {
-        if (this.countEventsByMonth(this.pastEvents) <= 1) {
+        if (this.countEventsByMonth(this.props.pastEvents) <= 1) {
             return null;
         }
 
@@ -110,7 +86,7 @@ class WishList extends Component {
 
         return (
             <span onClick={this.changeState} role="button" >View all
-                <span className="text-info"> {this.countEventsByMonth(this.pastEvents)} </span>
+                <span className="text-info"> {this.countEventsByMonth(this.props.pastEvents)} </span>
             past conferences
             </span>
         );
@@ -121,7 +97,7 @@ class WishList extends Component {
      * @return {Array}
      */
     renderPastEvent = () => {
-        if (_.isEmpty(this.pastEvents)) {
+        if (_.isEmpty(this.props.pastEvents)) {
             return null;
         }
         const cards = [];
@@ -132,7 +108,7 @@ class WishList extends Component {
             </h4>);
         cards.push(heading);
 
-        _.forEach(this.pastEvents, (group, key) => {
+        _.forEach(this.props.pastEvents, (group, key) => {
             const firstEvent = _.first(group.data);
             cards.push(
                 <div key={key} className="mb-5">
@@ -153,14 +129,14 @@ class WishList extends Component {
      * @return {Array}
      */
     renderAllPastEvents = () => {
-        const isThereOnlyOneEvent = this.countEventsByMonth(this.pastEvents) <= 1;
+        const isThereOnlyOneEvent = this.countEventsByMonth(this.props.pastEvents) <= 1;
 
         if (isThereOnlyOneEvent) {
             return [];
         }
 
         const hiddenCards = [];
-        _.forEach(this.pastEvents, (group, key) => {
+        _.forEach(this.props.pastEvents, (group, key) => {
             const lastEvents = _.tail(group.data);
             hiddenCards.push(
                 <div key={key} className="mb-5">
@@ -180,18 +156,18 @@ class WishList extends Component {
      * @return {Array}
      */
     renderUpcomingEvents = () => {
-        if (_.isEmpty(this.upcomingEvents)) {
+        if (_.isEmpty(this.props.upcomingEvents)) {
             return null;
         }
 
         const cards = [];
         const heading = (
             <h4 key="1" className="mb-2">Upcoming conferences
-                <span className="text-info"> ({this.countEventsByMonth(this.upcomingEvents)}) </span>
+                <span className="text-info"> ({this.countEventsByMonth(this.props.upcomingEvents)}) </span>
             </h4>);
         cards.push(heading);
 
-        _.forEach(this.upcomingEvents, (group, key) => {
+        _.forEach(this.props.upcomingEvents, (group, key) => {
             cards.push(
                 <div key={key} className="mb-5">
                     <h2 className="cards-date font-weight-normal">
@@ -240,10 +216,45 @@ class WishList extends Component {
         );
     }
 }
+this.pastEvents = {};
+this.upcomingEvents = {};
+
+const orderEventsByMonth = (_wishList) => {
+    if (_wishList.data.length === 0) {
+        return;
+    }
+    if (_wishList.isFetching && _wishList.isFetching === null) {
+        return;
+    }
+
+    _wishList.data.forEach((event) => {
+        const month = moment(event.start).format('MMMM');
+        const monthIsPast = moment().isAfter(event.start);
+
+        if (monthIsPast) {
+            this.pastEvents[month] = {
+                month: moment(event.start).format('MMMM'),
+                data: this.pastEvents[month] ?
+                    [...this.pastEvents[month].data, event] : [event],
+            };
+        } else {
+            this.upcomingEvents[month] = {
+                month: moment(event.start).format('MMMM'),
+                data: this.upcomingEvents[month] ?
+                    [...this.upcomingEvents[month].data, event] : [event],
+            };
+        }
+    });
+
+};
 
 const mapStateToProps = ({ wishList, auth }) => {
+    orderEventsByMonth(wishList);
+
     return {
         wishList,
+        upcomingEvents: this.upcomingEvents,
+        pastEvents: this.pastEvents,
         authToken: auth.token,
     };
 };
