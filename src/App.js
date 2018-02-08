@@ -16,7 +16,7 @@ import { fetchCurrentUser } from './ProfileSettings/duck';
 class App extends Component {
     static propTypes = {
         auth: PropTypes.shape({
-            error: PropTypes.string,
+            error: PropTypes.number,
             isAuthenticated: PropTypes.bool,
             token: PropTypes.string,
             isLoading: PropTypes.bool,

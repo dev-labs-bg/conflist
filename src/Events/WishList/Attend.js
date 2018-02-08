@@ -52,8 +52,6 @@ class Attend extends Component {
             return <HeartFullIcon />;
         }
 
-
-
         return <HeartIcon />;
     }
 
