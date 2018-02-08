@@ -16,6 +16,7 @@ const initialState = {
     data: [],
     error: null,
     isFetching: null,
+    lastFetched: null,
 };
 
 // Reducer
@@ -59,6 +60,7 @@ export default function reducer(state = initialState, action = {}) {
             ...state,
             data: events,
             isFetching: false,
+            lastFetched: new Date().valueOf(),
         };
     }
     case WISHLIST_FAIL:
