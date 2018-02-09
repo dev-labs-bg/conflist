@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import HeartFullIcon from '../../common/HeartFullIcon';
 import PopoverItem from '../../common/PopoverItem';
 import Event from '../Event';
 import { getFormattedDate } from '../../core/Dates';
 import { fetchConferenceDeatails } from './duck';
+import { attendConference } from '../WishList/duck';
 
 class InsidePage extends Component {
     static propTypes = {
@@ -17,24 +19,111 @@ class InsidePage extends Component {
         }),
         alias: PropTypes.string.isRequired,
         fetchConferenceDeatails: PropTypes.func.isRequired,
+        attendConference: PropTypes.func,
     };
     static defaultProps = {
         event: {},
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isUpdated: false,
+            error: null,
+            isNotAuth: false,
+            alreadyUpdated: false,
+        }
+    }
     componentDidMount() {
         this.props.fetchConferenceDeatails(this.props.alias);
     }
 
+    addToWishList = () => {
+        const successCallback = () => {
+            this.setState({ isUpdated: true });
+
+            this.handleDelayedMessageReset();
+        };
+        const errorCallback = (status) => {
+            this.setState({ error: status });
+
+            this.handleDelayedMessageReset();
+        };
+
+        if (this.props.auth.isAuthenticated && !this.state.isUpdated) {
+            this.props.attendConference(
+                this.props.event.data.id,
+                this.props.auth.token,
+                successCallback,
+                errorCallback
+            );
+            return;
+        } else if (!this.props.auth.isAuthenticated) {
+            this.setState({ isNotAuth: true });
+        } 
+        if (this.state.isUpdated) {
+            this.setState({ alreadyUpdated: true });
+        }
+
+    }
+
+    handleDelayedMessageReset = () => {
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
+            this.setState({ error: null, isUpdated: null });
+        }, 10000);
+    }
+
+    renderMessage(_error, _isUpdated, _isNotAuth, _alreadyUpdated) {
+        if (_isUpdated) {
+            return (
+                <h4 className="text-danger text-center mt-3">
+                    You added this conference to your Wanna Go List successfully!
+                </h4>);
+        }
+
+        if (isNaN(_error)) {
+            return (
+                <h4 className="text-danger text-center mt-3">
+                    {_error}
+                </h4>);
+        }
+
+        if (_error !== null) {
+            return (
+                <h4 className="text-danger text-center mt-3">
+                    Error with status {_error}. Try again!
+                </h4>);
+        }
+
+        if(_isNotAuth) {
+            return (
+                <h4 className="text-danger text-center mt-3">
+                    Login or Register so you can add conferences to your Wanna Go List!
+                </h4>);
+        }
+
+        if (_alreadyUpdated) {
+            return (
+                <h4 className="text-danger text-center mt-3">
+                    You already added this conference to your Wanna Go List!
+                </h4>);
+        }
+
+        return null;
+    }
+
     renderSpeakers() {
         const renderImages = [];
-        this.props.event.data.speakers.map((speaker) => {
+        this.props.event.data.speakers.map((speaker, key) => {
             renderImages.push(
-                <div className="d-inline" key={speaker.id} >
-                    <PopoverItem key={speaker.id} item={speaker} id={speaker.id}>
+                <div className="d-inline" key={key} >
+                    <PopoverItem key={key} item={speaker} id={key}>
                         <img
                             className="rounded-circle mr-2"
-                            key={speaker.id}
+                            key={key}
                             src={speaker.pictureUrl}
                             width="40"
                             height="40"
@@ -105,20 +194,10 @@ class InsidePage extends Component {
                     </div>
 
                     <div className="mb-4 text-bottom d-flex">
-                        <svg className="mr-1" width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                            <defs />
-                            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                                <g id="conflist-home-page-logged-in" transform="translate(-986.000000, -677.000000)">
-                                    <g id="conf-card" transform="translate(309.000000, 639.000000)">
-                                        <g id="ic_favorite_black_24px-(1)" transform="translate(675.000000, 35.000000)">
-                                            <polygon id="Shape" points="0 0 24 0 24 24 0 24" />
-                                            <path d="M12,21.35 L10.55,20.03 C5.4,15.36 2,12.28 2,8.5 C2,5.42 4.42,3 7.5,3 C9.24,3 10.91,3.81 12,5.09 C13.09,3.81 14.76,3 16.5,3 C19.58,3 22,5.42 22,8.5 C22,12.28 18.6,15.36 13.45,20.04 L12,21.35 Z" id="Shape" fill="#F2706D" fillRule="nonzero" />
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </svg>
-                        <h5 className="font-weight-normal d-inline">Going: <span className="text-secondary">{data.atendees}</span></h5>
+                        <HeartFullIcon />
+                        <h5 className="ml-1 font-weight-normal d-inline">Going:
+                            <span className="text-secondary">{data.atendees}</span>
+                        </h5>
                     </div>
                     <div dangerouslySetInnerHTML={this.renderDescription()} />
 
@@ -130,25 +209,42 @@ class InsidePage extends Component {
                 </div>
 
                 <div className="text-center">
-                    <button className="btn btn-primary mr-5">Wanna go</button>
-                    <a className="btn btn-secondary" href={data.website}>Go to website</a>
+                    <a
+                        className="btn btn-primary mr-5"
+                        onClick={this.addToWishList}
+                    >Wanna go
+                    </a>
+                    <a
+                        className="btn btn-secondary"
+                        href={data.website}
+                    >Go to website
+                    </a>
                 </div>
+                {this.renderMessage(
+                    this.state.error,
+                    this.state.isUpdated,
+                    this.state.isNotAuth,
+                    this.state.alreadyUpdated
+                )}
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ event }, { location }) => {
+const mapStateToProps = ({ auth, wishList, event }, { location }) => {
     const pathnameArray = location.pathname.split('/');
 
     return {
         event: event[pathnameArray[pathnameArray.length - 1]],
         alias: pathnameArray[pathnameArray.length - 1],
+        auth,
+        wishList,
     };
 };
 
 const mapDispatchToProps = {
     fetchConferenceDeatails,
+    attendConference,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsidePage);

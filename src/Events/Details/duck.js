@@ -70,9 +70,9 @@ export function failEventDetails(alias, error) {
 export function fetchConferenceDeatails(alias) {
     return dispatch => {
         dispatch(requestEventDetails(alias));
-        API.fetchConferenceDeatails()
+        API.fetchConferenceDeatails(alias)
             .then(response => {
-                dispatch(receiveEventDetails(response.data));
+                dispatch(receiveEventDetails(response.data[0]));
             })
             .catch(error => {
                 dispatch(failEventDetails(alias, error.response.status));

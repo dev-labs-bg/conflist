@@ -155,14 +155,17 @@ export function fetchWishListIfNeeded(_token) {
     };
 }
 
-export function attendConference(_eventId, _token) {
+export function attendConference(_eventId, _token, _successCb, _errorCb) {
     return (dispatch) => {
         API.attendConference(_eventId, _token)
             .then((response) => {
                 dispatch(attendEventSuccess(response.data[0]));
+                _successCb(response.data[0]);
             })
             .catch((error) => {
+                console.log(error)
                 dispatch(attendEventFail(error.response));
+                _errorCb(error.response);
             });
     };
 }

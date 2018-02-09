@@ -5,11 +5,9 @@ import { Popover, PopoverBody } from 'reactstrap';
 class PopoverItem extends Component {
     static propTypes = {
         item: PropTypes.shape({
-            id: PropTypes.string,
             name: PropTypes.string,
-            pictureUrl: PropTypes.string,
         }).isRequired,
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         children: PropTypes.object,
 
         // received from parent component Attend

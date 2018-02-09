@@ -34,9 +34,15 @@ class Attend extends Component {
         this.setState({
             isActive: !this.state.isActive,
         });
+        const successCallback = () => {
+            return;
+        };
+        const errorCallback = () => {
+            return;
+        };
 
         if (!this.state.isActive) {
-            this.props.attendConference(this.props.id, this.props.token);
+            this.props.attendConference(this.props.id, this.props.token, successCallback, errorCallback);
         } else {
             this.props.unattendConference(this.props.id, this.props.token);
         }
