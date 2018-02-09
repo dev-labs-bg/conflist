@@ -121,7 +121,7 @@ export function failWishList(error) {
     };
 }
 
-export function fetchWishList(_token) {
+function fetchWishList(_token) {
     return (dispatch) => {
         dispatch(requestWishList());
         API.fetchWishList(_token)
@@ -131,6 +131,23 @@ export function fetchWishList(_token) {
             .catch((error) => {
                 dispatch(failWishList(error.response.status));
             });
+    };
+}
+
+export function fetchWishListIfNeeded(_token, _lastFetched, _wishListData) {
+    return (dispatch) => {
+        const outOfDateAfter = 15 * 60 * 1000; // 15 minutes
+        const isLimitExceeded = (new Date().valueOf() - _lastFetched) > outOfDateAfter;
+
+        if (_wishListData.length === 0) {
+            dispatch(fetchWishList(_token));
+        } else {
+            if (isLimitExceeded) {
+                dispatch(fetchWishList(_token));
+            }
+        }
+            return _wishListData;
+
     };
 }
 

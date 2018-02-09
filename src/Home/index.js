@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Event from '../Events/Event';
 import EventsList from '../Events/List';
 import { fetchConferences } from '../Events/List/duck';
-import { fetchWishList } from '../Events/WishList/duck';
+import { fetchWishListIfNeeded } from '../Events/WishList/duck';
 
 class HomePage extends Component {
     static propTypes = {
@@ -21,11 +21,11 @@ class HomePage extends Component {
         }).isRequired,
         wishList: PropTypes.shape({
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
-            isFething: PropTypes.bool,
+            isFetching: PropTypes.bool,
+            lastFetched: PropTypes.number,
         }),
         fetchConferences: PropTypes.func.isRequired,
-        fetchWishList: PropTypes.func.isRequired,
-
+        fetchWishListIfNeeded: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -35,7 +35,11 @@ class HomePage extends Component {
     componentDidMount() {
         this.props.fetchConferences(() => {
             if (this.props.auth.isAuthenticated) {
-                this.props.fetchWishList(this.props.auth.token);
+                this.props.fetchWishListIfNeeded(
+                    this.props.auth.token,
+                    this.props.wishList.lastFetched,
+                    this.props.wishList.data,
+                );
             }
         });
     }
@@ -44,7 +48,7 @@ class HomePage extends Component {
         const { error } = this.props.events;
         const { isFetching } = this.props.events;
 
-        if (this.props.wishList.isFetching) {
+        if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
             return (
                 <div>
                 Loading...
@@ -87,7 +91,7 @@ const mapStateToProps = ({ events, auth, wishList }) => {
 
 const mapDispatchToProps = {
     fetchConferences,
-    fetchWishList,
+    fetchWishListIfNeeded,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import Event from '../Event';
 
 import Card from '../../common/Card';
-import { fetchWishList } from './duck';
+import { fetchWishListIfNeeded } from './duck';
 import { orderEventsByMonth } from '../../service';
 
 class WishList extends Component {
@@ -17,7 +17,7 @@ class WishList extends Component {
             lastFetched: PropTypes.number,
         }).isRequired,
         authToken: PropTypes.string.isRequired,
-        fetchWishList: PropTypes.func.isRequired,
+        fetchWishListIfNeeded: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -29,26 +29,12 @@ class WishList extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchWishList(this.props.authToken);
-        // this.fetchWishListIfNeeded();
-    }
-
-    fetchWishListIfNeeded() {
-        if (this.props.wishList.data.length === 0) {
-            this.props.fetchWishList(this.props.authToken);
-        } else {
-            const { lastFetched } = this.props.wishList;
-            const date = new Date().valueOf();
-            console.log(date)
-            console.log(lastFetched)
-            console.log((new Date().valueOf() - lastFetched));
-
-            if ((date - lastFetched) >= 15000) {
-                this.props.wishList.data = 0;
-                this.props.fetchWishList(this.props.authToken);
-            }
-        }
-
+        console.log(this.props.lastFetched)
+        this.props.fetchWishListIfNeeded(
+            this.props.authToken,
+            this.props.wishList.lastFetched,
+            this.props.wishList.data,
+        );
     }
 
     changeState = () => {
@@ -231,7 +217,7 @@ const mapStateToProps = ({ wishList, auth }) => {
 };
 
 const mapDispatchToProps = {
-    fetchWishList,
+    fetchWishListIfNeeded,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WishList);
