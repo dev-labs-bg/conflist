@@ -1,17 +1,23 @@
 import moment from 'moment';
 
-export const orderEventsByMonth = (_wishList) => {
+/**
+ * Order Events based on their date
+ * @param  {Array} _eventsList [array of Events]
+ * @return {object} { pastEvents, upcomingEvents }
+ */
+
+export const orderEventsByMonth = (_eventsList) => {
     const pastEvents = {};
     const upcomingEvents = {};
 
-    if (_wishList.data.length === 0) {
+    if (_eventsList.data.length === 0) {
         return {};
     }
-    if (_wishList.isFetching && _wishList.isFetching === null) {
+    if (_eventsList.isFetching && _eventsList.isFetching === null) {
         return {};
     }
 
-    _wishList.data.forEach((event) => {
+    _eventsList.data.forEach((event) => {
         const month = moment(event.start).format('MMMM');
         const monthIsPast = moment().isAfter(event.start);
 
