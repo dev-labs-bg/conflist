@@ -137,12 +137,19 @@ function fetchWishList(_token) {
 export function fetchWishListIfNeeded(_token) {
     return (dispatch, getState) => {
         const state = getState().wishList;
+
+        // Case 1
+        const isDataEmptyOrIsTheWishlistNeverFetched =
+            state.data.length === 0 && state.lastFetched === null;
+        if (isDataEmptyOrIsTheWishlistNeverFetched) {
+            dispatch(fetchWishList(_token));
+            return;
+        }
+
+        // Case 2
         const outOfDateAfter = 15 * 60 * 1000; // 15 minutes
         const isLimitExceeded = (new Date().valueOf() - state.lastFetched) > outOfDateAfter;
-
-        if (state.data.length === 0 && state.lastFetched === null) {
-            dispatch(fetchWishList(_token));
-        } else if (isLimitExceeded) {
+        if (isLimitExceeded) {
             dispatch(fetchWishList(_token));
         }
     };
