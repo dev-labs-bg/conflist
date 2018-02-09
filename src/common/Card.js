@@ -33,9 +33,6 @@ class Card extends Component {
     }
 
     renderTags(_tags) {
-        if (_tags === undefined) {
-            return null;
-        }
         const renderTags = [];
         _tags.map((tag) => {
             renderTags.push(<span
