@@ -16,8 +16,25 @@ class WishList extends Component {
             error: PropTypes.number,
             lastFetched: PropTypes.number,
         }).isRequired,
+        upcomingEvents: PropTypes.shape({
+            month: PropTypes.shape({
+                month: PropTypes.string,
+                data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+            }),
+        }),
+        pastEvents: PropTypes.shape({
+            month: PropTypes.shape({
+                month: PropTypes.string,
+                data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+            }),
+        }),
         authToken: PropTypes.string.isRequired,
         fetchWishListIfNeeded: PropTypes.func.isRequired,
+    };
+
+    static defaultProps = {
+        upcomingEvents: {},
+        pastEvents: {},
     };
 
     constructor(props) {
