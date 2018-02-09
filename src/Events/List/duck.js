@@ -62,12 +62,13 @@ export function failEventsList(error) {
     };
 }
 
-export function fetchConferences(state, action) {
+export function fetchConferences(successCb) {
     return dispatch => {
         dispatch(requestEventsList());
         API.fetchConferences()
             .then(response => {
                 dispatch(receiveEventsList(response.data));
+                successCb();
             })
             .catch(error => {
                 dispatch(failEventsList(error.response));

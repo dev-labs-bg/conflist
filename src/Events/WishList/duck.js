@@ -16,30 +16,34 @@ const initialState = {
     data: [],
     error: null,
     isFetching: null,
+    lastFetched: null,
 };
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-    case ATTEND_SUCCEESS:
+    case ATTEND_SUCCEESS: {
+        const event = new Event(action.event);
         return {
             ...state,
             data: [
                 ...state.data,
-                action.id,
+                event,
             ],
         };
+    }
     case ATTEND_FAIL:
         return {
             ...state,
             error: action.error,
         };
-    case UNATTEND_SUCCESS:
-        const data = state.data.filter(id => id !== action.id);
+    case UNATTEND_SUCCESS: {
+        const data = state.data.filter(ev => ev.id !== action.event._id);
         return {
             ...state,
             data: data,
         };
+    }
     case UNATTEND_FAIL:
         return {
             ...state,
@@ -56,6 +60,7 @@ export default function reducer(state = initialState, action = {}) {
             ...state,
             data: events,
             isFetching: false,
+            lastFetched: new Date().valueOf(),
         };
     }
     case WISHLIST_FAIL:
@@ -69,10 +74,10 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function attendEventSuccess(id) {
+export function attendEventSuccess(event) {
     return {
         type: ATTEND_SUCCEESS,
-        id,
+        event,
     };
 }
 
@@ -83,10 +88,10 @@ export function attendEventFail(error) {
     };
 }
 
-export function unattendEventSuccess(id) {
+export function unattendEventSuccess(event) {
     return {
         type: UNATTEND_SUCCESS,
-        id,
+        event,
     };
 }
 
@@ -116,8 +121,9 @@ export function failWishList(error) {
     };
 }
 
-export function fetchWishList(_token) {
+function fetchWishList(_token) {
     return (dispatch) => {
+        dispatch(requestWishList());
         API.fetchWishList(_token)
             .then((response) => {
                 dispatch(receiveWishList(response.data));
@@ -128,11 +134,32 @@ export function fetchWishList(_token) {
     };
 }
 
+export function fetchWishListIfNeeded(_token) {
+    return (dispatch, getState) => {
+        const state = getState().wishList;
+
+        // Case 1
+        const isDataEmptyOrIsTheWishlistNeverFetched =
+            state.data.length === 0 && state.lastFetched === null;
+        if (isDataEmptyOrIsTheWishlistNeverFetched) {
+            dispatch(fetchWishList(_token));
+            return;
+        }
+
+        // Case 2
+        const outOfDateAfter = 15 * 60 * 1000; // 15 minutes
+        const isLimitExceeded = (new Date().valueOf() - state.lastFetched) > outOfDateAfter;
+        if (isLimitExceeded) {
+            dispatch(fetchWishList(_token));
+        }
+    };
+}
+
 export function attendConference(_eventId, _token) {
     return (dispatch) => {
         API.attendConference(_eventId, _token)
             .then((response) => {
-                dispatch(attendEventSuccess(response.data[0]._id));
+                dispatch(attendEventSuccess(response.data[0]));
             })
             .catch((error) => {
                 dispatch(attendEventFail(error.response));
@@ -144,7 +171,7 @@ export function unattendConference(_eventId, _token) {
     return (dispatch) => {
         API.unattendConference(_eventId, _token)
             .then((response) => {
-                dispatch(unattendEventSuccess(response.data[0]._id));
+                dispatch(unattendEventSuccess(response.data[0]));
             })
             .catch((error) => {
                 dispatch(unattendEventFail(error.response));

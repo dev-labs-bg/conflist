@@ -14,6 +14,7 @@ class Card extends Component {
         event: PropTypes.instanceOf(Event).isRequired,
         authToken: PropTypes.string.isRequired,
         past: PropTypes.bool,
+        wishListed: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -31,9 +32,9 @@ class Card extends Component {
         return { __html: this.props.event.shortDescription };
     }
 
-    renderTags() {
+    renderTags(_tags) {
         const renderTags = [];
-        this.props.event.tags.map((tag) => {
+        _tags.map((tag) => {
             renderTags.push(<span
                 key={tag}
                 className="badge badge-pill badge-light mr-2"
@@ -70,6 +71,7 @@ class Card extends Component {
                                 id={event.id}
                                 token={this.props.authToken}
                                 past={this.props.past ? true : false}
+                                wishListed={this.props.wishListed}
                             />
                             <span className="font-weight-normal align-top">{event.atendees}</span>
                         </div>
@@ -87,7 +89,7 @@ class Card extends Component {
                     />
 
                     <div className="d-flex justify-content-end">
-                        {this.renderTags()}
+                        {this.renderTags(event.tags)}
                     </div>
 
                 </div>

@@ -15,6 +15,7 @@ class Attend extends Component {
         attendConference: PropTypes.func.isRequired,
         unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
+        wishListed: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -24,8 +25,9 @@ class Attend extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isActive: false,
+            isActive: this.props.wishListed,
         };
+
     }
 
     handleToggleActive = () => {
@@ -47,23 +49,17 @@ class Attend extends Component {
      */
     renderIcon = (isActive) => {
         if (isActive) {
-            return (
-                <HeartFullIcon />
-            );
+            return <HeartFullIcon />;
         }
 
-        if (this.props.past) {
-            return (
-                <PastEventIcon />
-            );
-        }
-
-        return (
-            <HeartIcon />
-        );
+        return <HeartIcon />;
     }
 
     render() {
+        if (this.props.past) {
+            return <PastEventIcon />;
+        }
+
         return (
             <PopoverItem
                 id={this.props.id}
