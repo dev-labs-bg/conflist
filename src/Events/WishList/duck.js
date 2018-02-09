@@ -134,20 +134,17 @@ function fetchWishList(_token) {
     };
 }
 
-export function fetchWishListIfNeeded(_token, _lastFetched, _wishListData) {
-    return (dispatch) => {
+export function fetchWishListIfNeeded(_token) {
+    return (dispatch, getState) => {
+        const state = getState().wishList;
         const outOfDateAfter = 15 * 60 * 1000; // 15 minutes
-        const isLimitExceeded = (new Date().valueOf() - _lastFetched) > outOfDateAfter;
+        const isLimitExceeded = (new Date().valueOf() - state.lastFetched) > outOfDateAfter;
 
-        if (_wishListData.length === 0) {
+        if (state.data.length === 0 && state.lastFetched === null) {
             dispatch(fetchWishList(_token));
-        } else {
-            if (isLimitExceeded) {
-                dispatch(fetchWishList(_token));
-            }
+        } else if (isLimitExceeded) {
+            dispatch(fetchWishList(_token));
         }
-            return _wishListData;
-
     };
 }
 

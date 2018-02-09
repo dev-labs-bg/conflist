@@ -35,11 +35,7 @@ class HomePage extends Component {
     componentDidMount() {
         this.props.fetchConferences(() => {
             if (this.props.auth.isAuthenticated) {
-                this.props.fetchWishListIfNeeded(
-                    this.props.auth.token,
-                    this.props.wishList.lastFetched,
-                    this.props.wishList.data,
-                );
+                this.props.fetchWishListIfNeeded(this.props.auth.token);
             }
         });
     }
@@ -47,14 +43,6 @@ class HomePage extends Component {
     render() {
         const { error } = this.props.events;
         const { isFetching } = this.props.events;
-
-        if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
-            return (
-                <div>
-                Loading...
-                </div>
-            );
-        }
 
         if (error !== null) {
             return (
@@ -65,6 +53,14 @@ class HomePage extends Component {
         }
 
         if (isFetching) {
+            return (
+                <div>
+                Loading...
+                </div>
+            );
+        }
+
+        if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
             return (
                 <div>
                 Loading...

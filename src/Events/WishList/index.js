@@ -29,12 +29,7 @@ class WishList extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.lastFetched)
-        this.props.fetchWishListIfNeeded(
-            this.props.authToken,
-            this.props.wishList.lastFetched,
-            this.props.wishList.data,
-        );
+        this.props.fetchWishListIfNeeded(this.props.authToken);
     }
 
     changeState = () => {
@@ -175,6 +170,7 @@ class WishList extends Component {
         if (this.props.authToken && this.props.authToken === null) {
             return <h4 className="text-danger text-center">Loading!</h4>;
         }
+
         if (this.props.wishList.isFetching && this.props.wishList.isFetching === null) {
             return <h4 className="text-danger text-center">Loading!</h4>;
         }
