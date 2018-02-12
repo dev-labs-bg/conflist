@@ -15,11 +15,12 @@ class Attend extends Component {
         attendConference: PropTypes.func.isRequired,
         unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
-        wishListed: PropTypes.bool.isRequired,
+        wishListed: PropTypes.bool,
     };
 
     static defaultProps = {
         past: false,
+        wishListed: false,
     };
 
     constructor(props) {
