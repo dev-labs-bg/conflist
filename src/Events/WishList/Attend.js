@@ -20,6 +20,7 @@ class Attend extends Component {
 
     static defaultProps = {
         past: false,
+        wishListed: false,
     };
 
     constructor(props) {
@@ -27,7 +28,6 @@ class Attend extends Component {
         this.state = {
             isActive: this.props.wishListed,
         };
-
     }
 
     handleToggleActive = () => {

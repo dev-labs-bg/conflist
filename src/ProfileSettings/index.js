@@ -34,7 +34,6 @@ class ProfileSettings extends Component {
             error: null,
             isValid: false,
         };
-        let message;
         this.handleChange = this.handleChange.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
     }
