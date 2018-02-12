@@ -7,7 +7,7 @@ import PopoverItem from '../../common/PopoverItem';
 import Event from '../Event';
 import { getFormattedDate } from '../../core/Dates';
 import { fetchConferenceDeatails } from './duck';
-import { attendConference } from '../WishList/duck';
+import { attendConference, fetchWishListIfNeeded } from '../WishList/duck';
 
 class InsidePage extends Component {
     static propTypes = {
@@ -39,6 +39,9 @@ class InsidePage extends Component {
 
     componentDidMount() {
         this.props.fetchConferenceDeatails(this.props.alias);
+        if (this.props.auth.isAuthenticated) {
+            this.props.fetchWishListIfNeeded(this.props.auth.token);
+        }
     }
 
     checkEventInWishList = () => {
@@ -48,11 +51,12 @@ class InsidePage extends Component {
             }
 
             this.props.wishList.data.map((event) => {
-
                 // ev.id.indexOf(this.props.event.data.id) === -1 ?
                 //     this.setState({ eventIsInWishList: false }) :
                 //     this.setState({ eventIsInWishList: true });
-                event.id.indexOf(this.props.event.data.id) === -1 ?
+                const isEventInWishList = event.id.indexOf(this.props.event.data.id)
+                console.log(isEventInWishList)
+                isEventInWishList === -1 ?
                     this.setState({ eventIsInWishList: false }) :
                     this.setState({ eventIsInWishList: true });
             });
@@ -60,9 +64,6 @@ class InsidePage extends Component {
             this.setState({ isNotAuth: true });
         }
 
-        if (!this.state.eventIsInWishList) {
-            this.addToWishList();
-        }
 
 
     }
@@ -82,12 +83,14 @@ class InsidePage extends Component {
 
         console.log(this.state.eventIsInWishList)
 
-        this.props.attendConference(
-            this.props.event.data.id,
-            this.props.auth.token,
-            successCallback,
-            errorCallback
-        );
+        if (!this.state.eventIsInWishList) {
+            this.props.attendConference(
+                this.props.event.data.id,
+                this.props.auth.token,
+                successCallback,
+                errorCallback
+            );
+        }
 
     }
 
@@ -269,6 +272,7 @@ const mapStateToProps = ({ auth, wishList, event }, { location }) => {
 
 const mapDispatchToProps = {
     fetchConferenceDeatails,
+    fetchWishListIfNeeded,
     attendConference,
 };
 
