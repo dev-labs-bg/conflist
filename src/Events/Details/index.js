@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as _ from 'lodash';
 
 import HeartFullIcon from '../../common/HeartFullIcon';
 import PopoverItem from '../../common/PopoverItem';
@@ -17,9 +18,13 @@ class InsidePage extends Component {
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
         }),
+        auth: PropTypes.shape({
+            isAuthenticated: PropTypes.bool,
+        }).isRequired,
         alias: PropTypes.string.isRequired,
         fetchConferenceDeatails: PropTypes.func.isRequired,
         attendConference: PropTypes.func,
+        fetchWishListIfNeeded: PropTypes.func,
     };
     static defaultProps = {
         event: {},
@@ -48,24 +53,22 @@ class InsidePage extends Component {
         if (this.props.auth.isAuthenticated) {
             if (this.props.wishList.data.length === 0) {
                 this.setState({ eventIsInWishList: false });
+                this.addToWishList();
             }
-
-            this.props.wishList.data.map((event) => {
-                // ev.id.indexOf(this.props.event.data.id) === -1 ?
-                //     this.setState({ eventIsInWishList: false }) :
-                //     this.setState({ eventIsInWishList: true });
-                const isEventInWishList = event.id.indexOf(this.props.event.data.id)
-                console.log(isEventInWishList)
-                isEventInWishList === -1 ?
-                    this.setState({ eventIsInWishList: false }) :
-                    this.setState({ eventIsInWishList: true });
+            const eventID = this.props.event.data.id;
+            const findEventInWishList = _.find(this.props.wishList.data, function(event) {
+                return event.id === eventID;
             });
+
+            if (typeof findEventInWishList === 'undefined') {
+                this.setState({ eventIsInWishList: false });
+                this.addToWishList();
+            } else {
+                this.setState({ eventIsInWishList: true });
+            }
         } else {
             this.setState({ isNotAuth: true });
         }
-
-
-
     }
 
     addToWishList = () => {
@@ -81,24 +84,26 @@ class InsidePage extends Component {
             this.handleDelayedMessageReset();
         };
 
-        console.log(this.state.eventIsInWishList)
-
         if (!this.state.eventIsInWishList) {
             this.props.attendConference(
                 this.props.event.data.id,
                 this.props.auth.token,
                 successCallback,
-                errorCallback
+                errorCallback,
             );
         }
-
     }
 
     handleDelayedMessageReset = () => {
         clearTimeout(this.timeout);
 
         this.timeout = setTimeout(() => {
-            this.setState({ error: null, isUpdated: null, isNotAuth: null });
+            this.setState({
+                error: null,
+                isUpdated: null,
+                isNotAuth: null,
+                eventIsInWishList: null,
+            });
         }, 10000);
     }
 
