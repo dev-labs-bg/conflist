@@ -10,6 +10,7 @@ import Login from './Login';
 import Gate from './Gate';
 import ProfileSettings from './ProfileSettings';
 import WishList from './Events/WishList';
+import Subscriptions from './MySubscriptions';
 import { getToken } from './Login/duck';
 import { fetchCurrentUser } from './ProfileSettings/duck';
 
@@ -61,6 +62,7 @@ class App extends Component {
                         <Route path="/event" component={EventDetails} />
                         <Route path="/profile-settings" component={ProfileSettings} />
                         <Route path="/wanna-go-list" component={WishList} />
+                        <Route path="/my-subscriptions" component={Subscriptions} />
                     </Switch>
                 </Wrapper>
             );
