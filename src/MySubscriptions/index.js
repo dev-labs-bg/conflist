@@ -8,35 +8,7 @@ class MySubscriptions extends Component {
 
     }
 
-    render () {
-        const noSubscriptions = (
-            <div class="text-center py-5">
-                <div class="mb-5">
-                    <img src={eventIcon} />
-                    <h4>There are no <span class="text-info">Events</span></h4>
-                </div>
-
-                <div class="bg-white card-subscription mx-auto px-5 py-5 text-left">
-                    <div class="px-3">
-                        <h4 class="mb-4">
-                            <span class="text-info">
-                                Subscribe
-                            </span>
-                            to receive updates about the upcoming conferences with #javascript and #web tags
-                        </h4>
-
-                        <div class="text-center mb-5">
-                            <button class="btn btn-primary">Sounds good</button>
-                        </div>
-
-                        <h6>
-                            <span class="text-info"> PS: </span>
-                            You can always manage your subscription list and unsubscribe.
-                        </h6>
-                    </div>
-                </div>
-            </div>
-        );
+    render() {
         return (
             <div className="py-5">
                 <h1 className="text-center mb-5">My Subscriptions</h1>
