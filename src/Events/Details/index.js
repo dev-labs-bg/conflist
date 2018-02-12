@@ -65,9 +65,11 @@ class InsidePage extends Component {
                 this.addToWishList();
             } else {
                 this.setState({ eventIsInWishList: true });
+                this.handleDelayedMessageReset();
             }
         } else {
             this.setState({ isNotAuth: true });
+            this.handleDelayedMessageReset();
         }
     }
 
