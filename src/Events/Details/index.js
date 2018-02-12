@@ -49,27 +49,32 @@ class InsidePage extends Component {
         }
     }
 
-    checkEventInWishList = () => {
-        if (this.props.auth.isAuthenticated) {
-            if (this.props.wishList.data.length === 0) {
-                this.setState({ eventIsInWishList: false });
-                this.addToWishList();
-            }
-            const eventID = this.props.event.data.id;
-            const findEventInWishList = _.find(this.props.wishList.data, function(event) {
-                return event.id === eventID;
-            });
+    isEventInWhishlist = (_eventID, _wishlist) => {
+        const event = _.find(_wishlist.data, e => e.id === _eventID);
 
-            if (typeof findEventInWishList === 'undefined') {
-                this.setState({ eventIsInWishList: false });
-                this.addToWishList();
-            } else {
-                this.setState({ eventIsInWishList: true });
-                this.handleDelayedMessageReset();
-            }
-        } else {
+        return typeof event !== 'undefined';
+    }
+
+    checkEventInWishList = () => {
+        // Case 1
+        if (!this.props.auth.isAuthenticated) {
             this.setState({ isNotAuth: true });
             this.handleDelayedMessageReset();
+
+            return;
+        }
+
+        // Case 2
+        const eventID = this.props.event.data.id;
+        const isEventInWhishlist =
+            this.isEventInWhishlist(eventID, this.props.wishList);
+
+        if (isEventInWhishlist) {
+            this.setState({ eventIsInWishList: true });
+            this.handleDelayedMessageReset();
+        } else {
+            this.setState({ eventIsInWishList: false });
+            this.addToWishList();
         }
     }
 
