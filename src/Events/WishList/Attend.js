@@ -15,7 +15,7 @@ class Attend extends Component {
         attendConference: PropTypes.func.isRequired,
         unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
-        wishListed: PropTypes.bool,
+        wishListed: PropTypes.bool.isRequired,
     };
 
     static defaultProps = {
@@ -27,22 +27,15 @@ class Attend extends Component {
         this.state = {
             isActive: this.props.wishListed,
         };
-
     }
 
     handleToggleActive = () => {
         this.setState({
             isActive: !this.state.isActive,
         });
-        const successCallback = () => {
-            return;
-        };
-        const errorCallback = () => {
-            return;
-        };
 
         if (!this.state.isActive) {
-            this.props.attendConference(this.props.id, this.props.token, successCallback, errorCallback);
+            this.props.attendConference(this.props.id, this.props.token);
         } else {
             this.props.unattendConference(this.props.id, this.props.token);
         }

@@ -155,7 +155,7 @@ export function fetchWishListIfNeeded(_token) {
     };
 }
 
-export function attendConference(_eventId, _token, _successCb, _errorCb) {
+export function attendConference(_eventId, _token, _successCb = () => {}, _errorCb = () => {}) {
     return (dispatch) => {
         API.attendConference(_eventId, _token)
             .then((response) => {
@@ -163,7 +163,6 @@ export function attendConference(_eventId, _token, _successCb, _errorCb) {
                 _successCb(response.data[0]);
             })
             .catch((error) => {
-
                 dispatch(attendEventFail(error.response));
                 _errorCb(error.response);
             });

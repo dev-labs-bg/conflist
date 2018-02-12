@@ -19,8 +19,12 @@ class InsidePage extends Component {
             lastFetched: PropTypes.number,
         }),
         auth: PropTypes.shape({
-            isAuthenticated: PropTypes.bool,
-        }).isRequired,
+            isAuthenticated: PropTypes.bool.isRequired,
+            token: PropTypes.string,
+        }),
+        wishList: PropTypes.shape({
+            data: PropTypes.instanceOf(Event),
+        }),
         alias: PropTypes.string.isRequired,
         fetchConferenceDeatails: PropTypes.func.isRequired,
         attendConference: PropTypes.func,
@@ -28,6 +32,10 @@ class InsidePage extends Component {
     };
     static defaultProps = {
         event: {},
+        wishList: {},
+        auth: {},
+        attendConference: () => {},
+        fetchWishListIfNeeded: () => {},
     };
 
     constructor(props) {
@@ -38,8 +46,7 @@ class InsidePage extends Component {
             error: null,
             isNotAuth: false,
             eventIsInWishList: false,
-        }
-
+        };
     }
 
     componentDidMount() {
@@ -114,42 +121,34 @@ class InsidePage extends Component {
         }, 10000);
     }
 
-    renderMessage(_error, _isUpdated, _isNotAuth, _eventIsInWishList) {
-        if (_isUpdated) {
+    renderMessage() {
+        if (this.state.isUpdated) {
             return (
                 <h4 className="text-danger text-center mt-3">
                     You added this conference to your Wanna Go List successfully!
                 </h4>);
         }
 
-        if (isNaN(_error)) {
+        if (this.state.error !== null) {
             return (
                 <h4 className="text-danger text-center mt-3">
-                    {_error}
+                    Error with status {this.state.error}. Try again!
                 </h4>);
         }
 
-        if (_error !== null) {
-            return (
-                <h4 className="text-danger text-center mt-3">
-                    Error with status {_error}. Try again!
-                </h4>);
-        }
-
-        if(_isNotAuth) {
+        if (this.state.isNotAuth) {
             return (
                 <h4 className="text-danger text-center mt-3">
                     Login or Register so you can add conferences to your Wanna Go List!
                 </h4>);
         }
 
-        if (_eventIsInWishList) {
+        if (this.state.eventIsInWishList) {
             return (
                 <h4 className="text-danger text-center mt-3">
                     You already added this conference to your Wanna Go List!
                 </h4>
             );
-
         }
 
         return null;
@@ -260,12 +259,7 @@ class InsidePage extends Component {
                     >Go to website
                     </a>
                 </div>
-                {this.renderMessage(
-                    this.state.error,
-                    this.state.isUpdated,
-                    this.state.isNotAuth,
-                    this.state.eventIsInWishList,
-                )}
+                {this.renderMessage()}
             </div>
         );
     }
