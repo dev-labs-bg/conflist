@@ -163,7 +163,7 @@ export function attendConference(_eventId, _token, _successCb, _errorCb) {
                 _successCb(response.data[0]);
             })
             .catch((error) => {
-                console.log(error)
+
                 dispatch(attendEventFail(error.response));
                 _errorCb(error.response);
             });

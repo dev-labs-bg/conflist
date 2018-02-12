@@ -32,16 +32,45 @@ class InsidePage extends Component {
             isUpdated: false,
             error: null,
             isNotAuth: false,
-            alreadyUpdated: false,
+            eventIsInWishList: false,
         }
+
     }
+
     componentDidMount() {
         this.props.fetchConferenceDeatails(this.props.alias);
+    }
+
+    checkEventInWishList = () => {
+        if (this.props.auth.isAuthenticated) {
+            if (this.props.wishList.data.length === 0) {
+                this.setState({ eventIsInWishList: false });
+            }
+
+            this.props.wishList.data.map((event) => {
+
+                // ev.id.indexOf(this.props.event.data.id) === -1 ?
+                //     this.setState({ eventIsInWishList: false }) :
+                //     this.setState({ eventIsInWishList: true });
+                event.id.indexOf(this.props.event.data.id) === -1 ?
+                    this.setState({ eventIsInWishList: false }) :
+                    this.setState({ eventIsInWishList: true });
+            });
+        } else {
+            this.setState({ isNotAuth: true });
+        }
+
+        if (!this.state.eventIsInWishList) {
+            this.addToWishList();
+        }
+
+
     }
 
     addToWishList = () => {
         const successCallback = () => {
             this.setState({ isUpdated: true });
+            this.setState({ eventIsInWishList: true });
 
             this.handleDelayedMessageReset();
         };
@@ -51,20 +80,14 @@ class InsidePage extends Component {
             this.handleDelayedMessageReset();
         };
 
-        if (this.props.auth.isAuthenticated && !this.state.isUpdated) {
-            this.props.attendConference(
-                this.props.event.data.id,
-                this.props.auth.token,
-                successCallback,
-                errorCallback
-            );
-            return;
-        } else if (!this.props.auth.isAuthenticated) {
-            this.setState({ isNotAuth: true });
-        } 
-        if (this.state.isUpdated) {
-            this.setState({ alreadyUpdated: true });
-        }
+        console.log(this.state.eventIsInWishList)
+
+        this.props.attendConference(
+            this.props.event.data.id,
+            this.props.auth.token,
+            successCallback,
+            errorCallback
+        );
 
     }
 
@@ -72,11 +95,11 @@ class InsidePage extends Component {
         clearTimeout(this.timeout);
 
         this.timeout = setTimeout(() => {
-            this.setState({ error: null, isUpdated: null });
+            this.setState({ error: null, isUpdated: null, isNotAuth: null });
         }, 10000);
     }
 
-    renderMessage(_error, _isUpdated, _isNotAuth, _alreadyUpdated) {
+    renderMessage(_error, _isUpdated, _isNotAuth, _eventIsInWishList) {
         if (_isUpdated) {
             return (
                 <h4 className="text-danger text-center mt-3">
@@ -105,11 +128,13 @@ class InsidePage extends Component {
                 </h4>);
         }
 
-        if (_alreadyUpdated) {
+        if (_eventIsInWishList) {
             return (
                 <h4 className="text-danger text-center mt-3">
                     You already added this conference to your Wanna Go List!
-                </h4>);
+                </h4>
+            );
+
         }
 
         return null;
@@ -211,7 +236,7 @@ class InsidePage extends Component {
                 <div className="text-center">
                     <a
                         className="btn btn-primary mr-5"
-                        onClick={this.addToWishList}
+                        onClick={this.checkEventInWishList}
                     >Wanna go
                     </a>
                     <a
@@ -224,7 +249,7 @@ class InsidePage extends Component {
                     this.state.error,
                     this.state.isUpdated,
                     this.state.isNotAuth,
-                    this.state.alreadyUpdated
+                    this.state.eventIsInWishList,
                 )}
             </div>
         );
