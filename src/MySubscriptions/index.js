@@ -11,7 +11,9 @@ class MySubscriptions extends Component {
     render() {
         return (
             <div className="py-5">
-                <h1 className="text-center mb-5">My Subscriptions</h1>
+                <h1 className="text-center mb-5">
+                    My Subscriptions
+                </h1>
 
                 <div className="bg-white card-subscription mx-auto px-5 py-5">
                     <div className="card-subscription__content mx-auto">
