@@ -68,6 +68,8 @@ const API = {
                 Authorization: `Bearer ${token}`,
             },
         }),
+    searchTags: searchString =>
+        instance.get(`search/${searchString}`),
 };
 
 export default API;
