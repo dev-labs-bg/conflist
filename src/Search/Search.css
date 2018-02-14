@@ -3,8 +3,8 @@
 }
 
 .react-autosuggest__input {
-  width: 240px;
   height: 30px;
+  width: 18.25rem;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
@@ -29,8 +29,8 @@
 .react-autosuggest__suggestions-container--open {
   display: block;
   position: absolute;
-  top: 51px;
-  width: 280px;
+  width: 18.25rem;
+  top: 38px;
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
@@ -68,4 +68,10 @@
   padding: 10px 0 0 10px;
   font-size: 12px;
   color: #777;
+}
+
+@media (min-width:739px) {
+    .react-autosuggest__suggestions-container--open {
+        margin-left: 1rem;
+    }
 }
