@@ -6,6 +6,9 @@ import './Search.css';
 import { searchTags, clearSuggestions } from './duck';
 
 class Search extends Component {
+        constructor(props) {
+            super(props);
+        }
         onChange = (event, { newValue }) => {
             this.props.searchTags(newValue);
             this.getSuggestions(newValue);
@@ -14,6 +17,12 @@ class Search extends Component {
         escapeRegexCharacters = (str) => {
             return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
+
+        onSuggestionsFetchRequested = ({ value }) => {
+            this.setState({
+                suggestions: this.getSuggestions(value),
+            });
+        };
 
         getSuggestions = (value) => {
             const escapedValue = this.escapeRegexCharacters(value.trim());
@@ -43,7 +52,6 @@ class Search extends Component {
         }
 
         renderSectionTitle = (section) => {
-            // debugger
             // console.log(section)
             return (
                 <strong>{section.title}</strong>
@@ -82,7 +90,7 @@ class Search extends Component {
                 <Autosuggest
                     multiSection={true}
                     suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.searchTags}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.clearSuggestions}
                     getSuggestionValue={this.getSuggestionValue}
                     renderSuggestion={this.renderSuggestion}
