@@ -3,92 +3,72 @@ import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 
 import './Search.css';
-import { searchTags } from './duck';
+import { searchTags, clearSuggestions } from './duck';
 
 class Search extends Component {
-    constructor() {
-        super();
-
-        // Autosuggest is a controlled component.
-        // This means that you need to provide an input value
-        // and an onChange handler that updates this value (see below).
-        // Suggestions also need to be provided to the Autosuggest,
-        // and they are initially empty because the Autosuggest is closed.
-        this.state = {
-            value: '',
-            suggestions: [],
-        };
-        const languages = [
-            {
-                name: 'C',
-                year: 1972,
-            },
-            {
-                name: 'Elm',
-                year: 2012,
-            },
-        ];
-
-        // Teach Autosuggest how to calculate suggestions for any given input value.
-        this.getSuggestions = (suggestions) => {
-            suggestions.forEach(value => {
-                const inputValue = value.trim().toLowerCase();
-                const inputLength = inputValue.length;
-
-                return inputLength === 0 ? [] : languages.filter(lang =>
-                    lang.name.toLowerCase().slice(0, inputLength) === inputValue
-                );
-            })
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const suggestions = this.props.search.data.map(data => data.name);
-        this.setState({
-            suggestions: suggestions,
-        })
-        console.log(suggestions)
-    }
-
         onChange = (event, { newValue }) => {
-            this.setState({
-                value: newValue,
-            });
+            this.props.searchTags(newValue);
+            this.getSuggestions(newValue);
+        }
 
-            this.props.searchTags(this.state.value);
-        };
+        escapeRegexCharacters = (str) => {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
 
-        // Autosuggest will call this function every time you need to update suggestions.
-        // You already implemented this logic above, so just use it.
-        onSuggestionsFetchRequested = ({ value }) => {
-            this.setState({
-                suggestions: this.getSuggestions(this.state.suggestions),
-            });
-        };
+        getSuggestions = (value) => {
+            const escapedValue = this.escapeRegexCharacters(value.trim());
 
-        // Autosuggest will call this function every time you need to clear suggestions.
-        onSuggestionsClearRequested = () => {
-            this.setState({
-                suggestions: [],
-            });
-        };
+            if (escapedValue === '') {
+                return [];
+            }
+
+            const regex = new RegExp('^' + escapedValue, 'i');
+
+            return this.props.suggestions
+                    .map(section => {
+                      return {
+                        title: section.title,
+                        data: section.data.filter(suggestion => regex.test(suggestion.name))
+                      };
+                    })
+                    .filter(section => section.data.length > 0);
+        }
+
+        getSuggestionValue = (suggestion) => {
+            return suggestion.name;
+        }
+
+        getSectionSuggestions = (section) => {
+            return section.data;
+        }
+
+        renderSectionTitle = (section) => {
+            // debugger
+            // console.log(section)
+            return (
+                <strong>{section.title}</strong>
+            );
+        }
+
+        renderSuggestion = (suggestion) => {
+            // const suggestions = [];
+            // suggestion.data.forEach(name => {
+            //     suggestions.push(
+            //         <span>{suggestion.data.name}</span>
+            //     );
+            // })
+            return <span>{suggestion.name}</span>;
+        }
+
 
         render() {
-            console.log(this.state)
-            console.log(this.props)
-            // When suggestion is clicked, Autosuggest needs to populate the input
-            // based on the clicked suggestion. Teach Autosuggest how to calculate the
-            // input value for every given suggestion.
-            const getSuggestionValue = suggestion => suggestion.name;
-
-            // Use your imagination to render suggestions.
-            const renderSuggestion = suggestion => (
-                <div className="p-relative">
-                    {suggestion}
-                </div>
-            );
-
-            const { value, suggestions } = this.state;
+            const { value,
+                 isLoading,
+                 onChange,
+                 searchTags,
+                 clearSuggestions
+             } = this.props.search;
+            const { suggestions } = this.props;
 
             // Autosuggest will pass through all these props to the input.
             const inputProps = {
@@ -100,11 +80,14 @@ class Search extends Component {
 
             return (
                 <Autosuggest
+                    multiSection={true}
                     suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
+                    onSuggestionsFetchRequested={this.searchTags}
+                    onSuggestionsClearRequested={this.clearSuggestions}
+                    getSuggestionValue={this.getSuggestionValue}
+                    renderSuggestion={this.renderSuggestion}
+                    renderSectionTitle={this.renderSectionTitle}
+                    getSectionSuggestions={this.getSectionSuggestions}
                     inputProps={inputProps}
                 />
             );
@@ -112,13 +95,36 @@ class Search extends Component {
 }
 
 const mapStateToProps = ({ search }) => {
+    const suggestions = [
+        {
+            title: 'tags',
+            data: [],
+        },
+        {
+            title: 'conferences',
+            data: [],
+        },
+    ];
+
+    search.suggestions.forEach((data) => {
+        // tags: [ php, js, ...]
+        // conferences: [ name ]
+        // speakers: [ name ]
+        if (data.resourceType === 'tag') {
+            suggestions[0].data.push({ name: data.name });
+        } else if (data.resourceType === 'conference') {
+            suggestions[1].data.push({ name: data.name });
+        }
+    });
     return {
         search,
-    }
+        suggestions,
+    };
 };
 
 const mapDispatchToProps = {
     searchTags,
+    clearSuggestions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
