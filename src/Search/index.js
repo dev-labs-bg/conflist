@@ -21,13 +21,13 @@ class Search extends Component {
             suggestions: {},
         };
 
-        onChange = (event, { newValue }) => {
-            this.props.searchTags(newValue);
-            this.getSuggestions(newValue);
-        }
-
-        escapeRegexCharacters = (str) => {
-            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        onChange = (event, { newValue, method }) => {
+            if (this.props.search.value !== newValue && newValue.length !== 0) {
+                if (method === 'type' || method === 'enter') {
+                    this.props.searchTags(newValue);
+                    this.getSuggestions(newValue);
+                }
+            }
         }
 
         // Autosuggest will call this function every time suggestions need to be
@@ -38,19 +38,11 @@ class Search extends Component {
 
         // Calculate suggestions for any given input value.
         getSuggestions = (value) => {
-            const escapedValue = this.escapeRegexCharacters(value.trim());
-
-            if (escapedValue === '') {
-                return [];
-            }
-
-            const regex = new RegExp('^' + escapedValue, 'i');
-
             return this.props.suggestions
                     .map(section => {
                       return {
                         title: section.title,
-                        data: section.data.filter(suggestion => regex.test(suggestion.name))
+                        data: section.data.filter(suggestion => suggestion.name)
                       };
                     })
                     .filter(section => section.data.length > 0);
