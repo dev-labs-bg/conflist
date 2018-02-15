@@ -1,10 +1,10 @@
 import API from '../core/Api';
 
 // Actions
-const UPDATE_INPUT_VALUE = 'UPDATE_INPUT_VALUE';
-const CLEAR_SUGGESTIONS = 'CLEAR_SUGGESTIONS';
-const MAYBE_UPDATE_SUGGESTIONS = 'MAYBE_UPDATE_SUGGESTIONS';
-const LOAD_SUGGESTIONS_BEGIN = 'LOAD_SUGGESTIONS_BEGIN';
+const UPDATE_INPUT_VALUE = 'search/UPDATE_INPUT_VALUE';
+const CLEAR_SUGGESTIONS = 'search/CLEAR_SUGGESTIONS';
+const RECEIVE_SUGGESTIONS = 'search/RECEIVE_SUGGESTIONS';
+const REQUEST_SUGGESTIONS = 'search/REQUEST_SUGGESTIONS';
 const FAIL = 'search/FAIL';
 
 const initialState = {
@@ -26,23 +26,18 @@ export default function reducer(state = initialState, action = {}) {
     case CLEAR_SUGGESTIONS:
         return {
             ...state,
+            value: '',
             suggestions: [],
         };
 
-    case LOAD_SUGGESTIONS_BEGIN:
+    case REQUEST_SUGGESTIONS:
         return {
             ...state,
             isLoading: true,
+            error: null,
         };
 
-    case MAYBE_UPDATE_SUGGESTIONS: {
-        // Ignore suggestions if input value changed
-        if (action.value !== state.value) {
-            return {
-                ...state,
-                isLoading: false,
-            };
-        }
+    case RECEIVE_SUGGESTIONS: {
         return {
             ...state,
             suggestions: action.suggestions,
@@ -73,9 +68,9 @@ export function clearSuggestions() {
     };
 }
 
-export function loadSuggestionsBegin() {
+export function requestSuggestions() {
     return {
-        type: LOAD_SUGGESTIONS_BEGIN,
+        type: REQUEST_SUGGESTIONS,
     };
 }
 
@@ -86,9 +81,9 @@ export function searchFail(e) {
     };
 }
 
-export function maybeUpdateSuggestions(suggestions, value) {
+export function receiveSuggestions(suggestions, value) {
     return {
-        type: MAYBE_UPDATE_SUGGESTIONS,
+        type: RECEIVE_SUGGESTIONS,
         suggestions,
         value,
     };
@@ -96,10 +91,10 @@ export function maybeUpdateSuggestions(suggestions, value) {
 
 export function searchTags(searchString) {
     return (dispatch) => {
+        dispatch(requestSuggestions());
         API.searchTags(searchString)
             .then((response) => {
-                dispatch(loadSuggestionsBegin());
-                dispatch(maybeUpdateSuggestions(response.data, searchString));
+                dispatch(receiveSuggestions(response.data, searchString));
             })
             .catch((e) => {
                 dispatch(searchFail(e.response.status));
