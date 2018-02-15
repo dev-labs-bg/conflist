@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 
@@ -6,9 +7,19 @@ import './Search.css';
 import { searchTags, clearSuggestions } from './duck';
 
 class Search extends Component {
-        constructor(props) {
-            super(props);
-        }
+        static propTypes = {
+            search: PropTypes.shape({
+                value: PropTypes.string,
+            }).isRequired,
+            suggestions: PropTypes.arrayOf(PropTypes.object),
+            searchTags: PropTypes.func.isRequired,
+            clearSuggestions: PropTypes.func.isRequired,
+        };
+
+        static defaultProps = {
+            suggestions: {},
+        };
+
         onChange = (event, { newValue }) => {
             this.props.searchTags(newValue);
             this.getSuggestions(newValue);
@@ -52,30 +63,18 @@ class Search extends Component {
         }
 
         renderSectionTitle = (section) => {
-            // console.log(section)
             return (
                 <strong>{section.title}</strong>
             );
         }
 
         renderSuggestion = (suggestion) => {
-            // const suggestions = [];
-            // suggestion.data.forEach(name => {
-            //     suggestions.push(
-            //         <span>{suggestion.data.name}</span>
-            //     );
-            // })
             return <span>{suggestion.name}</span>;
         }
 
 
         render() {
-            const { value,
-                 isLoading,
-                 onChange,
-                 searchTags,
-                 clearSuggestions
-             } = this.props.search;
+            const { value } = this.props.search;
             const { suggestions } = this.props;
 
             // Autosuggest will pass through all these props to the input.
@@ -91,7 +90,7 @@ class Search extends Component {
                     multiSection={true}
                     suggestions={suggestions}
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.clearSuggestions}
+                    onSuggestionsClearRequested={this.props.clearSuggestions}
                     getSuggestionValue={this.getSuggestionValue}
                     renderSuggestion={this.renderSuggestion}
                     renderSectionTitle={this.renderSectionTitle}
@@ -115,9 +114,6 @@ const mapStateToProps = ({ search }) => {
     ];
 
     search.suggestions.forEach((data) => {
-        // tags: [ php, js, ...]
-        // conferences: [ name ]
-        // speakers: [ name ]
         if (data.resourceType === 'tag') {
             suggestions[0].data.push({ name: data.name });
         } else if (data.resourceType === 'conference') {
