@@ -1,7 +1,5 @@
 import API from '../core/Api';
 
-
-
 // Actions
 const UPDATE_INPUT_VALUE = 'UPDATE_INPUT_VALUE';
 const CLEAR_SUGGESTIONS = 'CLEAR_SUGGESTIONS';
@@ -98,7 +96,6 @@ export function maybeUpdateSuggestions(suggestions, value) {
 
 export function searchTags(searchString) {
     return (dispatch) => {
-        dispatch(updateInputValue(searchString));
         API.searchTags(searchString)
             .then((response) => {
                 dispatch(loadSuggestionsBegin());

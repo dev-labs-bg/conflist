@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 
 import './Search.css';
-import { searchTags, clearSuggestions } from './duck';
+import { searchTags, clearSuggestions, updateInputValue } from './duck';
 
 class Search extends Component {
         static propTypes = {
@@ -14,6 +14,7 @@ class Search extends Component {
             suggestions: PropTypes.arrayOf(PropTypes.object),
             searchTags: PropTypes.func.isRequired,
             clearSuggestions: PropTypes.func.isRequired,
+            updateInputValue: PropTypes.func.isRequired,
         };
 
         static defaultProps = {
@@ -29,12 +30,13 @@ class Search extends Component {
             return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
+        // Autosuggest will call this function every time suggestions need to be
+        // updated.
         onSuggestionsFetchRequested = ({ value }) => {
-            this.setState({
-                suggestions: this.getSuggestions(value),
-            });
+            this.props.updateInputValue(value);
         };
 
+        // Calculate suggestions for any given input value.
         getSuggestions = (value) => {
             const escapedValue = this.escapeRegexCharacters(value.trim());
 
@@ -54,14 +56,19 @@ class Search extends Component {
                     .filter(section => section.data.length > 0);
         }
 
+        // When suggestion is clicked, Autosuggest needs to populate the input
+        // based on the clicked suggestion.
         getSuggestionValue = (suggestion) => {
             return suggestion.name;
         }
 
+        // Teach Autosuggest where to find the suggestions for every section,
+        // when multiSection={true}.
         getSectionSuggestions = (section) => {
             return section.data;
         }
 
+        // Section title, when multiSection={true}.
         renderSectionTitle = (section) => {
             return (
                 <strong>{section.title}</strong>
@@ -129,6 +136,7 @@ const mapStateToProps = ({ search }) => {
 const mapDispatchToProps = {
     searchTags,
     clearSuggestions,
+    updateInputValue,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
