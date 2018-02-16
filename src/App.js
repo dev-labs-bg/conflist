@@ -42,7 +42,7 @@ class App extends Component {
         const { isAuthenticated, isLoading, error } = this.props.auth;
 
         if (isLoading || isLoading === null) {
-            return (<p>Loading!</p>);
+            return (<p className="text-danger text-center">Loading!</p>);
         }
 
         if (error !== null) {
@@ -57,7 +57,6 @@ class App extends Component {
             return (
                 <Wrapper>
                     <Switch>
-                        <Route path="" exact component={HomePage} />
                         <Route path="/" exact component={HomePage} />
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
@@ -71,7 +70,6 @@ class App extends Component {
         return (
             <Wrapper>
                 <Switch>
-                    <Route path="" exact component={HomePage} />
                     <Route path="/" exact component={HomePage} />
                     <Route path="/home" component={HomePage} />
                     <Route path="/event" component={EventDetails} />
