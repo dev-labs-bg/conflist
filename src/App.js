@@ -57,6 +57,8 @@ class App extends Component {
             return (
                 <Wrapper>
                     <Switch>
+                        <Route path="" exact component={HomePage} />
+                        <Route path="/" exact component={HomePage} />
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
                         <Route path="/profile-settings" component={ProfileSettings} />
@@ -69,6 +71,7 @@ class App extends Component {
         return (
             <Wrapper>
                 <Switch>
+                    <Route path="" exact component={HomePage} />
                     <Route path="/" exact component={HomePage} />
                     <Route path="/home" component={HomePage} />
                     <Route path="/event" component={EventDetails} />

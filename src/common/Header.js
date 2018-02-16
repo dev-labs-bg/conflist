@@ -11,12 +11,14 @@ import {
     Nav,
     NavItem,
     NavLink,
+    Input,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
 } from 'reactstrap';
 
+import Search from '../Search';
 import Logo from './Logo';
 
 class Header extends Component {
@@ -152,11 +154,7 @@ class Header extends Component {
                     >
 
                         <form className="form-inline mt-xs-2 mr-xl-5">
-                            <input
-                                className="form-control mx-lg-3"
-                                type="text"
-                                placeholder="Search by location or technology..."
-                            />
+                            <Search />
                         </form>
 
                         <Nav className="nav navbar-nav justify-content-end">
