@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import './Search.css';
 import { searchTags, clearSuggestions, updateInputValue } from './duck';
@@ -73,7 +73,8 @@ class Search extends Component {
             if (sectionIndex === 0) {
 
             } else {
-                this.renderDetailsPage(suggestionValue);
+                // TODO: I need the alias!
+                this.props.history.push(`/event/${suggestionValue}`);
             }
         }
 
@@ -87,10 +88,6 @@ class Search extends Component {
         renderSuggestion = (suggestion, section) => {
 
             return <span>{suggestion.name}</span>;
-        }
-
-        renderDetailsPage = (suggestionValue) => {
-            // to={`/event/${suggestionValue}`}
         }
 
         render() {
@@ -154,4 +151,4 @@ const mapDispatchToProps = {
     updateInputValue,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Search));
