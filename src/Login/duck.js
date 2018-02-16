@@ -89,7 +89,7 @@ export function getToken() {
 }
 
 export function jwtTokenRequest() {
-    return dispatch => {
+    return (dispatch) => {
         dispatch(tokenRequest());
         API.requestToken()
             .then(response => {

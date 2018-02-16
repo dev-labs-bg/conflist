@@ -12,13 +12,15 @@ import calendarPassed from '../assets/images/calendar-passed.svg';
 class Card extends Component {
     static propTypes = {
         event: PropTypes.instanceOf(Event).isRequired,
-        authToken: PropTypes.string.isRequired,
+        authToken: PropTypes.string,
         past: PropTypes.bool,
         wishListed: PropTypes.bool,
     };
 
     static defaultProps = {
         past: false,
+        authToken: '',
+        wishListed: false,
     };
 
     /**
