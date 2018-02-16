@@ -1,6 +1,6 @@
 import axios from 'axios';
+import { baseUrl } from '../config';
 
-const baseUrl = 'https://api.conflist.devlabs-projects.com/';
 const instance = axios.create({
     baseURL: `${baseUrl}api/v1/`,
 });

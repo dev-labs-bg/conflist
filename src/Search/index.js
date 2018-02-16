@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import './Search.css';
 import { searchTags, clearSuggestions, updateInputValue } from './duck';
@@ -60,6 +62,21 @@ class Search extends Component {
             return section.data;
         }
 
+        onSuggestionSelected = (event, {
+            suggestion,
+            suggestionValue,
+            suggestionIndex,
+            sectionIndex,
+            method
+        }) => {
+            // Suggestion is tag
+            if (sectionIndex === 0) {
+
+            } else {
+                this.renderDetailsPage(suggestionValue);
+            }
+        }
+
         // Section title, when multiSection={true}.
         renderSectionTitle = (section) => {
             return (
@@ -67,14 +84,19 @@ class Search extends Component {
             );
         }
 
-        renderSuggestion = (suggestion) => {
+        renderSuggestion = (suggestion, section) => {
+
             return <span>{suggestion.name}</span>;
         }
 
+        renderDetailsPage = (suggestionValue) => {
+            // to={`/event/${suggestionValue}`}
+        }
 
         render() {
             const { value } = this.props.search;
             const { suggestions } = this.props;
+
 
             // Autosuggest will pass through all these props to the input.
             const inputProps = {
@@ -95,6 +117,7 @@ class Search extends Component {
                     renderSectionTitle={this.renderSectionTitle}
                     getSectionSuggestions={this.getSectionSuggestions}
                     inputProps={inputProps}
+                    onSuggestionSelected={this.onSuggestionSelected}
                 />
             );
         }
