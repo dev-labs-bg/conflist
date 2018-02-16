@@ -73,8 +73,7 @@ class Search extends Component {
             if (sectionIndex === 0) {
 
             } else {
-                // TODO: I need the alias!
-                this.props.history.push(`/event/${suggestionValue}`);
+                this.props.history.push(`/event/${suggestion.alias}`);
             }
         }
 
@@ -136,7 +135,7 @@ const mapStateToProps = ({ search }) => {
         if (data.resourceType === 'tag') {
             suggestions[0].data.push({ name: data.name });
         } else if (data.resourceType === 'conference') {
-            suggestions[1].data.push({ name: data.name });
+            suggestions[1].data.push({ name: data.name, alias: data.alias });
         }
     });
     return {
