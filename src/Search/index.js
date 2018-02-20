@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
+import { withRouter } from 'react-router-dom';
 
 import './Search.css';
 import { searchTags, clearSuggestions, updateInputValue } from './duck';
@@ -60,6 +61,26 @@ class Search extends Component {
             return section.data;
         }
 
+        onSuggestionSelected = (event, {
+            suggestion,
+            suggestionValue,
+            suggestionIndex,
+            sectionIndex,
+            method
+        }) => {
+            // Suggestion is tag
+            if (sectionIndex === 0) {
+                this.props.history.push({
+                    pathname: `/search/${suggestionValue}`,
+                    state: {
+                        wishListData: this.props.wishList.data,
+                    }
+                });
+            } else {
+                this.props.history.push(`/event/${suggestion.alias}`);
+            }
+        }
+
         // Section title, when multiSection={true}.
         renderSectionTitle = (section) => {
             return (
@@ -67,10 +88,9 @@ class Search extends Component {
             );
         }
 
-        renderSuggestion = (suggestion) => {
+        renderSuggestion = (suggestion, section) => {
             return <span>{suggestion.name}</span>;
         }
-
 
         render() {
             const { value } = this.props.search;
@@ -95,12 +115,13 @@ class Search extends Component {
                     renderSectionTitle={this.renderSectionTitle}
                     getSectionSuggestions={this.getSectionSuggestions}
                     inputProps={inputProps}
+                    onSuggestionSelected={this.onSuggestionSelected}
                 />
             );
         }
 }
 
-const mapStateToProps = ({ search }) => {
+const mapStateToProps = ({ search, wishList }) => {
     const suggestions = [
         {
             title: 'tags',
@@ -116,12 +137,13 @@ const mapStateToProps = ({ search }) => {
         if (data.resourceType === 'tag') {
             suggestions[0].data.push({ name: data.name });
         } else if (data.resourceType === 'conference') {
-            suggestions[1].data.push({ name: data.name });
+            suggestions[1].data.push({ name: data.name, alias: data.alias });
         }
     });
     return {
         search,
         suggestions,
+        wishList,
     };
 };
 
@@ -131,4 +153,4 @@ const mapDispatchToProps = {
     updateInputValue,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Search));
