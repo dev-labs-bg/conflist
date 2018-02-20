@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
-import { Redirect } from 'react-router';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import './Search.css';
 import { searchTags, clearSuggestions, updateInputValue } from './duck';
@@ -71,7 +70,12 @@ class Search extends Component {
         }) => {
             // Suggestion is tag
             if (sectionIndex === 0) {
-
+                this.props.history.push({
+                    pathname: `/search/${suggestionValue}`,
+                    state: {
+                        wishList: this.props.wishList.data,
+                    }
+                });
             } else {
                 this.props.history.push(`/event/${suggestion.alias}`);
             }
@@ -85,14 +89,12 @@ class Search extends Component {
         }
 
         renderSuggestion = (suggestion, section) => {
-
             return <span>{suggestion.name}</span>;
         }
 
         render() {
             const { value } = this.props.search;
             const { suggestions } = this.props;
-
 
             // Autosuggest will pass through all these props to the input.
             const inputProps = {
@@ -119,7 +121,7 @@ class Search extends Component {
         }
 }
 
-const mapStateToProps = ({ search }) => {
+const mapStateToProps = ({ search, wishList }) => {
     const suggestions = [
         {
             title: 'tags',
@@ -141,6 +143,7 @@ const mapStateToProps = ({ search }) => {
     return {
         search,
         suggestions,
+        wishList,
     };
 };
 

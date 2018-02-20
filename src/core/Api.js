@@ -70,6 +70,8 @@ const API = {
         }),
     searchTags: searchString =>
         instance.get(`search/${searchString}`),
+    getEventsByTag: tag =>
+        instance.get(`conferences/tags/${tag}`),
 };
 
 export default API;
