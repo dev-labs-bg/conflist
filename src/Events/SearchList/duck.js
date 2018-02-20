@@ -68,7 +68,6 @@ export function getEventsByTag(tag) {
         API.getEventsByTag(tag)
             .then((response) => {
                 dispatch(receiveEventsList(response.data));
-                // successCb();
             })
             .catch((error) => {
                 dispatch(failEventsList(error.response.status));
