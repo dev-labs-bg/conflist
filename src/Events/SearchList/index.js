@@ -34,7 +34,9 @@ class SearchList extends Component {
 
     componentDidMount() {
         this.props.getEventsByTag(this.props.searchTag);
-        this.props.fetchWishListIfNeeded(this.props.authToken);
+        if (this.props.authToken) {
+            this.props.fetchWishListIfNeeded(this.props.authToken);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
