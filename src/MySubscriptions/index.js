@@ -24,7 +24,7 @@ class MySubscriptions extends Component {
 
                 <div className="bg-white card-subscription mx-auto px-5 py-5">
                     <div className="card-subscription__content mx-auto">
-                        <h4 className="mb-4">You can always manage your путка
+                        <h4 className="mb-4">You can always manage your
                             <span className="text-primary"> #tag </span>
                         subscriptions.
                         </h4>
@@ -37,7 +37,8 @@ class MySubscriptions extends Component {
                             <span className="badge badge-pill badge-light">android</span>
                         </div>
                         <h6 className="mb-4">
-                            Once in a month you will receive an update about the upcoming and the new conferences matching these tags.
+                            Once in a month you will receive an update about the
+                             upcoming and the new conferences matching these tags.
                         </h6>
 
                         <div className="text-center">
