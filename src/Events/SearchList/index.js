@@ -60,6 +60,16 @@ class SearchList extends Component {
             return <div>Error with status {this.props.searchList.error} </div>;
         }
 
+        if (data.length === 0) {
+            return (
+                <div>
+                    <h2
+                        className="text-center mt-5"
+                    >There are no conferences for {this.props.searchTag}!
+                    </h2>
+                </div>
+            );
+        }
         const wishList = this.props.wishListData.length === 0 ?
             this.props.wishList.data : this.props.wishListData;
 

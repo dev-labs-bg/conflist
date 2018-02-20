@@ -4,7 +4,7 @@ import Event from '../Event';
 const initialState = {
     isFetching: null,
     lastFetched: null,
-    data: null,
+    data: [],
     error: null,
 };
 
