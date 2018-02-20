@@ -5,12 +5,14 @@ class User {
         name = '',
         email = '',
         twitterId = '',
+        subscriptions = [],
     }) {
         this.id = _id;
         this.profileImg = profileImg;
         this.name = name;
         this.email = email;
         this.twitterId = twitterId;
+        this.subscriptions = subscriptions;
     }
 }
 

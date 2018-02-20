@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import { fetchCurrentUser } from '../ProfileSettings/duck';
 import eventIcon from '../assets/images/event-icon.svg';
 
 class MySubscriptions extends Component {
-    constructor(props) {
-        super(props);
+    static propTypes = {
+        authToken: PropTypes.string.isRequired,
+        fetchCurrentUser: PropTypes.func.isRequired,
+    };
 
+    componentDidMount() {
+        this.props.fetchCurrentUser(this.props.authToken);
     }
 
     render() {
@@ -17,7 +24,7 @@ class MySubscriptions extends Component {
 
                 <div className="bg-white card-subscription mx-auto px-5 py-5">
                     <div className="card-subscription__content mx-auto">
-                        <h4 className="mb-4">You can always manage your
+                        <h4 className="mb-4">You can always manage your путка
                             <span className="text-primary"> #tag </span>
                         subscriptions.
                         </h4>
@@ -47,4 +54,15 @@ class MySubscriptions extends Component {
     }
 }
 
-export default MySubscriptions;
+const mapStateToProps = ({ auth, user }) => {
+    return {
+        authToken: auth.token,
+        user,
+    };
+};
+
+const mapDispatchToProps = {
+    fetchCurrentUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MySubscriptions);

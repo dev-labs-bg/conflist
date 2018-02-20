@@ -72,6 +72,30 @@ const API = {
         instance.get(`search/${searchString}`),
     getEventsByTag: tag =>
         instance.get(`conferences/tags/${tag}`),
+    subscribeByTag: (token, tag) =>
+        instance.post(
+            'users/me/suscribe',
+            {
+                tag,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        ),
+    unsubscribeByTag: (token, tag) =>
+        instance.post(
+            'users/me/unsubscribe',
+            {
+                tag,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        ),
 };
 
 export default API;
