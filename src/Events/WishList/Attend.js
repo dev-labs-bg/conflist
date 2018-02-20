@@ -11,7 +11,7 @@ import PopoverItem from '../../common/PopoverItem';
 class Attend extends Component {
     static propTypes = {
         id: PropTypes.string.isRequired,
-        token: PropTypes.string.isRequired,
+        token: PropTypes.string,
         attendConference: PropTypes.func.isRequired,
         unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
@@ -21,6 +21,7 @@ class Attend extends Component {
     static defaultProps = {
         past: false,
         wishListed: false,
+        token: '',
     };
 
     constructor(props) {

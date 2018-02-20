@@ -54,18 +54,19 @@ class HomePage extends Component {
 
         if (isFetching) {
             return (
-                <div>
+                <div className="text-danger text-center">
                 Loading...
                 </div>
             );
         }
-
-        if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
-            return (
-                <div>
-                Loading...
-                </div>
-            );
+        if (this.props.auth.isAuthenticated) {
+            if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
+                return (
+                    <div>
+                    Loading...
+                    </div>
+                );
+            }
         }
 
         return (

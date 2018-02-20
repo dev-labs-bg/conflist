@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { loginUrl } from '../config';
 import diskette from '../assets/images/diskette.svg';
 import subscribe from '../assets/images/subscribe.svg';
 
@@ -122,7 +123,7 @@ class Login extends Component {
                     </h2>
                     <a
                         target="_self"
-                        href="https://api.conflist.devlabs-projects.com/auth/twitter?returnUrl=http://localhost:3000/gate"
+                        href={loginUrl}
                         className="btn btn-primary btn-twitter"
                     >
                         Log in with Twitter

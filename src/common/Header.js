@@ -17,6 +17,7 @@ import {
     DropdownItem,
 } from 'reactstrap';
 
+import Search from '../Search';
 import Logo from './Logo';
 
 class Header extends Component {
@@ -48,6 +49,10 @@ class Header extends Component {
         this.setState({
             collapsed: !this.state.collapsed,
         });
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
     }
 
     renderNavClass = (isAuthenticated) => {
@@ -151,12 +156,11 @@ class Header extends Component {
                         navbar
                     >
 
-                        <form className="form-inline mt-xs-2 mr-xl-5">
-                            <input
-                                className="form-control mx-lg-3"
-                                type="text"
-                                placeholder="Search by location or technology..."
-                            />
+                        <form
+                            onSubmit={this.handleSubmit}
+                            className="form-inline mt-xs-2 mr-xl-5"
+                        >
+                            <Search />
                         </form>
 
                         <Nav className="nav navbar-nav justify-content-end">

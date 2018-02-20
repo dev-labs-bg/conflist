@@ -10,7 +10,8 @@ import Login from './Login';
 import Gate from './Gate';
 import ProfileSettings from './ProfileSettings';
 import WishList from './Events/WishList';
-import Subscriptions from './MySubscriptions';
+import MySubscriptions from './MySubscriptions';
+import SearchList from './Events/SearchList';
 import { getToken } from './Login/duck';
 import { fetchCurrentUser } from './ProfileSettings/duck';
 
@@ -43,7 +44,7 @@ class App extends Component {
         const { isAuthenticated, isLoading, error } = this.props.auth;
 
         if (isLoading || isLoading === null) {
-            return (<p>Loading!</p>);
+            return (<p className="text-danger text-center">Loading!</p>);
         }
 
         if (error !== null) {
@@ -58,11 +59,13 @@ class App extends Component {
             return (
                 <Wrapper>
                     <Switch>
+                        <Route path="/" exact component={HomePage} />
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
                         <Route path="/profile-settings" component={ProfileSettings} />
                         <Route path="/wanna-go-list" component={WishList} />
-                        <Route path="/my-subscriptions" component={Subscriptions} />
+                        <Route path="/search" component={SearchList} />
+                        <Route path="/my-subscriptions" component={MySubscriptions} />
                     </Switch>
                 </Wrapper>
             );
@@ -76,6 +79,7 @@ class App extends Component {
                     <Route path="/event" component={EventDetails} />
                     <Route path="/login" component={Login} />
                     <Route path="/gate" component={Gate} />
+                    <Route path="/search" component={SearchList} />
                 </Switch>
             </Wrapper>
         );
