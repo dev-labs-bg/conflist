@@ -51,6 +51,10 @@ class Header extends Component {
         });
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+    }
+
     renderNavClass = (isAuthenticated) => {
         if (isAuthenticated) {
             return 'navbar-light bg-white';
@@ -152,7 +156,10 @@ class Header extends Component {
                         navbar
                     >
 
-                        <form className="form-inline mt-xs-2 mr-xl-5">
+                        <form
+                            onSubmit={this.handleSubmit}
+                            className="form-inline mt-xs-2 mr-xl-5"
+                        >
                             <Search />
                         </form>
 

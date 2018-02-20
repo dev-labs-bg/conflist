@@ -73,7 +73,7 @@ class Search extends Component {
                 this.props.history.push({
                     pathname: `/search/${suggestionValue}`,
                     state: {
-                        wishList: this.props.wishList.data,
+                        wishListData: this.props.wishList.data,
                     }
                 });
             } else {
