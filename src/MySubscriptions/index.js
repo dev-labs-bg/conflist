@@ -1,21 +1,58 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import TagsInput from 'react-tagsinput';
+import { Form } from 'reactstrap';
 
-import { fetchCurrentUser } from '../ProfileSettings/duck';
-import eventIcon from '../assets/images/event-icon.svg';
+import { subscribeTag, unsubscribeTag } from './duck';
+import User from '../ProfileSettings/User';
+import './react-tagsinput.css';
 
 class MySubscriptions extends Component {
     static propTypes = {
         authToken: PropTypes.string.isRequired,
-        fetchCurrentUser: PropTypes.func.isRequired,
+        user: PropTypes.shape({
+            isFetching: PropTypes.bool,
+            data: PropTypes.instanceOf(User),
+        }).isRequired,
     };
 
-    componentDidMount() {
-        this.props.fetchCurrentUser(this.props.authToken);
+    constructor(props) {
+        super(props);
+        this.state = { tags: [] };
     }
 
+    componentWillReceiveProps(nextProps, nextState) {
+        if (nextProps.user.data !== null) {
+            this.setState({ tags: nextProps.user.data.subscriptions });
+        }
+
+        // this.props.subscribeTag(
+        //     authToken,
+        //
+        // )
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.tags.length !== this.state.tags.length) {
+            console.log(this.state.tags)
+        }
+    }
+
+    handleChange = (tags) => {
+        console.log(tags)
+        this.setState({ tags });
+    }
+
+    saveSettings = (event) => {
+        event.preventDefault();
+    }
+
+
     render() {
+        if (this.props.user.isFetching && this.props.user.isFetching === null) {
+            return <div>Loading</div>;
+        }
         return (
             <div className="py-5">
                 <h1 className="text-center mb-5">
@@ -24,28 +61,32 @@ class MySubscriptions extends Component {
 
                 <div className="bg-white card-subscription mx-auto px-5 py-5">
                     <div className="card-subscription__content mx-auto">
-                        <h4 className="mb-4">You can always manage your
-                            <span className="text-primary"> #tag </span>
-                        subscriptions.
-                        </h4>
+                        <Form onSubmit={this.saveSettings} >
+                            <h4 className="mb-4">You can always manage your
+                                <span className="text-primary"> #tag </span>
+                            subscriptions.
+                            </h4>
 
-                        <div className="text-center mb-5">
-                            <span className="badge badge-pill badge-light mr-2">javascript</span>
-                            <span className="badge badge-pill badge-light mr-2">css</span>
-                            <span className="badge badge-pill badge-light mr-2">web</span>
-                            <span className="badge badge-pill badge-light mr-2">ios</span>
-                            <span className="badge badge-pill badge-light">android</span>
-                        </div>
-                        <h6 className="mb-4">
-                            Once in a month you will receive an update about the
-                             upcoming and the new conferences matching these tags.
-                        </h6>
+                            <div className="text-center mb-5">
+                                <TagsInput
+                                    value={this.state.tags}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <h6 className="mb-4">
+                                Once in a month you will receive an update about the
+                                 upcoming and the new conferences matching these tags.
+                            </h6>
 
-                        <div className="text-center">
-                            <button className="btn btn-primary px-4 py-2">
-                                Save
-                            </button>
-                        </div>
+                            <div className="text-center">
+                                <button
+                                    className="btn btn-primary px-4 py-2"
+                                    type="submit"
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </Form>
                     </div>
 
                 </div>
@@ -55,15 +96,17 @@ class MySubscriptions extends Component {
     }
 }
 
-const mapStateToProps = ({ auth, user }) => {
+const mapStateToProps = ({ auth, user, subscriptions }) => {
     return {
         authToken: auth.token,
         user,
+        subscriptions,
     };
 };
 
 const mapDispatchToProps = {
-    fetchCurrentUser,
+    subscribeTag,
+    unsubscribeTag,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MySubscriptions);

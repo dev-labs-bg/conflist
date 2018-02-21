@@ -88,3 +88,17 @@ export function subscribeTag(_token, _tag, _successCb, _errorCb) {
             });
     };
 }
+
+export function unsubscribeTag(_token, _tag, _successCb, _errorCb) {
+    return (dispatch) => {
+        API.unsubscribeByTag(_token, _tag)
+            .then((response) => {
+                dispatch(unsubscribeTagSuccess(response.data));
+                _successCb(response.data)
+            })
+            .catch((error) => {
+                dispatch(unsubscribeTagFail(error.response.status));
+                _errorCb(error.response.status);
+            });
+    };
+}
