@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import TagsInput from 'react-tagsinput';
+import Autosuggest from 'react-autosuggest';
 import { Form } from 'reactstrap';
 
-import { subscribeTag, unsubscribeTag } from './duck';
+import { fetchTags, subscribeTag, unsubscribeTag } from './duck';
 import User from '../ProfileSettings/User';
 import './react-tagsinput.css';
 
@@ -16,46 +17,84 @@ class MySubscriptions extends Component {
             isFetching: PropTypes.bool,
             data: PropTypes.instanceOf(User),
         }).isRequired,
+        subscribeTag: PropTypes.func,
+        unsubscribeTag: PropTypes.func,
     };
 
     constructor(props) {
         super(props);
-        this.state = { tags: [] };
+        this.state = { tags: [], error: null };
     }
 
-    componentWillReceiveProps(nextProps, nextState) {
+    componentDidMount() {
+        this.props.fetchTags();
+    }
+
+    componentWillReceiveProps(nextProps) {
         if (nextProps.user.data !== null) {
             this.setState({ tags: nextProps.user.data.subscriptions });
         }
-
-        // this.props.subscribeTag(
-        //     authToken,
-        //
-        // )
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.tags.length !== this.state.tags.length) {
-            // console.log(this.state.tags)
-        }
+    addedTagHandler = (updatedTag) => {
+        const errorCallback = (status) => {
+            this.setState({ error: status });
+        };
+
+        const successCallback = () => {
+            console.log('success')
+        };
+        this.props.subscribeTag(
+            this.props.authToken,
+            updatedTag,
+            successCallback,
+            errorCallback,
+        );
+    }
+
+    deletedTagHandler = (updatedTag) => {
+        this.props.unsubscribeTag(
+            this.props.authToken,
+            updatedTag,
+        );
     }
 
     handleChange = (nextTags) => {
         const prevTags = this.state.tags;
+
+        // This tag is added
+        // if (_.difference(prevTags, nextTags).length === 0) {
+        // }
+        //
+        // This tag is removed
+        // if (_.difference(nextTags, prevTags).length === 0) {
+        // }
 
         // Gery will write a meaningfull comment.
         const updatedTag = [
             ..._.difference(prevTags, nextTags),
             ..._.difference(nextTags, prevTags),
         ];
-
+        debugger;
         this.setState({ tags: nextTags });
+        if (_.difference(prevTags, nextTags).length === 0) {
+            this.addedTagHandler(updatedTag);
+        } else {
+            this.deletedTagHandler(updatedTag);
+        }
     }
 
     saveSettings = (event) => {
         event.preventDefault();
     }
 
+    renderMessage = () => {
+        if (this.state.error === 404) {
+            return <h4>This tag is not valid!</h4>;
+        }
+
+        return null;
+    }
 
     render() {
         if (this.props.user.isFetching && this.props.user.isFetching === null) {
@@ -76,6 +115,7 @@ class MySubscriptions extends Component {
                             </h4>
 
                             <div className="text-center mb-5">
+                                {this.renderMessage()}
                                 <TagsInput
                                     value={this.state.tags}
                                     onChange={this.handleChange}
@@ -113,6 +153,7 @@ const mapStateToProps = ({ auth, user, subscriptions }) => {
 };
 
 const mapDispatchToProps = {
+    fetchTags,
     subscribeTag,
     unsubscribeTag,
 };
