@@ -74,7 +74,7 @@ const API = {
         instance.get(`conferences/tags/${tag}`),
     subscribeByTag: (token, tag) =>
         instance.post(
-            'users/me/suscribe',
+            'users/me/subscribe',
             {
                 tag,
             },
