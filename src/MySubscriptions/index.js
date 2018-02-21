@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import TagsInput from 'react-tagsinput';
 import { Form } from 'reactstrap';
@@ -35,13 +36,20 @@ class MySubscriptions extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.tags.length !== this.state.tags.length) {
-            console.log(this.state.tags)
+            // console.log(this.state.tags)
         }
     }
 
-    handleChange = (tags) => {
-        console.log(tags)
-        this.setState({ tags });
+    handleChange = (nextTags) => {
+        const prevTags = this.state.tags;
+
+        // Gery will write a meaningfull comment.
+        const updatedTag = [
+            ..._.difference(prevTags, nextTags),
+            ..._.difference(nextTags, prevTags),
+        ];
+
+        this.setState({ tags: nextTags });
     }
 
     saveSettings = (event) => {
