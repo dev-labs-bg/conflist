@@ -9,11 +9,13 @@ const SUBSCRIBE_FAIL = 'subscribeTag/FAIL';
 const UNSUBSCRIBE_SUCCEESS = 'unSubscribeTag/SUCCESS';
 const UNSUBSCRIBE_FAIL = 'unSubscribeTag/FAIL';
 
+const FETCH_TAGS_REQUEST = 'fetchTags/REQUEST';
 const FETCH_TAGS_SUCCESS = 'fetchTags/SUCCESS';
 const FETCH_TAGS_FAIL = 'fetchTags/FAIL';
 
 const initialState = {
     tags: [],
+    isFetching: null,
     error: null,
 };
 
@@ -43,15 +45,22 @@ export default function reducer(state = initialState, action = {}) {
             ...state,
             error: action.error,
         };
+    case FETCH_TAGS_REQUEST:
+        return {
+            ...state,
+            isFetching: true,
+        };
     case FETCH_TAGS_SUCCESS:
         return {
             ...state,
             tags: action.tags,
+            isFetching: false,
             error: null,
         };
     case FETCH_TAGS_FAIL:
         return {
             ...state,
+            isFetching: false,
             error: action.error,
         };
     default: return state;
@@ -87,6 +96,11 @@ export function unsubscribeTagFail(error) {
     };
 }
 
+export function fetchTagsRequest() {
+    return {
+        type: FETCH_TAGS_REQUEST,
+    };
+}
 export function fetchTagsSuccess(tags) {
     return {
         type: FETCH_TAGS_SUCCESS,
@@ -103,6 +117,7 @@ export function fetchTagsFail(error) {
 
 export function fetchTags() {
     return (dispatch) => {
+        dispatch(fetchTagsRequest());
         API.fetchTags()
             .then((response) => {
                 dispatch(fetchTagsSuccess(response.data));

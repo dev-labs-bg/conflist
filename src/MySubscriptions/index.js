@@ -96,11 +96,47 @@ class MySubscriptions extends Component {
 
         return null;
     }
+    autocompleteRenderInput = ({addTag, ...props}) => {
+      const handleOnChange = (e, {newValue, method}) => {
+        if (method === 'enter') {
+          e.preventDefault()
+        } else {
+          props.onChange(e)
+        }
+      }
 
+      const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
+      const inputLength = inputValue.length
+
+      let suggestions = this.props.subscriptions.allTags.filter((tag) => {
+        return tag.name.toLowerCase().slice(0, inputLength) === inputValue
+      })
+
+      return (
+        <Autosuggest
+          ref={props.ref}
+          suggestions={suggestions}
+          shouldRenderSuggestions={(value) => value && value.trim().length > 0}
+          getSuggestionValue={(suggestion) => suggestion.name}
+          renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
+          inputProps={{...props, onChange: handleOnChange}}
+          onSuggestionSelected={(e, {suggestion}) => {
+            addTag(suggestion.name)
+          }}
+          onSuggestionsClearRequested={() => {}}
+          onSuggestionsFetchRequested={() => {}}
+        />
+      )
+    }
     render() {
         if (this.props.user.isFetching && this.props.user.isFetching === null) {
             return <div>Loading</div>;
         }
+        if (this.props.subscriptions.isFetching && this.props.subscriptions.isFetching === null) {
+            return <div>Loading</div>;
+        }
+        const { allTags } = this.props.subscriptions;
+
         return (
             <div className="py-5">
                 <h1 className="text-center mb-5">
@@ -118,6 +154,7 @@ class MySubscriptions extends Component {
                             <div className="text-center mb-5">
                                 {this.renderMessage()}
                                 <TagsInput
+                                    renderInput={this.autocompleteRenderInput}
                                     value={this.state.tags}
                                     onChange={this.handleChange}
                                 />
