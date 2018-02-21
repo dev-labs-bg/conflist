@@ -75,8 +75,9 @@ class MySubscriptions extends Component {
             ..._.difference(prevTags, nextTags),
             ..._.difference(nextTags, prevTags),
         ];
-        debugger;
+
         this.setState({ tags: nextTags });
+
         if (_.difference(prevTags, nextTags).length === 0) {
             this.addedTagHandler(updatedTag);
         } else {

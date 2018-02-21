@@ -14,6 +14,7 @@ const RECEIVE = 'user/RECEIVE';
 const FAIL = 'user/FAIL';
 
 const UPDATE_SUCCESS = 'userUpdate/SUCCESS';
+const UPDATE_TAGS = 'user/UPDATE_TAGS';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -45,6 +46,15 @@ export default function reducer(state = initialState, action = {}) {
             data,
         };
     }
+    case UPDATE_TAGS: {
+        const user = new User(state.data);
+        user.subscriptions = action.tags;
+
+        return {
+            ...state,
+            data: user,
+        };
+    }
     default: return state;
     }
 }
@@ -74,6 +84,12 @@ export function successUpdateUser(user) {
     return {
         type: UPDATE_SUCCESS,
         user,
+    };
+}
+export function updateTags(tags) {
+    return {
+        type: UPDATE_TAGS,
+        tags,
     };
 }
 

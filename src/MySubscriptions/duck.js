@@ -1,5 +1,6 @@
 import API from '../core/Api';
 import Event from '../Events/Event';
+import { updateTags } from '../ProfileSettings/duck';
 
 // Actions
 const SUBSCRIBE_SUCCEESS = 'subscribeTag/SUCCESS';
@@ -22,6 +23,7 @@ export default function reducer(state = initialState, action = {}) {
     case SUBSCRIBE_SUCCEESS: {
         return {
             ...state,
+            tags: action.tags,
             error: null,
         };
     }
@@ -57,10 +59,10 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function subscribeTagSuccess(event) {
+export function subscribeTagSuccess(tags) {
     return {
         type: SUBSCRIBE_SUCCEESS,
-        event,
+        tags,
     };
 }
 
@@ -116,6 +118,7 @@ export function subscribeTag(_token, _tag, _successCb = () => {}, _errorCb = () 
         API.subscribeByTag(_token, _tag)
             .then((response) => {
                 dispatch(subscribeTagSuccess(response.data));
+                dispatch(updateTags(response.data))
                 _successCb(response.data);
             })
             .catch((error) => {
@@ -130,6 +133,7 @@ export function unsubscribeTag(_token, _tag) {
         API.unsubscribeByTag(_token, _tag)
             .then((response) => {
                 dispatch(unsubscribeTagSuccess(response.data));
+                dispatch(updateTags(response.data));
             })
             .catch((error) => {
                 dispatch(unsubscribeTagFail(error.response));
