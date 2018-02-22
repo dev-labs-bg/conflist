@@ -137,15 +137,6 @@ class MySubscriptions extends Component {
                             the upcoming and the new conferences matching
                             these tags.
                         </h6>
-
-                        <div className="text-center">
-                            <button
-                                className="btn btn-primary px-4 py-2"
-                                type="submit"
-                            >
-                                Save
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
