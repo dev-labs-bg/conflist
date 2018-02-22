@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import TagsInput from 'react-tagsinput';
-import Autosuggest from 'react-autosuggest';
-
 
 import { fetchTags, subscribeTag, unsubscribeTag } from './duck';
 import User from '../ProfileSettings/User';
 import './react-tagsinput.css';
-import './Autosuggest.css';
+
 
 class MySubscriptions extends Component {
     static propTypes = {
@@ -97,7 +95,10 @@ class MySubscriptions extends Component {
 
     renderMessage = () => {
         if (this.state.error === 404) {
-            return <h4>This tag is not valid!</h4>;
+            return (
+                <h4 className="text-danger text-center">
+                This tag is not valid!
+                </h4>);
         }
 
 
@@ -111,47 +112,6 @@ class MySubscriptions extends Component {
         if (this.props.subscriptions.isFetching && this.props.subscriptions.isFetching === null) {
             return <div>Loading</div>;
         }
-
-        const autocompleteRenderInput = ({ addTag, ...props }) => {
-            const handleOnChange = (e, { newValue, method }) => {
-                if (method === "enter") {
-                    e.preventDefault();
-                } else {
-                    props.onChange(e);
-                }
-            };
-
-            const inputValue =
-                (props.value && props.value.trim().toLowerCase()) || "";
-            const inputLength = inputValue.length;
-
-            let suggestions = this.props.subscriptions.tags.filter((tag) => {
-                return (
-                    tag.name.toLowerCase().slice(0, inputLength) === inputValue
-                );
-            });
-
-            return (
-                <Autosuggest
-                    ref={props.ref}
-                    suggestions={suggestions}
-                    shouldRenderSuggestions={value =>
-                        value && value.trim().length > 0
-                    }
-                    getSuggestionValue={suggestion => suggestion.name}
-                    renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
-                    inputProps={{
-                        ...props,
-                        onChange: handleOnChange
-                    }}
-                    onSuggestionSelected={(e, { suggestion }) => {
-                        addTag(suggestion.name);
-                    }}
-                    onSuggestionsClearRequested={() => {}}
-                    onSuggestionsFetchRequested={() => {}}
-                />
-            );
-        };
 
         return (
             <div className="py-5">
@@ -168,7 +128,6 @@ class MySubscriptions extends Component {
                         <div className="text-center mb-5">
                             {this.renderMessage()}
                             <TagsInput
-                                renderInput={autocompleteRenderInput}
                                 value={this.state.tags}
                                 onChange={this.handleChange}
                             />
