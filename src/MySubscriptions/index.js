@@ -110,6 +110,7 @@ class MySubscriptions extends Component {
             return <div>Loading</div>;
         }
 
+        // Render suggestions on tag-input
         const autocompleteRenderInput = ({ addTag, ...props }) => {
             const handleOnChange = (e, { newValue, method }) => {
                 if (method === 'enter') {

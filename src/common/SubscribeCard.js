@@ -8,7 +8,7 @@ class SubscribeCard extends Component {
     static propTypes = {
         authToken: PropTypes.string,
         tag: PropTypes.string.isRequired,
-        subscribeTag: PropTypes.func,
+        subscribeTag: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -30,7 +30,7 @@ class SubscribeCard extends Component {
 
         this.timeout = setTimeout(() => {
             this.setState({ error: null, isUpdated: null, isNotAuth: null });
-        }, 10000);
+        }, 1000);
     }
 
     tagSubscribe = () => {
