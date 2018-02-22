@@ -44,8 +44,8 @@ class MySubscriptions extends Component {
     }
 
     addedTagHandler = (updatedTag) => {
-        const errorCallback = (status) => {
-            this.setState({ error: status });
+        const errorCallback = (error) => {
+            this.setState({ error });
 
             this.handleDelayedMessageReset();
         };
@@ -95,10 +95,9 @@ class MySubscriptions extends Component {
     };
 
     renderMessage = () => {
-        if (this.state.error === 404) {
-            return <h4>This tag is not valid!</h4>;
+        if (this.state.error) {
+            return <h4>{this.state.error}!</h4>;
         }
-
 
         return null;
     };

@@ -134,8 +134,8 @@ export function subscribeTag(_token, _tag, _successCb = () => {}, _errorCb = () 
                 _successCb(response.data);
             })
             .catch((error) => {
-                dispatch(subscribeTagFail(error.response.status));
-                _errorCb(error.response.status);
+                dispatch(subscribeTagFail(error.response.data.message));
+                _errorCb(error.response.data.message);
             });
     };
 }
