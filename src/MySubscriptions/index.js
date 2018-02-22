@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import TagsInput from 'react-tagsinput';
+import Autosuggest from 'react-autosuggest';
 
 import { fetchTags, subscribeTag, unsubscribeTag } from './duck';
 import User from '../ProfileSettings/User';
 import './react-tagsinput.css';
-
 
 class MySubscriptions extends Component {
     static propTypes = {
@@ -77,8 +77,7 @@ class MySubscriptions extends Component {
     handleChange = (nextTags) => {
         const prevTags = this.state.tags;
 
-        // Compare previous and next tags
-        // Gery will write a meaningfull comment.
+        // Compare arrays of previous and next tags to find the updatedTag
         const updatedTag = [
             ..._.difference(prevTags, nextTags),
             ..._.difference(nextTags, prevTags),
@@ -87,18 +86,17 @@ class MySubscriptions extends Component {
         this.setState({ tags: nextTags });
 
         if (_.difference(prevTags, nextTags).length === 0) {
+            // Case 1: The tag is added
             this.addedTagHandler(updatedTag);
         } else {
+            // Case 2: The tag is removed
             this.deletedTagHandler(updatedTag);
         }
     };
 
     renderMessage = () => {
         if (this.state.error === 404) {
-            return (
-                <h4 className="text-danger text-center">
-                This tag is not valid!
-                </h4>);
+            return <h4>This tag is not valid!</h4>;
         }
 
 
@@ -112,6 +110,47 @@ class MySubscriptions extends Component {
         if (this.props.subscriptions.isFetching && this.props.subscriptions.isFetching === null) {
             return <div>Loading</div>;
         }
+
+        const autocompleteRenderInput = ({ addTag, ...props }) => {
+            const handleOnChange = (e, { newValue, method }) => {
+                if (method === 'enter') {
+                    e.preventDefault();
+                } else {
+                    props.onChange(e);
+                }
+            };
+
+            const inputValue =
+                (props.value && props.value.trim().toLowerCase()) || '';
+            const inputLength = inputValue.length;
+
+            let suggestions = this.props.subscriptions.tags.filter((tag) => {
+                return (
+                    tag.name.toLowerCase().slice(0, inputLength) === inputValue
+                );
+            });
+
+            return (
+                <Autosuggest
+                    ref={props.ref}
+                    suggestions={suggestions}
+                    shouldRenderSuggestions={value =>
+                        value && value.trim().length > 0
+                    }
+                    getSuggestionValue={suggestion => suggestion.name}
+                    renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
+                    inputProps={{
+                        ...props,
+                        onChange: handleOnChange
+                    }}
+                    onSuggestionSelected={(e, { suggestion }) => {
+                        addTag(suggestion.name);
+                    }}
+                    onSuggestionsClearRequested={() => {}}
+                    onSuggestionsFetchRequested={() => {}}
+                />
+            );
+        };
 
         return (
             <div className="py-5">
@@ -128,6 +167,7 @@ class MySubscriptions extends Component {
                         <div className="text-center mb-5">
                             {this.renderMessage()}
                             <TagsInput
+                                renderInput={autocompleteRenderInput}
                                 value={this.state.tags}
                                 onChange={this.handleChange}
                             />
@@ -137,6 +177,15 @@ class MySubscriptions extends Component {
                             the upcoming and the new conferences matching
                             these tags.
                         </h6>
+
+                        <div className="text-center">
+                            <button
+                                className="btn btn-primary px-4 py-2"
+                                type="submit"
+                            >
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 import API from '../core/Api';
-import Event from '../Events/Event';
 import { updateTags } from '../ProfileSettings/duck';
 
 // Actions
@@ -59,7 +58,7 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_TAGS_FAIL:
         return {
             ...state,
-            tags: false,
+            isFetching: false,
             error: action.error,
         };
     default: return state;
