@@ -25,7 +25,6 @@ export default function reducer(state = initialState, action = {}) {
     case SUBSCRIBE_SUCCEESS: {
         return {
             ...state,
-            tags: action.tags,
             error: null,
         };
     }
@@ -60,7 +59,7 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_TAGS_FAIL:
         return {
             ...state,
-            isFetching: false,
+            tags: false,
             error: action.error,
         };
     default: return state;
@@ -68,10 +67,9 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function subscribeTagSuccess(tags) {
+export function subscribeTagSuccess() {
     return {
         type: SUBSCRIBE_SUCCEESS,
-        tags,
     };
 }
 
@@ -82,10 +80,9 @@ export function subscribeTagFail(error) {
     };
 }
 
-export function unsubscribeTagSuccess(event) {
+export function unsubscribeTagSuccess() {
     return {
         type: UNSUBSCRIBE_SUCCEESS,
-        event,
     };
 }
 
@@ -101,6 +98,7 @@ export function fetchTagsRequest() {
         type: FETCH_TAGS_REQUEST,
     };
 }
+
 export function fetchTagsSuccess(tags) {
     return {
         type: FETCH_TAGS_SUCCESS,
@@ -125,15 +123,15 @@ export function fetchTags() {
             .catch((error) => {
                 dispatch(fetchTagsFail(error.response.status));
             });
-    }
+    };
 }
 
 export function subscribeTag(_token, _tag, _successCb = () => {}, _errorCb = () => {}) {
     return (dispatch) => {
         API.subscribeByTag(_token, _tag)
             .then((response) => {
-                dispatch(subscribeTagSuccess(response.data));
-                dispatch(updateTags(response.data))
+                dispatch(subscribeTagSuccess());
+                dispatch(updateTags(response.data));
                 _successCb(response.data);
             })
             .catch((error) => {
@@ -147,7 +145,7 @@ export function unsubscribeTag(_token, _tag) {
     return (dispatch) => {
         API.unsubscribeByTag(_token, _tag)
             .then((response) => {
-                dispatch(unsubscribeTagSuccess(response.data));
+                dispatch(unsubscribeTagSuccess());
                 dispatch(updateTags(response.data));
             })
             .catch((error) => {
