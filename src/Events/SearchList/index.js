@@ -7,6 +7,7 @@ import Event from '../Event';
 import EventsList from '../List';
 import { getEventsByTag } from './duck';
 import { fetchWishListIfNeeded } from '../WishList/duck';
+import eventIcon from '../../assets/images/event-icon.svg';
 
 class SearchList extends Component {
     static propTypes = {
@@ -64,7 +65,14 @@ class SearchList extends Component {
         }
 
         if (data.length === 0) {
-            return <SubscribeCard />;
+            return (
+                <div className="text-center py-5">
+                    <img className="mb-4" src={eventIcon} />
+                    <h4>There are no
+                        <span className="text-info"> Events </span>
+                    </h4>
+                    <SubscribeCard tag={this.props.searchTag}/>
+                </div>);
         }
         const wishList = this.props.wishListData.length === 0 ?
             this.props.wishList.data : this.props.wishListData;
