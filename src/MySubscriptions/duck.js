@@ -130,8 +130,9 @@ export function subscribeTag(_token, _tag, _successCb = () => {}, _errorCb = () 
         API.subscribeByTag(_token, _tag)
             .then((response) => {
                 dispatch(subscribeTagSuccess());
-                dispatch(updateTags(response.data));
                 _successCb(response.data);
+                // Update state in user reducer with the subscribed tag
+                dispatch(updateTags(response.data));
             })
             .catch((error) => {
                 dispatch(subscribeTagFail(error.response.data.message));
@@ -145,6 +146,7 @@ export function unsubscribeTag(_token, _tag) {
         API.unsubscribeByTag(_token, _tag)
             .then((response) => {
                 dispatch(unsubscribeTagSuccess());
+                // Update state in user reducer with the unsubscribed tag
                 dispatch(updateTags(response.data));
             })
             .catch((error) => {

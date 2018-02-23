@@ -46,6 +46,10 @@ export default function reducer(state = initialState, action = {}) {
             data,
         };
     }
+    /**
+     * Update subscriptions array when User subscribes or unsubscribes to any tag,
+     * gets called in Subscriptions reducer.
+     */
     case UPDATE_TAGS: {
         const user = new User(state.data);
         user.subscriptions = action.tags;
@@ -86,6 +90,7 @@ export function successUpdateUser(user) {
         user,
     };
 }
+
 export function updateTags(tags) {
     return {
         type: UPDATE_TAGS,
