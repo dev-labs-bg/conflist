@@ -50,14 +50,10 @@ class MySubscriptions extends Component {
             this.handleDelayedMessageReset();
         };
 
-        const successCallback = () => {
-            console.log('success');
-        };
-
         this.props.subscribeTag(
             this.props.authToken,
             updatedTag,
-            successCallback,
+            () => {},
             errorCallback,
         );
     };
