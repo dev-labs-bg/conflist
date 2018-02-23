@@ -98,9 +98,9 @@ export function updateTags(tags) {
     };
 }
 
-export function updateCurrentUser(_token, _name, _successCb, _errorCb) {
+export function updateCurrentUser(_token, _updatedValue, _successCb, _errorCb) {
     return (dispatch) => {
-        API.updateCurrentUser(_token, _name)
+        API.updateCurrentUser(_token, _updatedValue)
             .then((response) => {
                 dispatch(successUpdateUser(response.data));
                 _successCb(response.data);

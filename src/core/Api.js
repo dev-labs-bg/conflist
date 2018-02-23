@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from '../config';
+import * as _ from 'lodash';
 
 const instance = axios.create({
     baseURL: `${baseUrl}api/v1/`,
@@ -48,18 +49,37 @@ const API = {
                 Authorization: `Bearer ${token}`,
             },
         }),
-    updateCurrentUser: (token, _name) =>
+      updateCurrentUser: (token, _updatedValue) => {
         instance.post(
             'users/me',
             {
-                name: _name,
+                avatar: [
+                    {
+                        ..._updatedValue,
+                    },
+                ],
             },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             },
-        ),
+        )
+
+
+
+            // instance.post(
+            //     'users/me',
+            //     {
+            //         name: _updatedValue,
+            //     },
+            //     {
+            //         headers: {
+            //             Authorization: `Bearer ${token}`,
+            //         },
+            //     },
+            // )
+    },
     fetchWishList: token =>
         axios({
             url: `${baseUrl}api/v1/users/me/conferences`,
