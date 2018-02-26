@@ -6,14 +6,20 @@ class SuggestConference extends Component {
     }
 
     render() {
+        const style = {
+            height: '100vh',
+        };
         return (
-            <div className="container mx-auto pt-5 pb-5">
-                <h1 className="text-center mb-5">Suggest a conference</h1>
-
+            <div
+                className="w-100"
+                style={style}
+            >
                 <iframe
+                    className="mx-auto"
                     title="Conflist Suggest a conference"
-                    width="700px"
-                    height="500px"
+                    width="100%"
+                    height="100%"
+                    frameBorder="0"
                     src="https://devlabs.typeform.com/to/UJp2uM"
                 />
             </div>
