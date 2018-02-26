@@ -6,6 +6,7 @@ const instance = axios.create({
     baseURL: `${baseUrl}api/v1/`,
 });
 
+let field;
 const API = {
     fetchConferences: () =>
         instance.get('conferences'),
@@ -49,37 +50,16 @@ const API = {
                 Authorization: `Bearer ${token}`,
             },
         }),
-      updateCurrentUser: (token, _updatedValue) => {
+    updateCurrentUser: (token, _updatedValue) =>
         instance.post(
             'users/me',
-            {
-                avatar: [
-                    {
-                        ..._updatedValue,
-                    },
-                ],
-            },
+            _updatedValue,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             },
-        )
-
-
-
-            // instance.post(
-            //     'users/me',
-            //     {
-            //         name: _updatedValue,
-            //     },
-            //     {
-            //         headers: {
-            //             Authorization: `Bearer ${token}`,
-            //         },
-            //     },
-            // )
-    },
+        ),
     fetchWishList: token =>
         axios({
             url: `${baseUrl}api/v1/users/me/conferences`,

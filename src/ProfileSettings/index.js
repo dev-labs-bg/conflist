@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import base64Img from 'base64-img';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
@@ -21,11 +20,7 @@ class ProfileSettings extends Component {
         auth: PropTypes.shape({
             token: PropTypes.string,
         }).isRequired,
-        updateCurrentUser: PropTypes.func,
-    };
-
-    static defaultProps = {
-        updateCurrentUser: () => {},
+        updateCurrentUser: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -67,10 +62,17 @@ class ProfileSettings extends Component {
     }
 
     updateAvatar = () => {
+        const updateValue = {
+            avatar: [
+                {
+                    ...this.state.avatarBase64,
+                },
+            ],
+        };
         if (this.state.avatar.length !== 0) {
             this.props.updateCurrentUser(
                 this.props.auth.token,
-                this.state.avatarBase64,
+                updateValue,
                 () => {},
                 () => {},
             );
@@ -103,11 +105,13 @@ class ProfileSettings extends Component {
 
             this.handleDelayedMessageReset();
         };
-
+        const updateValue = {
+            name: this.state.name,
+        };
         if (this.state.isValid) {
             this.props.updateCurrentUser(
                 this.props.auth.token,
-                this.state.name,
+                updateValue,
                 successCallback,
                 errorCallback,
             );
