@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
@@ -19,11 +20,7 @@ class ProfileSettings extends Component {
         auth: PropTypes.shape({
             token: PropTypes.string,
         }).isRequired,
-        updateCurrentUser: PropTypes.func,
-    };
-
-    static defaultProps = {
-        updateCurrentUser: () => {},
+        updateCurrentUser: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -33,6 +30,8 @@ class ProfileSettings extends Component {
             isUpdated: false,
             error: null,
             isValid: false,
+            avatar: [],
+            avatarBase64: {},
         };
         this.handleChange = this.handleChange.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
@@ -46,6 +45,41 @@ class ProfileSettings extends Component {
         }
     }
 
+    onDrop = (acceptedFiles) => {
+        this.setState({
+            avatar: acceptedFiles[0],
+        });
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            this.setState({
+                avatarBase64: {
+                    title: acceptedFiles[0].name,
+                    src: event.target.result,
+                },
+            });
+        };
+        reader.readAsDataURL(acceptedFiles[0]);
+    }
+
+    updateAvatar = () => {
+        const updateValue = {
+            avatar: [
+                {
+                    ...this.state.avatarBase64,
+                },
+            ],
+        };
+        if (this.state.avatar.length !== 0) {
+            this.props.updateCurrentUser(
+                this.props.auth.token,
+                updateValue,
+                () => {},
+                () => {},
+            );
+        }
+    }
+
+
     handleChange(event) {
         this.setState({ name: event.target.value });
 
@@ -56,7 +90,7 @@ class ProfileSettings extends Component {
             }
         }
 
-        this.setState({ isValid: isValid });
+        this.setState({ isValid });
         return isValid;
     }
 
@@ -72,10 +106,14 @@ class ProfileSettings extends Component {
             this.handleDelayedMessageReset();
         };
 
+        const updateValue = {
+            name: this.state.name,
+        };
+
         if (this.state.isValid) {
             this.props.updateCurrentUser(
                 this.props.auth.token,
-                this.state.name,
+                updateValue,
                 successCallback,
                 errorCallback,
             );
@@ -125,8 +163,17 @@ class ProfileSettings extends Component {
             return <h4 className="text-danger text-center">Error fetching user data!</h4>;
         }
 
-        const { profileImg, name, email } = this.props.user.data;
 
+        const { profileImg, name, email } = this.props.user.data;
+        const dropzoneStyle = {
+            width: '200px',
+            height: '50px',
+            borderWidth: '1px',
+            borderColor: '#717171',
+            borderStyle: 'dashed',
+            borderRadius: '5px',
+            marginBotton: '15px',
+        };
         return (
             <div className="container mx-auto pt-5 pb-5">
                 {this.renderMessage(this.state.error, this.state.isUpdated)}
@@ -139,15 +186,36 @@ class ProfileSettings extends Component {
                         <div className="d-flex justify-content-center">
                             <img
                                 className="mr-3 rounded-circle"
-                                src={profileImg}
+                                src={this.state.avatar.length === 0 ?
+                                    profileImg : this.state.avatar.preview}
                                 width="100"
                                 height="100"
                                 alt="profile avatar"
                             />
 
-                            <div className="d-flex flex-column w-25 justify-content-around">
-                                <span className="label">Your Avatar</span>
-                                <button className="btn btn-secondary" type="button">Update</button>
+                            <div className="d-flex flex-column w-50 justify-content-around align-items-center">
+                                <Dropzone
+                                    onDrop={this.onDrop}
+                                    multiple={false}
+                                    style={dropzoneStyle}
+                                >
+                                    {this.state.avatar.length === 0 ?
+                                        <p className="ml-1 label">
+                                            Drop your avatar here
+                                        </p>
+                                        :
+                                        <p className="ml-1 label">
+                                            {this.state.avatar.name}
+                                        </p>
+                                    }
+
+                                </Dropzone>
+                                <button
+                                    className="btn btn-secondary w-50"
+                                    type="button"
+                                    onClick={this.updateAvatar}
+                                >Update
+                                </button>
                             </div>
 
                         </div>
@@ -201,12 +269,10 @@ class ProfileSettings extends Component {
     }
 }
 
-const mapStateToProps = ({ auth, user }) => {
-    return {
-        user,
-        auth,
-    };
-};
+const mapStateToProps = ({ auth, user }) => ({
+    user,
+    auth,
+});
 
 const mapDispatchToProps = {
     updateCurrentUser,

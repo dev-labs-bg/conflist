@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { baseUrl } from '../config';
+import * as _ from 'lodash';
 
 const instance = axios.create({
     baseURL: `${baseUrl}api/v1/`,
 });
 
+let field;
 const API = {
     fetchConferences: () =>
         instance.get('conferences'),
@@ -48,12 +50,10 @@ const API = {
                 Authorization: `Bearer ${token}`,
             },
         }),
-    updateCurrentUser: (token, _name) =>
+    updateCurrentUser: (token, _updatedValue) =>
         instance.post(
             'users/me',
-            {
-                name: _name,
-            },
+            _updatedValue,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
