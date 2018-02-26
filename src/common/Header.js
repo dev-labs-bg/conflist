@@ -171,7 +171,9 @@ class Header extends Component {
                             </NavItem>
 
                             <NavItem>
-                                <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
+                                <Link className="nav-link" to="/conference-suggest">
+                                    Suggest a conference
+                                </Link>
                             </NavItem>
                             { this.renderDropdown(isAuthenticated, this.props.user.data) }
                         </Nav>
@@ -185,11 +187,9 @@ class Header extends Component {
     }
 }
 
-const mapStateToProps = ({ user, auth }) => {
-    return {
-        user,
-        isAuthenticated: auth.isAuthenticated,
-    };
-};
+const mapStateToProps = ({ user, auth }) => ({
+    user,
+    isAuthenticated: auth.isAuthenticated,
+});
 
 export default connect(mapStateToProps)(Header);
