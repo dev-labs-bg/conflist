@@ -8,7 +8,7 @@ class SuggestConference extends Component {
     render() {
         return (
             <div
-                className="w-100 h-100 embed-responsive embed-responsive-16by9"
+                className="w-100 h-100 embed-responsive embed-responsive-1by1"
             >
                 <iframe
                     className="embed-responsive-item"
