@@ -6,16 +6,12 @@ class SuggestConference extends Component {
     }
 
     render() {
-        const style = {
-            height: '100vh',
-        };
         return (
             <div
-                className="w-100"
-                style={style}
+                className="w-100 h-100 embed-responsive embed-responsive-16by9"
             >
                 <iframe
-                    className="mx-auto"
+                    className="embed-responsive-item"
                     title="Conflist Suggest a conference"
                     width="100%"
                     height="100%"
