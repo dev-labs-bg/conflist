@@ -105,9 +105,11 @@ class ProfileSettings extends Component {
 
             this.handleDelayedMessageReset();
         };
+
         const updateValue = {
             name: this.state.name,
         };
+
         if (this.state.isValid) {
             this.props.updateCurrentUser(
                 this.props.auth.token,
@@ -166,7 +168,7 @@ class ProfileSettings extends Component {
         const dropzoneStyle = {
             width: '200px',
             height: '50px',
-            borderWidth: '2px',
+            borderWidth: '1px',
             borderColor: '#717171',
             borderStyle: 'dashed',
             borderRadius: '5px',
