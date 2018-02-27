@@ -66,6 +66,7 @@ class Header extends Component {
 
     logOut = () => {
         this.props.removeToken();
+        window.location.reload(true);
     }
 
     renderDropdown = (_isAuthenticated, _userData) => {
