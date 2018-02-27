@@ -7,28 +7,24 @@ class SuggestConference extends Component {
 
     render() {
         const style = {
-            paddingBottom: '85%',
-            height: '0',
-            width: '100%',
-            position: 'relative',
         };
         const iFrame = {
-            top: 0,
-            left: 0,
             position: 'absolute',
+            overflow: 'hidden',
+            bottom: '0',
+            height: 'calc(100% - 93px)',
         };
         return (
             <div
                 style={style}
             >
                 <iframe
-                    className="position-absolute"
                     title="Conflist Suggest a conference"
                     width="100%"
-                    height="100%"
                     frameBorder="0"
                     style={iFrame}
-                    allowfullscreen
+                    allowFullScreen
+                    align="middle"
                     src="https://devlabs.typeform.com/to/UJp2uM"
                 />
             </div>
