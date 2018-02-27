@@ -31,14 +31,12 @@ class App extends Component {
     async componentDidMount() {
         await this.props.getToken();
         if (this.props.auth.isAuthenticated) {
-            debugger
             this.props.fetchCurrentUser(this.props.auth.token);
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
-            debugger
             this.props.fetchCurrentUser(nextProps.auth.token);
         }
     }
