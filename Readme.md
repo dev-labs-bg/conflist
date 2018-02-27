@@ -18,6 +18,7 @@ You need to create a config.js file in the src folder containing url's used in t
 baseUrl = `https://api.conflist.devlabs-projects.com/`;
 loginUrl = `${baseUrl}auth/twitter?returnUrl=http://localhost:3000/gate`;
 ```
+The config.js file is added in .gitignore.
 
 ## Run
 
@@ -43,5 +44,3 @@ This is an open source project, so if you want to contribute you need to:
 3. npm run watch-css
 4. npm start
 ```
-
-33
