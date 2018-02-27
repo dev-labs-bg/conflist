@@ -35,9 +35,9 @@ class App extends Component {
         }
     }
 
-    componentWillReceiveProps() {
-        if (this.props.auth.isAuthenticated) {
-            this.props.fetchCurrentUser(this.props.auth.token);
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.fetchCurrentUser(nextProps.auth.token);
         }
     }
 

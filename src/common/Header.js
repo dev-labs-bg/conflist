@@ -10,13 +10,13 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
 } from 'reactstrap';
 
+import { removeToken } from '../Login/duck';
 import Search from '../Search';
 import Logo from './Logo';
 
@@ -30,6 +30,7 @@ class Header extends Component {
             }),
             isFetching: PropTypes.bool,
         }),
+        removeToken: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -61,6 +62,11 @@ class Header extends Component {
         }
 
         return 'navbar-dark';
+    }
+
+    logOut = () => {
+        this.props.removeToken();
+        window.location.reload(true);
     }
 
     renderDropdown = (_isAuthenticated, _userData) => {
@@ -105,7 +111,7 @@ class Header extends Component {
                             Wanna go list
                         </Link>
                         <DropdownItem divider />
-                        <DropdownItem>
+                        <DropdownItem onClick={this.logOut}>
                             Log out
                         </DropdownItem>
                     </DropdownMenu>
@@ -197,4 +203,8 @@ const mapStateToProps = ({ user, auth }) => ({
     isAuthenticated: auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = {
+    removeToken,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

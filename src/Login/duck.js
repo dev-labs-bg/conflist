@@ -13,6 +13,7 @@ const RECEIVE = 'jwtToken/RECEIVE';
 const FAIL = 'jwtToken/FAIL';
 const SET = 'jwtToken/SET';
 const GET = 'jwtToken/GET';
+const REMOVE = 'jwtToken/REMOVE';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -36,11 +37,12 @@ export default function reducer(state = initialState, action = {}) {
             isLoading: false,
             isAuthenticated: false,
         };
-    case SET:
+    case SET: {
         localStorage.setItem('token', action.token);
         return {
             ...state,
         };
+    }
     case GET: {
         const token = localStorage.getItem('token');
         return {
@@ -48,6 +50,15 @@ export default function reducer(state = initialState, action = {}) {
             isAuthenticated: !!token,
             isLoading: false,
             token,
+        };
+    }
+    case REMOVE: {
+        const removeToken = localStorage.removeItem('token');
+        return {
+            ...state,
+            isAuthenticated: false,
+            isLoading: false,
+            token: null,
         };
     }
     default: return state;
@@ -87,6 +98,13 @@ export function getToken() {
         type: GET,
     };
 }
+
+export function removeToken() {
+    return {
+        type: REMOVE,
+    };
+}
+
 
 export function jwtTokenRequest() {
     return (dispatch) => {

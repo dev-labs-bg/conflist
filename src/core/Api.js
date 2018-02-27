@@ -1,12 +1,10 @@
 import axios from 'axios';
 import { baseUrl } from '../config';
-import * as _ from 'lodash';
 
 const instance = axios.create({
     baseURL: `${baseUrl}api/v1/`,
 });
 
-let field;
 const API = {
     fetchConferences: () =>
         instance.get('conferences'),
