@@ -138,10 +138,15 @@ class Header extends Component {
 
         const { isAuthenticated } = this.props;
 
+        const style = {
+            zIndex: '1',
+        };
+
         return (
             <div className={!isAuthenticated ? 'register' : null}>
                 <Navbar
-                    className={`navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
+                    style={style}
+                    className={`p-relative navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
                     <NavbarBrand className="mx-auto">
                         <Logo
@@ -171,7 +176,9 @@ class Header extends Component {
                             </NavItem>
 
                             <NavItem>
-                                <NavLink className="nav-link" href="#">Suggest a conference</NavLink>
+                                <Link className="nav-link" to="/conference-suggest">
+                                    Suggest a conference
+                                </Link>
                             </NavItem>
                             { this.renderDropdown(isAuthenticated, this.props.user.data) }
                         </Nav>
@@ -185,11 +192,9 @@ class Header extends Component {
     }
 }
 
-const mapStateToProps = ({ user, auth }) => {
-    return {
-        user,
-        isAuthenticated: auth.isAuthenticated,
-    };
-};
+const mapStateToProps = ({ user, auth }) => ({
+    user,
+    isAuthenticated: auth.isAuthenticated,
+});
 
 export default connect(mapStateToProps)(Header);

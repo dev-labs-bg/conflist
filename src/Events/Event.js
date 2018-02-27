@@ -14,7 +14,7 @@ class Event {
         tags = [],
         website = '',
         speakers = [],
-        atendees = null,
+        attendees = null,
     }) {
         this.id = _id;
         this.name = name;
@@ -30,7 +30,7 @@ class Event {
         this.tags = tags;
         this.website = website;
         this.speakers = speakers;
-        this.atendees = atendees;
+        this.attendees = attendees;
     }
 }
 
