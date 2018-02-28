@@ -1,12 +1,9 @@
 .load-wrapp {
-    float: left;
     width: 100px;
     height: 100px;
-    margin: 0 10px 10px 0;
+    margin: 40px auto 0;
     padding: 20px 20px 20px;
     border-radius: 5px;
-    text-align: center;
-    background-color: #d8d8d8;
 }
 
 .bubble-1,

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
 
+import Loading from '../common/Loading';
 import { updateCurrentUser } from './duck';
 
 class ProfileSettings extends Component {
@@ -156,7 +157,7 @@ class ProfileSettings extends Component {
 
     render() {
         if (this.props.user.isFetching || this.props.user.isFetching === null) {
-            return <h4 className="text-danger text-center">Loading!</h4>;
+            return <Loading />;
         }
 
         if (this.props.user.error !== null) {

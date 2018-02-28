@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Loading from '../../common/Loading';
 import SubscribeCard from '../../common/SubscribeCard';
 import Event from '../Event';
 import EventsList from '../List';
@@ -51,12 +52,12 @@ class SearchList extends Component {
         const { isFetching, error, data } = this.props.searchList;
 
         if (isFetching || isFetching === null) {
-            return <div>Loading!</div>;
+            return <Loading />;
         }
 
         if (this.props.authToken) {
             if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
-                return <div>Loading!</div>;
+                return <Loading />;
             }
         }
 

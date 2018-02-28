@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Loading from './common/Loading';
 import Wrapper from './common/Wrapper';
 import EventDetails from './Events/Details';
 import HomePage from './Home';
@@ -45,7 +46,7 @@ class App extends Component {
         const { isAuthenticated, isLoading, error } = this.props.auth;
 
         if (isLoading || isLoading === null) {
-            return (<p className="text-danger text-center">Loading!</p>);
+            return <Loading />;
         }
 
         if (error !== null) {
@@ -89,11 +90,9 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => {
-    return {
-        auth,
-    };
-};
+const mapStateToProps = ({ auth }) => ({
+    auth,
+});
 
 const mapDispatchToProps = {
     getToken,

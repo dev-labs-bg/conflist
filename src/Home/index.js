@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Loading from '../common/Loading';
 import Event from '../Events/Event';
 import EventsList from '../Events/List';
 import { fetchConferences } from '../Events/List/duck';
@@ -45,27 +46,15 @@ class HomePage extends Component {
         const { isFetching } = this.props.events;
 
         if (error !== null) {
-            return (
-                <div>
-                    Error with status { error }
-                </div>
-            );
+            return <Loading />;
         }
 
         if (isFetching) {
-            return (
-                <div className="text-danger text-center">
-                Loading...
-                </div>
-            );
+            return <Loading />;
         }
         if (this.props.auth.isAuthenticated) {
             if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
-                return (
-                    <div>
-                    Loading...
-                    </div>
-                );
+                return <Loading />;
             }
         }
 
