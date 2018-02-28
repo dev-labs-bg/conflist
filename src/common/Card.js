@@ -100,10 +100,8 @@ class Card extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => {
-    return {
-        authToken: auth.token,
-    };
-};
+const mapStateToProps = ({ auth }) => ({
+    authToken: auth.token,
+});
 
 export default connect(mapStateToProps)(Card);

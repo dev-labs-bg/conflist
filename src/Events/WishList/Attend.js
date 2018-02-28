@@ -36,11 +36,17 @@ class Attend extends Component {
             isActive: !this.state.isActive,
         });
 
+
+        if (this.props.token === null) {
+            return (<div>Login or register so you can add to your WishList!</div>);
+        }
+
         if (!this.state.isActive) {
             this.props.attendConference(this.props.id, this.props.token);
         } else {
             this.props.unattendConference(this.props.id, this.props.token);
         }
+
     }
 
     /**
