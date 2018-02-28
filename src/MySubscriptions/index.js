@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import TagsInput from 'react-tagsinput';
 import Autosuggest from 'react-autosuggest';
+import Loading from '../common/Loading';
 
 import { fetchTags, subscribeTag, unsubscribeTag } from './duck';
 import User from '../ProfileSettings/User';
@@ -100,10 +101,10 @@ class MySubscriptions extends Component {
 
     render() {
         if (this.props.user.isFetching && this.props.user.isFetching === null) {
-            return <div>Loading</div>;
+            return <Loading />;
         }
         if (this.props.subscriptions.isFetching && this.props.subscriptions.isFetching === null) {
-            return <div>Loading</div>;
+            return <Loading />;
         }
 
         // Render suggestions on tag-input

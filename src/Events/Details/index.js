@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
+import Loading from '../../common/Loading';
 import HeartFullIcon from '../../common/HeartFullIcon';
 import PopoverItem from '../../common/PopoverItem';
 import Event from '../Event';
@@ -201,7 +202,7 @@ class InsidePage extends Component {
         const { error, isFetching, data } = this.props.event;
 
         if (typeof isFetching === 'undefined' || isFetching) {
-            return (<p>Loading!</p>);
+            return <Loading />;
         }
 
         if (error !== null) {

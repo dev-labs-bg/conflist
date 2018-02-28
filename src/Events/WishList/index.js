@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import Event from '../Event';
 
+import Loading from '../../common/Loading';
 import Card from '../../common/Card';
 import { fetchWishListIfNeeded } from './duck';
 import { orderEventsByMonth } from '../../service';
@@ -185,11 +186,11 @@ class WishList extends Component {
 
     render() {
         if (this.props.authToken && this.props.authToken === null) {
-            return <h4 className="text-danger text-center">Loading!</h4>;
+            return <Loading />;
         }
 
         if (this.props.wishList.isFetching && this.props.wishList.isFetching === null) {
-            return <h4 className="text-danger text-center">Loading!</h4>;
+            return <Loading />;
         }
 
         if (this.props.wishList.error !== null) {
