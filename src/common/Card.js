@@ -27,7 +27,9 @@ class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            // Attend component
             isActive: this.props.wishListed,
+            // Modal component
             isOpen: this.props.wishListed,
         };
     }
