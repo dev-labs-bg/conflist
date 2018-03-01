@@ -16,7 +16,6 @@ class Attend extends Component {
         unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
         wishListed: PropTypes.bool,
-
         onClick: PropTypes.func,
         isActive: PropTypes.bool,
     };
@@ -25,31 +24,29 @@ class Attend extends Component {
         past: false,
         wishListed: false,
         token: '',
+        onClick: () => {},
+        isActive: false,
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isActive: this.props.wishListed,
-            isOpen: this.props.wishListed,
-        };
-    }
-
-
     handleToggleActive = () => {
+        /**
+         * Call OnClick function from parent component Card to change isActive prop
+         */
         this.props.onClick();
 
-        if (this.props.token !== null) {
-            if (!this.props.isActive) {
-                this.props.attendConference(this.props.id, this.props.token);
-            } else {
-                this.props.unattendConference(this.props.id, this.props.token);
-            }
+        if (this.props.token === null) {
+            return null;
+        }
+
+        if (!this.props.isActive) {
+            this.props.attendConference(this.props.id, this.props.token);
+        } else {
+            this.props.unattendConference(this.props.id, this.props.token);
         }
     }
 
     /**
-     * Change Icon on isActive state change
+     * Change Icon on isActive prop change
      * @param  {Boolean}
      * @return {svg icon}
      */

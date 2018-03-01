@@ -54,6 +54,7 @@ class Card extends Component {
         return renderTags;
     }
 
+    // Handle button click and close Modal component
     toggleModal = () => {
         this.setState({
             isOpen: !this.state.isOpen,
@@ -61,22 +62,29 @@ class Card extends Component {
     }
 
     handleAttendClick = () => {
-        this.setState({ isActive: !this.state.isActive, isOpen: !this.state.isOpen });
+        this.setState({
+            isActive: !this.state.isActive,
+            isOpen: !this.state.isOpen,
+        });
     }
 
-
     renderModal = () => {
+        /**
+         * Show Modal component with a message, when unregistered user
+         * tries to wishlist an event
+         */
         if (this.state.isOpen) {
             if (this.state.isActive && this.props.authToken === null) {
                 return (
                     <Modal
-                    show={this.state.isOpen}
-                    onClose={this.toggleModal}
-                    text={<h5 className="text-center">
-                        Login or Register so you can add to your WishList!
-                    </h5>
-                    }
-                />);
+                        show={this.state.isOpen}
+                        onClose={this.toggleModal}
+                        text={
+                            <h5 className="text-center">
+                            Login or Register so you can add to your WishList!
+                            </h5>
+                        }
+                    />);
             }
         }
     }
