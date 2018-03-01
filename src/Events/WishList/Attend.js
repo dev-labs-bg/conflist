@@ -16,27 +16,29 @@ class Attend extends Component {
         unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
         wishListed: PropTypes.bool,
+        onClick: PropTypes.func,
+        isActive: PropTypes.bool,
     };
 
     static defaultProps = {
         past: false,
         wishListed: false,
         token: '',
+        onClick: () => {},
+        isActive: false,
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isActive: this.props.wishListed,
-        };
-    }
-
     handleToggleActive = () => {
-        this.setState({
-            isActive: !this.state.isActive,
-        });
+        /**
+         * Call OnClick function from parent component Card to change isActive prop
+         */
+        this.props.onClick();
 
-        if (!this.state.isActive) {
+        if (this.props.token === null) {
+            return null;
+        }
+
+        if (!this.props.isActive) {
             this.props.attendConference(this.props.id, this.props.token);
         } else {
             this.props.unattendConference(this.props.id, this.props.token);
@@ -44,12 +46,12 @@ class Attend extends Component {
     }
 
     /**
-     * Change Icon on isActive state change
+     * Change Icon on isActive prop change
      * @param  {Boolean}
      * @return {svg icon}
      */
     renderIcon = (isActive) => {
-        if (isActive) {
+        if (isActive && this.props.token !== null) {
             return <HeartFullIcon />;
         }
 
@@ -66,9 +68,9 @@ class Attend extends Component {
                 id={this.props.id}
                 item={{ name: 'Wanna go' }}
                 onClick={this.handleToggleActive}
-                isActive={this.state.isActive}
+                isActive={this.props.isActive}
             >
-                { this.renderIcon(this.state.isActive) }
+                { this.renderIcon(this.props.isActive) }
             </PopoverItem>
         );
     }
