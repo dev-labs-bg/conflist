@@ -16,6 +16,9 @@ class Attend extends Component {
         unattendConference: PropTypes.func.isRequired,
         past: PropTypes.bool,
         wishListed: PropTypes.bool,
+
+        onClick: PropTypes.func,
+        isActive: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -28,25 +31,21 @@ class Attend extends Component {
         super(props);
         this.state = {
             isActive: this.props.wishListed,
+            isOpen: this.props.wishListed,
         };
     }
 
+
     handleToggleActive = () => {
-        this.setState({
-            isActive: !this.state.isActive,
-        });
+        this.props.onClick();
 
-
-        if (this.props.token === null) {
-            return (<div>Login or register so you can add to your WishList!</div>);
+        if (this.props.token !== null) {
+            if (!this.props.isActive) {
+                this.props.attendConference(this.props.id, this.props.token);
+            } else {
+                this.props.unattendConference(this.props.id, this.props.token);
+            }
         }
-
-        if (!this.state.isActive) {
-            this.props.attendConference(this.props.id, this.props.token);
-        } else {
-            this.props.unattendConference(this.props.id, this.props.token);
-        }
-
     }
 
     /**
@@ -55,7 +54,7 @@ class Attend extends Component {
      * @return {svg icon}
      */
     renderIcon = (isActive) => {
-        if (isActive) {
+        if (isActive && this.props.token !== null) {
             return <HeartFullIcon />;
         }
 
@@ -72,9 +71,9 @@ class Attend extends Component {
                 id={this.props.id}
                 item={{ name: 'Wanna go' }}
                 onClick={this.handleToggleActive}
-                isActive={this.state.isActive}
+                isActive={this.props.isActive}
             >
-                { this.renderIcon(this.state.isActive) }
+                { this.renderIcon(this.props.isActive) }
             </PopoverItem>
         );
     }

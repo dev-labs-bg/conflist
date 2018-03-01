@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Modal from './Modal';
 import Event from '../Events/Event';
 import Attend from '../Events/WishList/Attend';
 import { getFormattedDate } from '../core/Dates';
@@ -23,6 +24,13 @@ class Card extends Component {
         wishListed: false,
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            isActive: this.props.wishListed,
+            isOpen: this.props.wishListed,
+        };
+    }
     /**
      * Using dangerouslySetInnerHTML
      *
@@ -46,10 +54,37 @@ class Card extends Component {
         return renderTags;
     }
 
+    toggleModal = () => {
+        this.setState({
+            isOpen: !this.state.isOpen,
+        });
+    }
+
+    handleAttendClick = () => {
+        this.setState({ isActive: !this.state.isActive, isOpen: !this.state.isOpen });
+    }
+
+
+    renderModal = () => {
+        if (this.state.isOpen) {
+            if (this.state.isActive && this.props.authToken === null) {
+                return (
+                    <Modal
+                    show={this.state.isOpen}
+                    onClose={this.toggleModal}
+                    text={<h5 className="text-center">
+                        Login or Register so you can add to your WishList!
+                    </h5>
+                    }
+                />);
+            }
+        }
+    }
     render() {
         const { event } = this.props;
         return (
             <div className="card mb-2">
+                {this.renderModal()}
                 <Link to={`/event/${event.alias}`}>
                     <img
                         className="card-img"
@@ -74,6 +109,8 @@ class Card extends Component {
                                 token={this.props.authToken}
                                 past={this.props.past ? true : false}
                                 wishListed={this.props.wishListed}
+                                onClick={this.handleAttendClick}
+                                isActive={this.state.isActive}
                             />
                             <span className="font-weight-normal align-top">{event.atendees}</span>
                         </div>
