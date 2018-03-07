@@ -174,6 +174,9 @@ class ProfileSettings extends Component {
             borderStyle: 'dashed',
             borderRadius: '5px',
             marginBotton: '15px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
         };
         return (
             <div className="container mx-auto pt-5 pb-5">
@@ -184,7 +187,7 @@ class ProfileSettings extends Component {
                         className="profile-card__content py-5 mb-0"
                         onSubmit={this.updateSettings}
                     >
-                        <div className="d-flex justify-content-center">
+                        <div className="d-flex justify-content-center border border-top-0 border-right-0 border-left-0 mb-3 pb-1">
                             <img
                                 className="mr-3 rounded-circle"
                                 src={this.state.avatar.length === 0 ?
@@ -194,20 +197,20 @@ class ProfileSettings extends Component {
                                 alt="profile avatar"
                             />
 
-                            <div className="d-flex flex-column w-50 justify-content-around align-items-center">
+                            <div className="d-flex flex-column w-50 justify-content-around align-items-center text-center">
                                 <Dropzone
                                     onDrop={this.onDrop}
                                     multiple={false}
                                     style={dropzoneStyle}
                                 >
                                     {this.state.avatar.length === 0 ?
-                                        <p className="ml-1 label">
+                                        <span className="label mx-0 my-0">
                                             Drop your avatar here
-                                        </p>
+                                        </span>
                                         :
-                                        <p className="ml-1 label">
+                                        <span className="label mx-0 my-0">
                                             {this.state.avatar.name}
-                                        </p>
+                                        </span>
                                     }
 
                                 </Dropzone>
@@ -220,7 +223,7 @@ class ProfileSettings extends Component {
                             </div>
 
                         </div>
-                        <hr className="w-100" />
+
 
                         <Label
                             for="first-name"
@@ -229,9 +232,9 @@ class ProfileSettings extends Component {
                         <br />
                         <Input
                             className={this.state.isValid ?
-                                'border-top-0 border-right-0 border-left-0 w-100 pl-0'
+                                'border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0'
                                 :
-                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0'}
+                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0'}
                             type="text"
                             name="name"
                             minLength="4"
@@ -247,7 +250,7 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0"
+                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0 rounded-0"
                             type="Email"
                             name="email"
                             placeholder={email}
@@ -256,7 +259,7 @@ class ProfileSettings extends Component {
 
                         <div className="text-center mt-5">
                             <button
-                                className="btn btn-primary btn-lg"
+                                className="btn btn-primary"
                                 type="submit"
                             >
                             Update Settings
