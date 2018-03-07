@@ -16,6 +16,8 @@ import {
     DropdownItem,
 } from 'reactstrap';
 
+import iconsWhole from '../assets/images/icons-whole.png';
+import icons from '../assets/images/icons.png';
 import { removeToken } from '../Login/duck';
 import Search from '../Search';
 import Logo from './Logo';
@@ -139,6 +141,21 @@ class Header extends Component {
                     className="btn btn-primary font-weight-bold align-self-start"
                 >Register
                 </Link>
+                <picture>
+                    <source
+                        media="(min-width: 715px)"
+                        srcSet={iconsWhole}
+                    />
+                    <source
+                        srcSet={iconsWhole}
+                    />
+                    <img
+                        src={icons}
+                        srcSet={icons}
+                        className="w-100"
+                        alt="register icons"
+                    />
+                </picture>
             </div>
         );
 
