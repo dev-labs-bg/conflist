@@ -224,19 +224,19 @@ class InsidePage extends Component {
                 />
 
                 <div className="mb-1">
-                    <h4 className="mb-2">{data.name}</h4>
-                    <span className="card__dates mb-2">{getFormattedDate(data.start, data.end)}
+                    <h4 className="mb-3">{data.name}</h4>
+                    <span className="card__dates">{getFormattedDate(data.start, data.end)}
                         <span className="text-info"> | </span> {data.venue}, {data.city}, {data.country}
                     </span>
 
-                    <div className="mb-3">
+                    <div className="mb-4 mt-2">
                         {this.renderTags()}
                     </div>
 
                     <div className="mb-4 text-bottom d-flex">
                         <HeartFullIcon />
-                        <h5 className="ml-1 font-weight-normal d-inline">Going:
-                            <span className="text-secondary">{data.atendees}</span>
+                        <h5 className="ml-2 font-weight-normal d-inline">Going:
+                            <span className="text-secondary ml-1">{data.attendees.length}</span>
                         </h5>
                     </div>
                     <div dangerouslySetInnerHTML={this.renderDescription()} />
@@ -252,6 +252,7 @@ class InsidePage extends Component {
                     <a
                         className="btn btn-primary mr-5"
                         onClick={this.checkEventInWishList}
+                        tabIndex="0"
                     >Wanna go
                     </a>
                     <a
