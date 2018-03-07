@@ -162,14 +162,14 @@ class Header extends Component {
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                     <Collapse
-                        className="justify-content-end ml-md-4 text-left"
+                        className="ml-md-4 justify-content-end text-left"
                         isOpen={!this.state.collapsed}
                         navbar
                     >
 
                         <form
                             onSubmit={this.handleSubmit}
-                            className="form-inline mt-xs-2 mr-xl-5"
+                            className="form-inline mt-xs-2 mx-auto"
                         >
                             <Search />
                         </form>
