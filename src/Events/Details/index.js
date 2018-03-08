@@ -171,6 +171,7 @@ class InsidePage extends Component {
                         />
                     </PopoverItem>
                 </div>);
+            return key;
         });
         return renderImages;
     }
@@ -183,6 +184,7 @@ class InsidePage extends Component {
                 className="badge badge-pill badge-light mr-2"
             >{tag}
             </span>);
+            return tag;
         });
         return renderTags;
     }

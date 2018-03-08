@@ -44,18 +44,6 @@ class Card extends Component {
         return { __html: this.props.event.shortDescription };
     }
 
-    renderTags(_tags) {
-        const renderTags = [];
-        _tags.map((tag) => {
-            renderTags.push(<span
-                key={tag}
-                className="badge badge-pill badge-light mr-2"
-            >{tag}
-            </span>);
-        });
-        return renderTags;
-    }
-
     // Handle button click and close Modal component
     toggleModal = () => {
         this.setState({
@@ -68,6 +56,19 @@ class Card extends Component {
             isActive: !this.state.isActive,
             isOpen: !this.state.isOpen,
         });
+    }
+
+    renderTags(_tags) {
+        const renderTags = [];
+        _tags.map((tag) => {
+            renderTags.push(<span
+                key={tag}
+                className="badge badge-pill badge-light mr-2"
+            >{tag}
+            </span>);
+            return tag;
+        });
+        return renderTags;
     }
 
     renderModal = () => {

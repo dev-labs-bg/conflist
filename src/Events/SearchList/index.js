@@ -68,11 +68,11 @@ class SearchList extends Component {
         if (data.length === 0) {
             return (
                 <div className="text-center py-5">
-                    <img className="mb-4" src={eventIcon} />
+                    <img className="mb-4" src={eventIcon} alt="no events" />
                     <h4>There are no
                         <span className="text-info"> Events </span>
                     </h4>
-                    <SubscribeCard tag={this.props.searchTag}/>
+                    <SubscribeCard tag={this.props.searchTag} />
                 </div>);
         }
         const wishList = this.props.wishListData.length === 0 ?
