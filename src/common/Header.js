@@ -7,7 +7,6 @@ import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
     UncontrolledDropdown,
@@ -169,13 +168,12 @@ class Header extends Component {
                     style={style}
                     className={`p-relative navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
-                    <NavbarBrand className="mx-auto">
-                        <Link to="/home">
-                            <Logo
-                                authentication={isAuthenticated}
-                            />
-                        </Link>
-                    </NavbarBrand>
+
+                    <Link className="mx-auto" href="#home" to="/home">
+                        <Logo
+                            authentication={isAuthenticated}
+                        />
+                    </Link>
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                     <Collapse
