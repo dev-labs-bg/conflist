@@ -126,7 +126,7 @@ class Header extends Component {
 
     render() {
         const registerBkg = (
-            <div className="background-img text-center">
+            <div className="text-center xs-mb-3">
                 <h2 className="register__title mx-auto font-weight-bold mt-4">
                     Discover your next conference you wanna go!
                 </h2>
@@ -143,16 +143,14 @@ class Header extends Component {
                 </Link>
                 <picture>
                     <source
-                        media="(min-width: 715px)"
+                        media="(min-width: 900px)"
                         srcSet={iconsWhole}
-                    />
-                    <source
-                        srcSet={iconsWhole}
+                        sizes="1x, 2x"
                     />
                     <img
                         src={icons}
-                        srcSet={icons}
                         className="w-100"
+                        sizes="1x, 2x"
                         alt="register icons"
                     />
                 </picture>
@@ -172,9 +170,11 @@ class Header extends Component {
                     className={`p-relative navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
                     <NavbarBrand className="mx-auto">
-                        <Logo
-                            authentication={isAuthenticated}
-                        />
+                        <Link to="/home">
+                            <Logo
+                                authentication={isAuthenticated}
+                            />
+                        </Link>
                     </NavbarBrand>
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
