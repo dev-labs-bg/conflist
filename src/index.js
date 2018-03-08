@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import eventsReducer from './Events/List/duck';
 import eventReducer from './Events/Details/duck';
@@ -33,7 +32,7 @@ const reducer = combineReducers({
     subscriptions: subscriptionsReducer,
 });
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk, logger)));
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
     <Provider store={store}>
