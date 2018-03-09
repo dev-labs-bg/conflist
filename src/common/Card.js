@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -44,17 +44,6 @@ class Card extends Component {
         return { __html: this.props.event.shortDescription };
     }
 
-    renderTags(_tags) {
-        const renderTags = [];
-        _tags.map((tag) => {
-            renderTags.push(<span
-                key={tag}
-                className="badge badge-pill badge-light mr-2"
-            >{tag}
-            </span>);
-        });
-        return renderTags;
-    }
 
     // Handle button click and close Modal component
     toggleModal = () => {
@@ -68,6 +57,34 @@ class Card extends Component {
             isActive: !this.state.isActive,
             isOpen: !this.state.isOpen,
         });
+    }
+
+    tagClicked = (event) => {
+        this.props.history.push({
+            pathname: `/search/${event.target.textContent}`,
+            state: {
+                wishListData: {},
+            },
+        })
+    }
+
+    renderTags(_tags) {
+        const renderTags = [];
+        const style = {
+            cursor: 'pointer',
+        };
+        _tags.map((tag) => {
+            renderTags.push(<span
+                key={tag}
+                className="badge badge-pill badge-light mr-2"
+                style={style}
+                onClick={
+                    this.tagClicked
+                }
+            >{tag}
+            </span>);
+        });
+        return renderTags;
     }
 
     renderModal = () => {
@@ -151,4 +168,4 @@ const mapStateToProps = ({ auth }) => ({
     authToken: auth.token,
 });
 
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps)(withRouter(Card));
