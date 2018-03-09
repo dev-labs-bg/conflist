@@ -23,6 +23,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const middlewares = [];
 
+// disable redux-logger in production mode
 if (process.env.NODE_ENV === 'development') {
     const { logger } = require(`redux-logger`);
     middlewares.push(logger);
