@@ -5,9 +5,11 @@ html {
 
 /**
  * Added margin-bottom for sticky footer
+ * padding-top for fixed header
  *
  * {@link http://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/}
  */
 body {
     margin-bottom: $footer-height;
+    padding-top: 5.75rem;
 }
