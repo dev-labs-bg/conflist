@@ -169,22 +169,21 @@ class Header extends Component {
                     className={`p-relative navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
 
-                    <Link className="mx-auto" href="#home" to="/home">
-                        <Logo
-                            authentication={isAuthenticated}
-                        />
-                    </Link>
-
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                     <Collapse
-                        className="ml-md-4 justify-content-end text-left"
+                        className="justify-content-between text-left"
                         isOpen={!this.state.collapsed}
                         navbar
                     >
+                        <Link className="" href="#home" to="/home">
+                            <Logo
+                                authentication={isAuthenticated}
+                            />
+                        </Link>
 
                         <form
                             onSubmit={this.handleSubmit}
-                            className="form-inline mt-xs-2 mx-auto"
+                            className="form-inline mt-xs-2"
                         >
                             <Search />
                         </form>
