@@ -142,7 +142,7 @@ class Card extends Component {
                                 onClick={this.handleAttendClick}
                                 isActive={this.state.isActive}
                             />
-                            <span className="font-weight-normal align-top">{event.atendees}</span>
+                            <span className="font-weight-normal ml-1 align-top card__dates">{event.attendees.length}</span>
                         </div>
                     </span>
 
