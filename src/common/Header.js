@@ -183,7 +183,7 @@ class Header extends Component {
 
                         <form
                             onSubmit={this.handleSubmit}
-                            className="form-inline mt-xs-2"
+                            className="form-inline mt-xs-2 mx-auto"
                         >
                             <Search />
                         </form>
