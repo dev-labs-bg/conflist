@@ -180,6 +180,7 @@ class ProfileSettings extends Component {
         };
         return (
             <div className="container mx-auto pt-5 pb-5">
+                <h1 className="text-center mb-5">Profile Settings</h1>
                 {this.renderMessage(this.state.error, this.state.isUpdated)}
                 <div className="bg-white d-flex justify-content-center align-items-center mx-auto profile-card">
 

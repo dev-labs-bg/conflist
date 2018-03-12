@@ -200,14 +200,14 @@ class WishList extends Component {
         if (this.props.wishList.data.length === 0) {
             return (
                 <div className="container mx-auto pt-5 pb-5">
-                    <h2 className="text-center mb-5">Wanna Go List</h2>
+                    <h1 className="text-center mb-5">Wanna Go List</h1>
                     <h4 className="text-danger text-center">Your list is empty!</h4>
                 </div>
             );
         }
         return (
             <div className="container mx-auto pt-5 pb-5">
-                <h2 className="text-center mb-5">Wanna Go List</h2>
+                <h1 className="text-center mb-5">Wanna Go List</h1>
                 {this.renderPastEvent()}
                 {this.state.togglePastEvents ? this.renderAllPastEvents() : null}
                 <div className="upcoming-conf__container">
