@@ -118,7 +118,7 @@ class Login extends Component {
                 </div>
 
                 <div className="text-center">
-                    <h2 className="font-weight-normal mb-4">
+                    <h2 className="font-weight-normal mb-5">
                         Login to conflist
                     </h2>
                     <a

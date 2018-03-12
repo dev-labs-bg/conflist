@@ -41,6 +41,7 @@ const reducer = combineReducers({
     subscriptions: subscriptionsReducer,
 });
 
+
 const store = createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)));
 
 const app = (

@@ -73,6 +73,7 @@ class Card extends Component {
         const style = {
             cursor: 'pointer',
         };
+
         _tags.map((tag) => {
             renderTags.push(<span
                 key={tag}
@@ -116,8 +117,6 @@ class Card extends Component {
                     <img
                         className="card-img"
                         src={event.pictureUrl}
-                        width="243"
-                        height="202"
                         alt={event.name}
                     />
                 </Link>

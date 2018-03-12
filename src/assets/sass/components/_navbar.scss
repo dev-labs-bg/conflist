@@ -8,6 +8,11 @@
             width: 18.25rem;
             margin-right:2.125rem;
         }
+
+        .nav-item .nav-link {
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
     }
 }
 
@@ -43,14 +48,6 @@
 .register {
     background-image: linear-gradient(to right, #0d215f 0%, #0e225f 40%, #09174a 100%);
     color: #fff;
-}
-
-.background-img {
-    background-image: url("../images/register-icons.svg");
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-size: contain;
-    padding-bottom: 10.5625rem;
 }
 
 .register__text {

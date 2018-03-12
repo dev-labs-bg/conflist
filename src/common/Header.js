@@ -7,7 +7,6 @@ import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
     UncontrolledDropdown,
@@ -16,6 +15,8 @@ import {
     DropdownItem,
 } from 'reactstrap';
 
+import iconsWhole from '../assets/images/icons-whole.png';
+import icons from '../assets/images/icons.png';
 import { removeToken } from '../Login/duck';
 import Search from '../Search';
 import Logo from './Logo';
@@ -124,7 +125,7 @@ class Header extends Component {
 
     render() {
         const registerBkg = (
-            <div className="background-img text-center">
+            <div className="text-center xs-mb-3">
                 <h2 className="register__title mx-auto font-weight-bold mt-4">
                     Discover your next conference you wanna go!
                 </h2>
@@ -139,6 +140,19 @@ class Header extends Component {
                     className="btn btn-primary font-weight-bold align-self-start"
                 >Register
                 </Link>
+                <picture>
+                    <source
+                        media="(min-width: 900px)"
+                        srcSet={iconsWhole}
+                        sizes="1x, 2x"
+                    />
+                    <img
+                        src={icons}
+                        className="w-100"
+                        sizes="1x, 2x"
+                        alt="register icons"
+                    />
+                </picture>
             </div>
         );
 
@@ -154,22 +168,23 @@ class Header extends Component {
                     style={style}
                     className={`p-relative navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
-                    <NavbarBrand className="mx-auto">
+
+                    <Link className="mx-auto" href="#home" to="/home">
                         <Logo
                             authentication={isAuthenticated}
                         />
-                    </NavbarBrand>
+                    </Link>
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                     <Collapse
-                        className="justify-content-end ml-md-4 text-left"
+                        className="ml-md-4 justify-content-end text-left"
                         isOpen={!this.state.collapsed}
                         navbar
                     >
 
                         <form
                             onSubmit={this.handleSubmit}
-                            className="form-inline mt-xs-2 mr-xl-5"
+                            className="form-inline mt-xs-2 mx-auto"
                         >
                             <Search />
                         </form>
