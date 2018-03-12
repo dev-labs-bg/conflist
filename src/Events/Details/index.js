@@ -269,6 +269,7 @@ class InsidePage extends Component {
                     <a
                         className="btn btn-secondary"
                         href={data.website}
+                        target="_blank"
                     >Go to website
                     </a>
                 </div>
