@@ -57,6 +57,15 @@ class InsidePage extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.alias !== nextProps.alias) {
+            this.props.fetchConferenceDeatails(nextProps.alias);
+            if (this.props.auth.isAuthenticated) {
+                this.props.fetchWishListIfNeeded(this.props.auth.token);
+            }
+        }
+    }
+
     isEventInWhishlist = (_eventID, _wishlist) => {
         const event = _.find(_wishlist.data, e => e.id === _eventID);
 
