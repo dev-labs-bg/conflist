@@ -8,6 +8,7 @@ import Event from '../Events/Event';
 import Attend from '../Events/WishList/Attend';
 import { getFormattedDate } from '../core/Dates';
 import calendar from '../assets/images/callendar.svg';
+import placeHolder from '../assets/images/placeholder.svg';
 import calendarPassed from '../assets/images/calendar-passed.svg';
 
 class Card extends Component {
@@ -126,8 +127,11 @@ class Card extends Component {
                         <div className="card__info">
                             <img src={this.props.past ? calendarPassed : calendar} className="mr-1" alt="small calendar" />
                             <span className="card__dates"> {getFormattedDate(event.start, event.end)}
-                                <span className="text-info"> | </span> {event.venue}, {event.city}, {event.country}
                             </span>
+                            <div className="mt-1">
+                                <img className="mr-1" width="19" height="19" src={placeHolder} alt="placeholder" />
+                                <span className="card__dates"> {event.venue}, {event.city}, {event.country}</span>
+                            </div>
                         </div>
                         <div className="card__button">
                             <Attend
