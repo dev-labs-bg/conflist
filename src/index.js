@@ -21,6 +21,15 @@ import registerServiceWorker from './registerServiceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const middlewares = [];
+
+// disable redux-logger in production mode
+if (process.env.NODE_ENV === 'development') {
+    const { logger } = require(`redux-logger`);
+    middlewares.push(logger);
+}
+middlewares.push(thunk);
+
 const reducer = combineReducers({
     events: eventsReducer,
     event: eventReducer,
@@ -32,7 +41,8 @@ const reducer = combineReducers({
     subscriptions: subscriptionsReducer,
 });
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+
+const store = createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)));
 
 const app = (
     <Provider store={store}>
@@ -42,5 +52,5 @@ const app = (
     </Provider>
 );
 
-ReactDOM.render( app, document.getElementById('root'));
+ReactDOM.render(app, document.getElementById('root'));
 registerServiceWorker();

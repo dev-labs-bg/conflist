@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -44,6 +44,7 @@ class Card extends Component {
         return { __html: this.props.event.shortDescription };
     }
 
+
     // Handle button click and close Modal component
     toggleModal = () => {
         this.setState({
@@ -58,15 +59,31 @@ class Card extends Component {
         });
     }
 
+    tagClicked = (event) => {
+        this.props.history.push({
+            pathname: `/search/${event.target.textContent}`,
+            state: {
+                wishListData: {},
+            },
+        })
+    }
+
     renderTags(_tags) {
         const renderTags = [];
+        const style = {
+            cursor: 'pointer',
+        };
+
         _tags.map((tag) => {
             renderTags.push(<span
                 key={tag}
                 className="badge badge-pill badge-light mr-2"
+                style={style}
+                onClick={
+                    this.tagClicked
+                }
             >{tag}
             </span>);
-            return tag;
         });
         return renderTags;
     }
@@ -150,4 +167,4 @@ const mapStateToProps = ({ auth }) => ({
     authToken: auth.token,
 });
 
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps)(withRouter(Card));
