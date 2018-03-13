@@ -185,15 +185,31 @@ class InsidePage extends Component {
         return renderImages;
     }
 
+    tagClicked = (event) => {
+        this.props.history.push({
+            pathname: `/search/${event.target.textContent}`,
+            state: {
+                wishListData: {},
+            },
+        })
+    }
+
     renderTags() {
         const renderTags = [];
+        const style = {
+            cursor: 'pointer',
+        };
+
         this.props.event.data.tags.map((tag) => {
             renderTags.push(<span
                 key={tag}
                 className="badge badge-pill badge-light mr-2"
+                style={style}
+                onClick={
+                    this.tagClicked
+                }
             >{tag}
             </span>);
-            return tag;
         });
         return renderTags;
     }
@@ -229,6 +245,7 @@ class InsidePage extends Component {
                 <img
                     className="mx-auto mb-5"
                     src={data.pictureUrl}
+
                     alt={data.name}
                 />
 
