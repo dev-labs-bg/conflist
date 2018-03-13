@@ -229,8 +229,6 @@ class InsidePage extends Component {
                 <img
                     className="mx-auto mb-5"
                     src={data.pictureUrl}
-                    width="381"
-                    height="388"
                     alt={data.name}
                 />
 
