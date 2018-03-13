@@ -171,7 +171,7 @@ class InsidePage extends Component {
         this.props.event.data.speakers.map((speaker, key) => {
             renderImages.push(
                 <div className="d-inline" key={key} >
-                    <PopoverItem key={key} item={speaker} id={key}>
+                    <PopoverItem parentComponent="eventDetails" key={key} item={speaker} id={key}>
                         <img
                             className="rounded-circle mr-2"
                             key={key}
@@ -246,6 +246,7 @@ class InsidePage extends Component {
             <div className="container__register mx-auto pt-5 pb-5 d-flex flex-column">
                 <img
                     className="mx-auto mb-5"
+                    width="100%"
                     src={data.pictureUrl}
                     alt={data.name}
                 />

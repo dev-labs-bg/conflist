@@ -8,6 +8,7 @@ class PopoverItem extends Component {
             name: PropTypes.string,
         }).isRequired,
         id: PropTypes.number.isRequired,
+        parentComponent: PropTypes.string.isRequired,
         children: PropTypes.object,
 
         // received from parent component Attend
@@ -30,6 +31,12 @@ class PopoverItem extends Component {
     }
 
     toggle() {
+        if (this.props.parentComponent === 'eventDetails') {
+            this.setState({
+                popoverOpen: !this.state.popoverOpen,
+            });
+        }
+
         /**
          * Call OnClick function from parent component Attend to change isActive icon,
          * and close Popover
@@ -54,9 +61,10 @@ class PopoverItem extends Component {
     }
 
     render() {
+        const style = { cursor: 'pointer' };
         return (
             <span>
-                <span role="button" id={'Popover-' + this.props.id} onClick={this.toggle}>
+                <span style={style} role="button" id={'Popover-' + this.props.id} onClick={this.toggle}>
                     {this.props.children}
                 </span>
                 <Popover
