@@ -7,7 +7,7 @@ class PopoverItem extends Component {
         item: PropTypes.shape({
             name: PropTypes.string,
         }).isRequired,
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         parentComponent: PropTypes.string.isRequired,
         children: PropTypes.object,
 
@@ -39,7 +39,7 @@ class PopoverItem extends Component {
 
         /**
          * Call OnClick function from parent component Attend to change isActive icon,
-         * and close Popover
+         * and close Popover for Card Attend PopoverItem
          */
         if (!this.state.popoverOpen) {
             this.props.onClick();

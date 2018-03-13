@@ -171,7 +171,7 @@ class InsidePage extends Component {
         this.props.event.data.speakers.map((speaker, key) => {
             renderImages.push(
                 <div className="d-inline" key={key} >
-                    <PopoverItem parentComponent="eventDetails" key={key} item={speaker} id={key}>
+                    <PopoverItem parentComponent="eventDetails" key={key} item={speaker} id={`p${key}`}>
                         <img
                             className="rounded-circle mr-2"
                             key={key}
