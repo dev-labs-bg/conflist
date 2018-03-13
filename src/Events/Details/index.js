@@ -47,6 +47,7 @@ class InsidePage extends Component {
             error: null,
             isNotAuth: false,
             eventIsInWishList: false,
+            updateCount: 0,
         };
     }
 
@@ -54,6 +55,15 @@ class InsidePage extends Component {
         this.props.fetchConferenceDeatails(this.props.alias);
         if (this.props.auth.isAuthenticated) {
             this.props.fetchWishListIfNeeded(this.props.auth.token);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.alias !== nextProps.alias) {
+            this.props.fetchConferenceDeatails(nextProps.alias);
+            if (this.props.auth.isAuthenticated) {
+                this.props.fetchWishListIfNeeded(this.props.auth.token);
+            }
         }
     }
 
@@ -90,6 +100,7 @@ class InsidePage extends Component {
         const successCallback = () => {
             this.setState({ isUpdated: true });
             this.setState({ eventIsInWishList: true });
+            this.setState({ updateCount: 1 });
 
             this.handleDelayedMessageReset();
         };
@@ -160,7 +171,7 @@ class InsidePage extends Component {
         this.props.event.data.speakers.map((speaker, key) => {
             renderImages.push(
                 <div className="d-inline" key={key} >
-                    <PopoverItem key={key} item={speaker} id={key}>
+                    <PopoverItem shouldTogglePopover key={key} item={speaker} id={`p${key}`}>
                         <img
                             className="rounded-circle mr-2"
                             key={key}
@@ -176,15 +187,31 @@ class InsidePage extends Component {
         return renderImages;
     }
 
+    tagClicked = (event) => {
+        this.props.history.push({
+            pathname: `/search/${event.target.textContent}`,
+            state: {
+                wishListData: {},
+            },
+        })
+    }
+
     renderTags() {
         const renderTags = [];
+        const style = {
+            cursor: 'pointer',
+        };
+
         this.props.event.data.tags.map((tag) => {
             renderTags.push(<span
                 key={tag}
                 className="badge badge-pill badge-light mr-2"
+                style={style}
+                onClick={
+                    this.tagClicked
+                }
             >{tag}
             </span>);
-            return tag;
         });
         return renderTags;
     }
@@ -219,9 +246,8 @@ class InsidePage extends Component {
             <div className="container__register mx-auto pt-5 pb-5 d-flex flex-column">
                 <img
                     className="mx-auto mb-5"
+                    width="100%"
                     src={data.pictureUrl}
-                    width="381"
-                    height="388"
                     alt={data.name}
                 />
 
@@ -236,7 +262,7 @@ class InsidePage extends Component {
                     </div>
 
                     <div className="mb-4 text-bottom d-flex">
-                        <HeartFullIcon />
+                        <HeartFullIcon style={{ cursor: 'auto' }} />
                         <h4 className="ml-2 font-weight-normal d-inline">Going:
                             <span className="text-secondary ml-1">{data.attendees.length}</span>
                         </h4>
@@ -260,6 +286,7 @@ class InsidePage extends Component {
                     <a
                         className="btn btn-secondary"
                         href={data.website}
+                        target="_blank"
                     >Go to website
                     </a>
                 </div>
