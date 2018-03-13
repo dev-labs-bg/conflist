@@ -1,16 +1,6 @@
 import React from 'react';
 
 const heartFullIcon = ({ style }) => {
-    let cursor;
-    // Receive style from props only when cursor shouldn't be pointer
-    if (typeof style === 'undefined') {
-        cursor = {
-            cursor: 'pointer',
-        };
-    } else {
-        cursor = style;
-    }
-
     return (
         <svg
             width="20px"
@@ -19,7 +9,7 @@ const heartFullIcon = ({ style }) => {
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
-            style={cursor}
+            style={typeof style === 'undefined' ? { cursor: 'pointer' } : style }
         >
             <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="conflist-home-page-logged-in" transform="translate(-986.000000, -677.000000)">
