@@ -31,6 +31,10 @@ class PopoverItem extends Component {
     }
 
     toggle() {
+        /**
+         * This PopoverItem has two different behaviours depending
+         * on which parent component is called
+         */
         if (this.props.parentComponent === 'eventDetails') {
             this.setState({
                 popoverOpen: !this.state.popoverOpen,
