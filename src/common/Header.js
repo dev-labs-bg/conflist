@@ -148,7 +148,7 @@ class Header extends Component {
                     />
                     <img
                         src={icons}
-                        className="w-100"
+                        className="w-100 pb-3"
                         sizes="1x, 2x"
                         alt="register icons"
                     />

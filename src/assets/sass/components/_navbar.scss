@@ -10,6 +10,10 @@
     background-color: $blue-base-color;
 }
 
+.navbar-dark {
+    background-color: $blue-base-color;
+}
+
 @include media-breakpoint-up(lg) {
     .navbar {
         .form-inline .form-control {
