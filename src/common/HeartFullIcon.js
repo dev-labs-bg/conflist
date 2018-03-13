@@ -1,7 +1,7 @@
 import React from 'react';
 
-const heartFullIcon = () => {
-    const style = {
+const heartFullIcon = ({ style }) => {
+    const styling = {
         cursor: 'pointer',
     };
     return (
@@ -12,7 +12,7 @@ const heartFullIcon = () => {
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
-            style={style}
+            style={typeof style === 'undefined' ? styling : style}
         >
             <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="conflist-home-page-logged-in" transform="translate(-986.000000, -677.000000)">

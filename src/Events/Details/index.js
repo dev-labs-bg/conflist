@@ -47,6 +47,7 @@ class InsidePage extends Component {
             error: null,
             isNotAuth: false,
             eventIsInWishList: false,
+            updateCount: 0,
         };
     }
 
@@ -99,6 +100,7 @@ class InsidePage extends Component {
         const successCallback = () => {
             this.setState({ isUpdated: true });
             this.setState({ eventIsInWishList: true });
+            this.setState({ updateCount: 1 });
 
             this.handleDelayedMessageReset();
         };
@@ -245,7 +247,6 @@ class InsidePage extends Component {
                 <img
                     className="mx-auto mb-5"
                     src={data.pictureUrl}
-
                     alt={data.name}
                 />
 
@@ -260,9 +261,9 @@ class InsidePage extends Component {
                     </div>
 
                     <div className="mb-4 text-bottom d-flex">
-                        <HeartFullIcon />
+                        <HeartFullIcon style={{ cursor: 'auto' }} />
                         <h5 className="ml-2 font-weight-normal d-inline">Going:
-                            <span className="text-secondary ml-1">{data.attendees.length}</span>
+                            <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
                         </h5>
                     </div>
                     <div dangerouslySetInnerHTML={this.renderDescription()} />
