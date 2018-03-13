@@ -8,7 +8,7 @@ class PopoverItem extends Component {
             name: PropTypes.string,
         }).isRequired,
         id: PropTypes.string.isRequired,
-        parentComponent: PropTypes.string.isRequired,
+        shouldTogglePopover: PropTypes.bool,
         children: PropTypes.object,
 
         // received from parent component Attend
@@ -33,9 +33,9 @@ class PopoverItem extends Component {
     toggle() {
         /**
          * This PopoverItem has two different behaviours depending
-         * on which parent component is called
+         * on shouldTogglePopover prop
          */
-        if (this.props.parentComponent === 'eventDetails') {
+        if (this.props.shouldTogglePopover) {
             this.setState({
                 popoverOpen: !this.state.popoverOpen,
             });
@@ -43,7 +43,7 @@ class PopoverItem extends Component {
 
         /**
          * Call OnClick function from parent component Attend to change isActive icon,
-         * and close Popover for Card Attend PopoverItem
+         * and close Popover on Card Attend PopoverItem
          */
         if (!this.state.popoverOpen) {
             this.props.onClick();

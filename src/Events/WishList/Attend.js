@@ -66,7 +66,6 @@ class Attend extends Component {
         return (
             <PopoverItem
                 id={this.props.id}
-                parentComponent="attend"
                 item={{ name: 'Wanna go' }}
                 onClick={this.handleToggleActive}
                 isActive={this.props.isActive}
