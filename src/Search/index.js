@@ -98,7 +98,7 @@ class Search extends Component {
 
             // Autosuggest will pass through all these props to the input.
             const inputProps = {
-                className: 'form-control mx-lg-3',
+                className: 'form-control',
                 placeholder: 'Search by name or technology...',
                 value,
                 onChange: this.onChange,

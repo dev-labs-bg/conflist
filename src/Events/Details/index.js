@@ -252,27 +252,27 @@ class InsidePage extends Component {
                 />
 
                 <div className="mb-1">
-                    <h4 className="mb-3">{data.name}</h4>
-                    <span className="card__dates">{getFormattedDate(data.start, data.end)}
+                    <h1 className="mb-4">{data.name}</h1>
+                    <h4>{getFormattedDate(data.start, data.end)}
                         <span className="text-info"> | </span> {data.venue}, {data.city}, {data.country}
-                    </span>
+                    </h4>
 
-                    <div className="mb-4 mt-2">
+                    <div className="mb-2 mt-2">
                         {this.renderTags()}
                     </div>
 
                     <div className="mb-4 text-bottom d-flex">
                         <HeartFullIcon style={{ cursor: 'auto' }} />
-                        <h5 className="ml-2 font-weight-normal d-inline">Going:
-                            <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
-                        </h5>
+                        <h4 className="ml-2 font-weight-normal d-inline">Going:
+                            <span className="text-secondary ml-1">{data.attendees.length}</span>
+                        </h4>
                     </div>
                     <div dangerouslySetInnerHTML={this.renderDescription()} />
 
                 </div>
 
                 <div className="mb-5">
-                    <h5 className="font-weight-bold mb-2">Speakers:</h5>
+                    <h4 className="mb-2">Speakers:</h4>
                     {this.renderSpeakers()}
                 </div>
 

@@ -2,11 +2,22 @@
     outline:none;
 }
 
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-item:active {
+    background-color: $blue-base-color;
+}
+
+.navbar-dark {
+    background-color: $blue-base-color;
+}
+
 @include media-breakpoint-up(lg) {
     .navbar {
         .form-inline .form-control {
             width: 18.25rem;
-            margin-right:2.125rem;
         }
 
         .nav-item .nav-link {

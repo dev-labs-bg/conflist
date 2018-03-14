@@ -22,10 +22,15 @@
 .btn-secondary:hover {
     color: #fff;
     background-color: $cyan;
-    border: 0;
+    border: 1px solid $cyan;
 }
 
 .btn-twitter {
     background-color: #00aced;
     border: 1px solid #00aced;
+    color: #fff;
+}
+
+.btn-primary:focus, .btn-secondary:focus, .btn-twitter:focus {
+    box-shadow: none;
 }
