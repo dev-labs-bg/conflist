@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import PageNotFound from './common/PageNotFound';
 import Loading from './common/Loading';
 import Wrapper from './common/Wrapper';
 import EventDetails from './Events/Details';
@@ -69,6 +70,7 @@ class App extends Component {
                         <Route path="/search" component={SearchList} />
                         <Route path="/my-subscriptions" component={MySubscriptions} />
                         <Route path="/conference-suggest" component={SuggestConference} />
+                        <Route path="*" component={PageNotFound} />
                     </Switch>
                 </Wrapper>
             );
@@ -84,6 +86,7 @@ class App extends Component {
                     <Route path="/gate" component={Gate} />
                     <Route path="/search" component={SearchList} />
                     <Route path="/conference-suggest" component={SuggestConference} />
+                    <Route path="*" component={PageNotFound} />
                 </Switch>
             </Wrapper>
         );
