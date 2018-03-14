@@ -125,7 +125,7 @@ class Header extends Component {
 
     render() {
         const registerBkg = (
-            <div className="text-center xs-mb-3">
+            <div className="text-center xs-mb-3 mt-4">
                 <h2 className="register__title mx-auto font-weight-bold mt-4">
                     Discover your next conference you wanna go!
                 </h2>
@@ -166,7 +166,7 @@ class Header extends Component {
             <div className={!isAuthenticated ? 'register' : null}>
                 <Navbar
                     style={style}
-                    className={`p-relative navbar fixed-top navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
+                    className={`p-relative navbar navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
