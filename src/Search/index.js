@@ -76,8 +76,15 @@ class Search extends Component {
                         wishListData: this.props.wishList.data,
                     }
                 });
-            } else {
+            } else if (sectionIndex === 1) {
                 this.props.history.push(`/event/${suggestion.alias}`);
+            } else {
+                this.props.history.push({
+                    pathname: `/speakers`,
+                    state: {
+                        speakers: this.props.suggestions[2].data,
+                    }
+                })
             }
         }
 
@@ -88,7 +95,21 @@ class Search extends Component {
             );
         }
 
-        renderSuggestion = (suggestion, section) => {
+        renderSuggestion = (suggestion) => {
+            if (suggestion.pictureUrl) {
+                return (
+                    <span>
+                        <img
+                            className="rounded-circle mr-2"
+                            src={suggestion.pictureUrl}
+                            alt={suggestion.name}
+                            width="40"
+                            height="40"
+                        />
+                        {suggestion.name}
+                    </span>);
+            }
+
             return <span>{suggestion.name}</span>;
         }
 
@@ -131,6 +152,10 @@ const mapStateToProps = ({ search, wishList }) => {
             title: 'conferences',
             data: [],
         },
+        {
+            title: 'speakers',
+            data: [],
+        },
     ];
 
     search.suggestions.forEach((data) => {
@@ -138,6 +163,8 @@ const mapStateToProps = ({ search, wishList }) => {
             suggestions[0].data.push({ name: data.name });
         } else if (data.resourceType === 'conference') {
             suggestions[1].data.push({ name: data.name, alias: data.alias });
+        } else if (data.resourceType === 'speaker') {
+            suggestions[2].data.push({ name: data.name, pictureUrl: data.pictureUrl });
         }
     });
     return {
