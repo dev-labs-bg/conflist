@@ -80,9 +80,10 @@ class Search extends Component {
                 this.props.history.push(`/event/${suggestion.alias}`);
             } else {
                 this.props.history.push({
-                    pathname: `/speakers`,
+                    pathname: `/speaker/${suggestionValue}`,
                     state: {
-                        speakers: this.props.suggestions[2].data,
+                        wishListData: this.props.wishList.data,
+                        eventsList: this.props.search.suggestions,
                     }
                 })
             }
@@ -96,6 +97,7 @@ class Search extends Component {
         }
 
         renderSuggestion = (suggestion) => {
+            // show speaker pictures
             if (suggestion.pictureUrl) {
                 return (
                     <span>
