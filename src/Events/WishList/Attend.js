@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Transition from 'react-transition-group/Transition';
 
 import HeartFullIcon from '../../common/HeartFullIcon';
 import HeartIcon from '../../common/HeartIcon';
@@ -70,7 +71,11 @@ class Attend extends Component {
                 onClick={this.handleToggleActive}
                 isActive={this.props.isActive}
             >
-                { this.renderIcon(this.props.isActive) }
+                <Transition
+                    timeout={500}
+                >
+                    { this.renderIcon(this.props.isActive) }
+                </Transition>
             </PopoverItem>
         );
     }
