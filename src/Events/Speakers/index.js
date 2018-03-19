@@ -2,31 +2,83 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Event from '../Event';
 import EventsList from '../List';
 import Loading from '../../common/Loading';
 import { fetchWishListIfNeeded } from '../WishList/duck';
+import { getEventsBySpeaker } from './duck';
 
 class Speakers extends Component {
     static propTypes = {
-        eventsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+        getEventsBySpeaker: PropTypes.func.isRequired,
+        fetchWishListIfNeeded: PropTypes.func,
+        wishListData: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+        wishList: PropTypes.shape({
+            data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+            isFetching: PropTypes.bool,
+        }),
+        speaker: PropTypes.shape({
+            id: PropTypes.string,
+            name: PropTypes.string,
+            pictureUrl: PropTypes.string,
+        }).isRequired,
+        speakerEvents: PropTypes.shape({
+            isFetching: PropTypes.bool,
+            data: PropTypes.object,
+        }).isRequired,
+        authToken: PropTypes.string,
+
     };
 
+    static defaultProps = {
+        fetchWishListIfNeeded: () => {},
+        wishListData: [],
+        wishList: {},
+        authToken: '',
+    };
+
+    componentDidMount() {
+        this.props.getEventsBySpeaker(this.props.speaker.id);
+        if (this.props.authToken) {
+            this.props.fetchWishListIfNeeded(this.props.authToken);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.speaker.name !== this.props.speaker.name) {
+            this.props.getEventsBySpeaker(nextProps.speaker.id);
+        }
+    }
+
     render() {
-        // if (this.props.authToken) {
-        //     if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
-        //         return <Loading />;
-        //     }
-        // }
+        const { isFetching, data } = this.props.speakerEvents;
+        if (isFetching || isFetching === null) {
+            return <Loading />;
+        }
+        if (this.props.authToken) {
+            if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
+                return <Loading />;
+            }
+        }
 
         const wishList = this.props.wishListData.length === 0 ?
             this.props.wishList.data : this.props.wishListData;
-        console.log(this.props.eventsList)
         return (
             <div className="pb-5 pt-5 container">
-                <h1 className="text-center">Events with speaker {this.props.speakerName}</h1>
+                <h1 className="text-center">Events with speaker:</h1>
+                <div className="text-center d-flex justify-content-center align-items-center">
+                    <img
+                        src={this.props.speaker.pictureUrl}
+                        className="rounded-circle mr-2"
+                        width="60"
+                        height="60"
+                        alt={this.props.speaker.name}
+                    />
+                    <h2 className="d-inline">{this.props.speaker.name}</h2>
+                </div>
                 <div className="mt-2">
                     <EventsList
-                        events={this.props.eventsList || undefined}
+                        events={data || undefined}
                         wishList={wishList}
                     />
                 </div>
@@ -35,25 +87,17 @@ class Speakers extends Component {
     }
 }
 
-const mapStateToProps = ({ wishList, auth }, { location }) => {
-    const pathnameArray = location.pathname.split('/');
-    const eventsList = [];
-    location.state.eventsList.forEach((data) => {
-        if (data.resourceType === 'conference') {
-            eventsList.push(data);
-        }
-    })
-    return {
-        authToken: auth.token,
-        eventsList,
-        wishListData: location.state.wishListData,
-        wishList,
-        speakerName: pathnameArray[pathnameArray.length - 1],
-    };
-};
+const mapStateToProps = ({ wishList, auth, speakerEvents }, { location }) => ({
+    speakerEvents,
+    authToken: auth.token,
+    wishListData: location.state.wishListData,
+    wishList,
+    speaker: location.state.speaker,
+});
 
 const mapDispatchToProps = {
     fetchWishListIfNeeded,
+    getEventsBySpeaker,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Speakers);
