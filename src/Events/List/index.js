@@ -20,6 +20,13 @@ class CardList extends Component {
                     [...this.eventsGroupedByMonth[month].data, event] : [event],
             };
         });
+
+        const months = ["January", "February", "March", "April", "May", "June",
+  	        "July", "August", "September", "October", "November", "December"];
+        this.eventsGroupedByMonth = _.sortBy(this.eventsGroupedByMonth, (group) => {
+            return months.indexOf(group.month);
+        })
+
         this.wishListIds = [];
     }
 
