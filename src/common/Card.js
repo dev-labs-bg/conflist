@@ -137,12 +137,12 @@ class Card extends Component {
                         </div>
                         <div className="card__button">
                             <AnimateOnChange
-                                baseClassName="Attend"
-                                animationClassName="Attend--bounce"
+                                baseClassName="attend"
+                                animationClassName="attend--bounce"
                                 animate={this.state.isActive}
                             >
                                 <Attend
-                                    className="Attend"
+                                    className="attend"
                                     id={event.id}
                                     token={this.props.authToken}
                                     past={this.props.past ? true : false}
