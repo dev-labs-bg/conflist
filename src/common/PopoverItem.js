@@ -72,6 +72,7 @@ class PopoverItem extends Component {
                     {this.props.children}
                 </span>
                 <Popover
+                    className="mb-3"
                     placement="top"
                     isOpen={this.state.popoverOpen}
                     target={'Popover-' + this.props.id}
