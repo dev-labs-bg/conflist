@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import AnimateOnChange from 'react-animate-on-change';
 
+import '../Events/WishList/Attend.css';
 import Modal from './Modal';
 import Event from '../Events/Event';
 import Attend from '../Events/WishList/Attend';
@@ -134,14 +136,21 @@ class Card extends Component {
                             </div>
                         </div>
                         <div className="card__button">
-                            <Attend
-                                id={event.id}
-                                token={this.props.authToken}
-                                past={this.props.past ? true : false}
-                                wishListed={this.props.wishListed}
-                                onClick={this.handleAttendClick}
-                                isActive={this.state.isActive}
-                            />
+                            <AnimateOnChange
+                                baseClassName="Attend"
+                                animationClassName="Attend--bounce"
+                                animate={this.state.isActive}
+                            >
+                                <Attend
+                                    className="Attend"
+                                    id={event.id}
+                                    token={this.props.authToken}
+                                    past={this.props.past ? true : false}
+                                    wishListed={this.props.wishListed}
+                                    onClick={this.handleAttendClick}
+                                    isActive={this.state.isActive}
+                                />
+                            </AnimateOnChange>
                             <span className="font-weight-normal ml-1 align-top card__dates">{event.attendees.length}</span>
                         </div>
                     </span>
