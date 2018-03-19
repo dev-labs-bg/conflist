@@ -12,6 +12,7 @@ import currentUserReducer from './ProfileSettings/duck';
 import searchReducer from './Search/duck';
 import searchListReducer from './Events/SearchList/duck';
 import subscriptionsReducer from './MySubscriptions/duck';
+import speakerEvents from './Events/Speakers/duck';
 
 import './index.css';
 import './assets/sass/style.css';
@@ -39,6 +40,7 @@ const reducer = combineReducers({
     search: searchReducer,
     searchList: searchListReducer,
     subscriptions: subscriptionsReducer,
+    speakerEvents,
 });
 
 
