@@ -94,6 +94,8 @@ const API = {
                 },
             },
         ),
+    getEventsBySpeaker: speakerId =>
+        instance.get(`speakers/${speakerId}/conferences`),
 };
 
 export default API;
