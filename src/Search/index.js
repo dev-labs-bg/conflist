@@ -83,7 +83,7 @@ class Search extends Component {
                     pathname: `/speaker/${suggestionValue}`,
                     state: {
                         wishListData: this.props.wishList.data,
-                        eventsList: this.props.search.suggestions,
+                        speaker: suggestion,
                     }
                 })
             }
@@ -166,7 +166,7 @@ const mapStateToProps = ({ search, wishList }) => {
         } else if (data.resourceType === 'conference') {
             suggestions[1].data.push({ name: data.name, alias: data.alias });
         } else if (data.resourceType === 'speaker') {
-            suggestions[2].data.push({ name: data.name, pictureUrl: data.pictureUrl });
+            suggestions[2].data.push({ name: data.name, pictureUrl: data.pictureUrl, id: data._id });
         }
     });
     return {
