@@ -21,11 +21,12 @@ class CardList extends Component {
             };
         });
 
-        const months = ["January", "February", "March", "April", "May", "June",
-  	        "July", "August", "September", "October", "November", "December"];
-        this.eventsGroupedByMonth = _.sortBy(this.eventsGroupedByMonth, (group) => {
-            return months.indexOf(group.month);
-        })
+        const months = ['January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'];
+        this.eventsGroupedByMonth = _.sortBy(
+            this.eventsGroupedByMonth,
+            group => months.indexOf(group.month),
+        );
 
         this.wishListIds = [];
     }
