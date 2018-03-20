@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as _ from 'lodash';
 
+import { orderEventsByMonthChronologicaly } from '../../service';
 import Card from '../../common/Card';
 import Event from '../Event';
 
@@ -20,6 +21,8 @@ class CardList extends Component {
                     [...this.eventsGroupedByMonth[month].data, event] : [event],
             };
         });
+
+        this.eventsGroupedByMonth = orderEventsByMonthChronologicaly(this.eventsGroupedByMonth);
         this.wishListIds = [];
     }
 
