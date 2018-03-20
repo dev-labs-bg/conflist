@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as _ from 'lodash';
 
+import { orderEventsByMonthChronologicaly } from '../../service';
 import Card from '../../common/Card';
 import Event from '../Event';
 
@@ -21,13 +22,7 @@ class CardList extends Component {
             };
         });
 
-        const months = ['January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'];
-        this.eventsGroupedByMonth = _.sortBy(
-            this.eventsGroupedByMonth,
-            group => months.indexOf(group.month),
-        );
-
+        this.eventsGroupedByMonth = orderEventsByMonthChronologicaly(this.eventsGroupedByMonth);
         this.wishListIds = [];
     }
 
