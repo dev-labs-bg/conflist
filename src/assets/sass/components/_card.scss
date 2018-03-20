@@ -35,6 +35,10 @@
     border: 1px solid #e6e6e6;
 }
 
+.badge-light:hover {
+    box-shadow:  #cccccc 0 0px 9px 3px;
+}
+
 .card-subscription {
     max-width: 65.875rem;
     border-radius: 0.625rem;

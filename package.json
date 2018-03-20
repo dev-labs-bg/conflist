@@ -13,6 +13,7 @@
     "popper.js": "1.12.9",
     "prop-types": "15.6.0",
     "react": "16.2.0",
+    "react-animate-on-change": "1.0.1",
     "react-autosuggest": "9.3.3",
     "react-dom": "16.2.0",
     "react-dropzone": "4.2.8",
