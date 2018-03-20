@@ -50,6 +50,7 @@ class Speakers extends Component {
         }
     }
 
+
     render() {
         const { isFetching, data } = this.props.speakerEvents;
         if (isFetching || isFetching === null) {
@@ -63,9 +64,10 @@ class Speakers extends Component {
 
         const wishList = this.props.wishListData.length === 0 ?
             this.props.wishList.data : this.props.wishListData;
+
         return (
             <div className="pb-5 pt-5 container">
-                <h1 className="text-center">Conferences with speaker</h1>
+                <h2 className="text-center">Conferences attended by speaker</h2>
                 <div className="text-center d-flex justify-content-center align-items-center">
                     <img
                         src={this.props.speaker.pictureUrl}
@@ -76,12 +78,21 @@ class Speakers extends Component {
                     />
                     <h2 className="d-inline">{this.props.speaker.name}</h2>
                 </div>
-                <div className="mt-2">
-                    <EventsList
-                        events={data || undefined}
-                        wishList={wishList}
-                    />
-                </div>
+                {
+                    data.length !== 0 ?
+                        <div className="mt-2">
+                            <EventsList
+                                events={data || undefined}
+                                wishList={wishList}
+                            />
+                        </div>
+                        :
+                        <div className="mt-2">
+                            <h4 className="text-center">
+                                This speaker is not attending any conferences!
+                            </h4>
+                        </div>
+                }
             </div>
         );
     }
