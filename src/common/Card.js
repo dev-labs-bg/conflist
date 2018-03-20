@@ -3,9 +3,9 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AnimateOnChange from 'react-animate-on-change';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import '../Events/WishList/Attend.css';
-import Modal from './Modal';
 import Event from '../Events/Event';
 import Attend from '../Events/WishList/Attend';
 import { getFormattedDate } from '../core/Dates';
@@ -99,17 +99,30 @@ class Card extends Component {
         if (this.state.isOpen) {
             if (this.state.isActive && this.props.authToken === null) {
                 return (
-                    <Modal
-                        show={this.state.isOpen}
-                        onClose={this.toggleModal}
-                        text={
-                            <h5 className="text-center">
-                            Login or Register so you can add to your WishList!
-                            </h5>
-                        }
-                    />);
+                    <Modal isOpen={this.state.isOpen} toggle={this.handleAttendClick}>
+                        <ModalHeader toggle={this.handleAttendClick}>Warning</ModalHeader>
+                        <ModalBody>
+                        Login or Register so you can add to your WishList!
+                        </ModalBody>
+                        <ModalFooter className="text-center">
+                            <Link
+                                to="/login"
+                                className="btn btn-primary align-self-start"
+                            >
+                                Login
+                            </Link>{' '}
+                            <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
+                        </ModalFooter>
+                    </Modal>
+                );
             }
         }
+    }
+    closeModal = () => {
+        this.setState({
+            isActive: !this.state.isActive,
+            isOpen: !this.state.isOpen,
+        });
     }
     render() {
         const { event } = this.props;
