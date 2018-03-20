@@ -2,11 +2,27 @@ import moment from 'moment';
 import * as _ from 'lodash';
 
 /**
+ * Reorder EventsList object chronologicaly by months
+ * @param  {object} _events
+ * @return {array}     [Array of Events]
+ */
+export const orderEventsByMonthChronologicaly = (_events) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const eventsList = _.sortBy(
+        _events,
+        group => months.indexOf(group.month),
+    );
+
+    return eventsList;
+};
+
+/**
  * Order Events based on their date
  * @param  {Array} _eventsList [array of Events]
  * @return {object} { pastEvents, upcomingEvents }
  */
-
 export const orderEventsByMonth = (_eventsList) => {
     let pastEvents = {};
     let upcomingEvents = {};
@@ -18,9 +34,6 @@ export const orderEventsByMonth = (_eventsList) => {
     if (_eventsList.isFetching && _eventsList.isFetching === null) {
         return {};
     }
-
-    const months = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'];
 
     _eventsList.data.forEach((event) => {
         const month = moment(event.start).format('MMMM');
@@ -41,15 +54,8 @@ export const orderEventsByMonth = (_eventsList) => {
         }
     });
 
-    pastEvents = _.sortBy(
-        pastEvents,
-        group => months.indexOf(group.month),
-    );
-
-    upcomingEvents = _.sortBy(
-        upcomingEvents,
-        group => months.indexOf(group.month),
-    );
+    pastEvents = orderEventsByMonthChronologicaly(pastEvents);
+    upcomingEvents = orderEventsByMonthChronologicaly(upcomingEvents);
 
     return { pastEvents, upcomingEvents };
 };
