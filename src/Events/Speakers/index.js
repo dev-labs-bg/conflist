@@ -65,7 +65,7 @@ class Speakers extends Component {
             this.props.wishList.data : this.props.wishListData;
         return (
             <div className="pb-5 pt-5 container">
-                <h1 className="text-center">Events with speaker:</h1>
+                <h1 className="text-center">Conferences with speaker</h1>
                 <div className="text-center d-flex justify-content-center align-items-center">
                     <img
                         src={this.props.speaker.pictureUrl}
