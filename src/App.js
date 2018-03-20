@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Speakers from './Events/Speakers';
 import PageNotFound from './common/PageNotFound';
 import Loading from './common/Loading';
 import Wrapper from './common/Wrapper';
@@ -65,6 +66,7 @@ class App extends Component {
                         <Route path="/" exact component={HomePage} />
                         <Route path="/home" component={HomePage} />
                         <Route path="/event" component={EventDetails} />
+                        <Route path="/speaker" component={Speakers} />
                         <Route path="/profile-settings" component={ProfileSettings} />
                         <Route path="/wanna-go-list" component={WishList} />
                         <Route path="/search" component={SearchList} />
@@ -82,6 +84,7 @@ class App extends Component {
                     <Route path="/" exact component={HomePage} />
                     <Route path="/home" component={HomePage} />
                     <Route path="/event" component={EventDetails} />
+                    <Route path="/speaker" component={Speakers} />
                     <Route path="/login" component={Login} />
                     <Route path="/gate" component={Gate} />
                     <Route path="/search" component={SearchList} />
