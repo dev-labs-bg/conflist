@@ -60,11 +60,9 @@ class WishList extends Component {
      * @return {number}
      */
     countEventsByMonth = (_events) => {
-        let monthEventsNumber;
+        let monthEventsNumber = 0;
         _.forEach(_events, (group) => {
-            _.forEach(group, (e) => {
-                monthEventsNumber = +_.size(group.data);
-            });
+            monthEventsNumber += _.size(group.data);
         });
 
         return monthEventsNumber;
@@ -86,7 +84,7 @@ class WishList extends Component {
         }
 
         return (
-            <span onClick={this.changeState} role="button" >View all
+            <span onClick={this.changeState} role="button" style={{ cursor: 'pointer' }} >View all
                 <span className="text-info"> {this.countEventsByMonth(this.props.pastEvents)} </span>
             past conferences
             </span>
@@ -102,23 +100,20 @@ class WishList extends Component {
             return null;
         }
         const cards = [];
-        const heading = (
-            <h4 key="2" className="mb-3">Last
-                <span className="text-info"> 1 </span>
-                from all Past conferences
-            </h4>);
+        const heading = (<h4 key="2" className="mb-3">Past conferences</h4>);
         cards.push(heading);
 
-        _.forEach(this.props.pastEvents, (group, key) => {
-            const firstEvent = _.first(group.data);
-            cards.push(
-                <div key={key} className="mb-5">
-                    {
-                        <Card key={firstEvent.id} event={firstEvent} past />
-                    }
-                    {this.countPastEvents()}
-                </div>);
-        });
+        const firstEventGroup = _.first(this.props.pastEvents)
+        const firstEvent = _.first(firstEventGroup.data);
+
+        cards.push(
+            <div className="mb-5">
+                {
+                    <Card event={firstEvent} past />
+                }
+                {this.countPastEvents()}
+            </div>);
+
 
         return cards;
     }
@@ -137,12 +132,27 @@ class WishList extends Component {
         }
 
         const hiddenCards = [];
-        _.forEach(this.props.pastEvents, (group, key) => {
-            const lastEvents = _.tail(group.data);
+
+        /**
+         * Add last event card from the first month
+         */
+        const firstEventsObject = _.first(this.props.pastEvents);
+        hiddenCards.push(
+            <div>
+                {
+                    _.tail(firstEventsObject.data).map(event =>
+                        <Card event={event} past />)
+                }
+            </div>);
+
+        /**
+         * Add the other cards from pastEvents
+         */
+        _.forEach(_.tail(this.props.pastEvents), (group, key) => {
             hiddenCards.push(
                 <div key={key} className="mb-5">
                     {
-                        lastEvents.map(event =>
+                        group.data.map(event =>
                             <Card key={event.id} event={event} past />)
                     }
                 </div>);
