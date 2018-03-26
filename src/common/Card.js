@@ -180,7 +180,7 @@ class Card extends Component {
                         dangerouslySetInnerHTML={this.eventDescription()}
                     />
 
-                    <div className="d-flex justify-content-end">
+                    <div className="d-md-flex justify-content-end">
                         {this.renderTags(event.tags)}
                     </div>
 
