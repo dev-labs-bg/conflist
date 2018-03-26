@@ -128,7 +128,7 @@ class Card extends Component {
     render() {
         const { event } = this.props;
         return (
-            <div className="card mb-2">
+            <div className="card mb-2 flex-sm-row">
                 {this.renderModal()}
                 <Link to={`/event/${event.alias}`} className="text-center">
                     <img
@@ -165,7 +165,7 @@ class Card extends Component {
                                     isActive={this.state.isActive}
                                 />
                             </AnimateOnChange>
-                            <span className="font-weight-normal ml-1 card__dates">{event.attendees.length}</span>
+                            <span className="font-weight-normal align-top ml-1 card__dates card__attendees">{event.attendees.length}</span>
                         </div>
                     </span>
 
