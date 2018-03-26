@@ -1,5 +1,4 @@
 .card {
-    flex-direction: row;
     font-size: $primary-font-size;
 }
 
@@ -27,6 +26,11 @@
     font-weight: $font-weight-light;
 }
 
+.card__attendees {
+    position: absolute;
+    top: 11%;
+    right: 0;
+}
 .card-text {
     font-weight: $font-weight-light;
 }
