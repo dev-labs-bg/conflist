@@ -130,7 +130,7 @@ class Card extends Component {
         return (
             <div className="card mb-2">
                 {this.renderModal()}
-                <Link to={`/event/${event.alias}`}>
+                <Link to={`/event/${event.alias}`} className="text-center">
                     <img
                         className="card-img"
                         src={event.pictureUrl}
@@ -149,7 +149,7 @@ class Card extends Component {
                                 <span className="card__dates"> {event.venue}, {event.city}, {event.country}</span>
                             </div>
                         </div>
-                        <div className="card__button">
+                        <div className="card__button position-relative">
                             <AnimateOnChange
                                 baseClassName="attend"
                                 animationClassName="attend--bounce"
@@ -165,7 +165,7 @@ class Card extends Component {
                                     isActive={this.state.isActive}
                                 />
                             </AnimateOnChange>
-                            <span className="font-weight-normal ml-1 align-top card__dates">{event.attendees.length}</span>
+                            <span className="font-weight-normal ml-1 card__dates">{event.attendees.length}</span>
                         </div>
                     </span>
 
