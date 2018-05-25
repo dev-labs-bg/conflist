@@ -210,19 +210,15 @@ class ProfileSettings extends Component {
                                     style={dropzoneStyle}
                                     className="label"
                                 >{
-                                    ({
-                                        isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
-                                            if (isDragActive) {
-                                          return "This file is authorized";
+                                        ({ acceptedFiles, rejectedFiles }) => {
+                                            if (rejectedFiles.length !== 0) {
+                                                return 'File is rejected'
+                                            }
+                                            return acceptedFiles.length !== 0
+                                                ? 'File is accepted'
+                                                : 'Drop your avatar here or click to select files to upload.';
                                         }
-                                        if (isDragReject) {
-                                          return "This file is not authorized";
-                                        }
-                                        return acceptedFiles.length || rejectedFiles.length
-                                          ? 'File is accepted'
-                                          : 'Drop your avatar here or click to select files to upload.';
-                                      }
-                                  }
+                                    }
 
                                 </Dropzone>
                                 <button
