@@ -78,6 +78,9 @@ class ProfileSettings extends Component {
                 () => {},
             );
         }
+        this.setState({
+            avatar: [],
+        });
     }
 
 
@@ -167,16 +170,16 @@ class ProfileSettings extends Component {
 
         const { profileImg, name, email } = this.props.user.data;
         const dropzoneStyle = {
-            width: '200px',
-            height: '50px',
+            padding: '5px',
             borderWidth: '1px',
             borderColor: '#717171',
             borderStyle: 'dashed',
             borderRadius: '5px',
-            marginBotton: '15px',
+            marginBottom: '15px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            cursor: 'pointer',
         };
         return (
             <div className="container mx-auto pt-5 pb-5">
@@ -188,6 +191,7 @@ class ProfileSettings extends Component {
                         className="profile-card__content py-5 mb-0"
                         onSubmit={this.updateSettings}
                     >
+
                         <div className="d-flex justify-content-center border border-top-0 border-right-0 border-left-0 mb-3 pb-1">
                             <img
                                 className="mr-3 rounded-circle"
@@ -202,17 +206,23 @@ class ProfileSettings extends Component {
                                 <Dropzone
                                     onDrop={this.onDrop}
                                     multiple={false}
+                                    accept="image/jpeg, image/png"
                                     style={dropzoneStyle}
-                                >
-                                    {this.state.avatar.length === 0 ?
-                                        <span className="label mx-0 my-0">
-                                            Drop your avatar here
-                                        </span>
-                                        :
-                                        <span className="label mx-0 my-0">
-                                            {this.state.avatar.name}
-                                        </span>
-                                    }
+                                    className="label"
+                                >{
+                                    ({
+                                        isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
+                                            if (isDragActive) {
+                                          return "This file is authorized";
+                                        }
+                                        if (isDragReject) {
+                                          return "This file is not authorized";
+                                        }
+                                        return acceptedFiles.length || rejectedFiles.length
+                                          ? 'File is accepted'
+                                          : 'Drop your avatar here or click to select files to upload.';
+                                      }
+                                  }
 
                                 </Dropzone>
                                 <button
@@ -222,7 +232,6 @@ class ProfileSettings extends Component {
                                 >Update
                                 </button>
                             </div>
-
                         </div>
 
 
