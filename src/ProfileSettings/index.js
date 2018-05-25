@@ -63,6 +63,17 @@ class ProfileSettings extends Component {
     }
 
     updateAvatar = () => {
+        const successCallback = () => {
+            this.setState({ isUpdated: true });
+
+            this.handleDelayedMessageReset();
+        };
+        const errorCallback = (status) => {
+            this.setState({ error: status });
+
+            this.handleDelayedMessageReset();
+        };
+
         const updateValue = {
             avatar: [
                 {
@@ -74,13 +85,10 @@ class ProfileSettings extends Component {
             this.props.updateCurrentUser(
                 this.props.auth.token,
                 updateValue,
-                () => {},
-                () => {},
+                successCallback,
+                errorCallback,
             );
         }
-        this.setState({
-            avatar: [],
-        });
     }
 
 
@@ -170,7 +178,9 @@ class ProfileSettings extends Component {
 
         const { profileImg, name, email } = this.props.user.data;
         const dropzoneStyle = {
-            padding: '5px',
+            width: '200px',
+            height: '80px',
+            padding: '2px',
             borderWidth: '1px',
             borderColor: '#717171',
             borderStyle: 'dashed',
@@ -212,7 +222,7 @@ class ProfileSettings extends Component {
                                 >{
                                         ({ acceptedFiles, rejectedFiles }) => {
                                             if (rejectedFiles.length !== 0) {
-                                                return 'File is rejected'
+                                                return 'File is rejected';
                                             }
                                             return acceptedFiles.length !== 0
                                                 ? 'File is accepted'
