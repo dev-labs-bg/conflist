@@ -7,6 +7,9 @@ import Event from '../Events/Event';
 import EventsList from '../Events/List';
 import { fetchConferences } from '../Events/List/duck';
 import { fetchWishListIfNeeded } from '../Events/WishList/duck';
+import CalendarList from '../Events/CalendarList';
+import ListViewIcon from '../common/ListViewIcon';
+import CalendarViewIcon from '../common/CalendarViewIcon';
 
 class HomePage extends Component {
     static propTypes = {
@@ -33,12 +36,43 @@ class HomePage extends Component {
         wishList: {},
     }
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            listView: false,
+            calendarView: true,
+        };
+    }
+
     componentDidMount() {
         this.props.fetchConferences(() => {
             if (this.props.auth.isAuthenticated) {
                 this.props.fetchWishListIfNeeded(this.props.auth.token);
             }
         });
+    }
+
+    toggleListView = () => {
+        this.setState({ listView: true, calendarView: false });
+    }
+
+    toggleCalendarView = () => {
+        this.setState({ listView: false, calendarView: true });
+    }
+
+    renderEventsListView = () => {
+        if (this.state.listView) {
+            return (
+                <EventsList
+                    events={this.props.events.data || undefined}
+                    wishList={this.props.wishList.data}
+                />
+            );
+        }
+        return (
+            <CalendarList />
+        );
     }
 
     render() {
@@ -59,10 +93,24 @@ class HomePage extends Component {
         }
 
         return (
-            <EventsList
-                events={this.props.events.data || undefined}
-                wishList={this.props.wishList.data}
-            />
+            <div>
+                <div className={`${this.props.auth.isAuthenticated ? 'buttons-toggle-view__wrapper button-toggle-view__wrapper--auth' : 'bg-white'} py-2`}>
+                    <div className="container d-flex py-1">
+                        <ListViewIcon
+                            isAuthenticated={this.props.auth.isAuthenticated}
+                            isActive={this.state.listView}
+                            onClick={this.toggleListView}
+                        />
+                        <CalendarViewIcon
+                            isAuthenticated={this.props.auth.isAuthenticated}
+                            isActive={this.state.calendarView}
+                            onClick={this.toggleCalendarView}
+                        />
+                    </div>
+                </div>
+
+                {this.renderEventsListView()}
+            </div>
         );
     }
 }
