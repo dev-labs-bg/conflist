@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 const CalendarViewIcon = (props) => {
     /**
      * Chooses icon color based on the received props -
-     * isAuthenticated and isActive
+     * isAuthenticated and activeView
      * @return {string}
      */
     const changeIconColor = () => {
         if (props.isAuthenticated) {
-            if (props.isActive) {
+            if (props.activeView === 'CALENDAR') {
                 return '#FFFFFF';
             }
             return '#FFB2B3';
         }
 
-        if (props.isActive) {
+        if (props.activeView === 'CALENDAR') {
             return '#f2706d';
         }
         return '#919193';
@@ -60,7 +60,7 @@ const CalendarViewIcon = (props) => {
 
 CalendarViewIcon.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    isActive: PropTypes.bool.isRequired,
+    activeView: PropTypes.string.isRequired,
     onClick: PropTypes.func,
 };
 

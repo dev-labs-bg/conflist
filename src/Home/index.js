@@ -40,8 +40,7 @@ class HomePage extends Component {
         super(props);
 
         this.state = {
-            listView: false,
-            calendarView: true,
+            activeView: 'CALENDAR',
         };
     }
 
@@ -54,26 +53,13 @@ class HomePage extends Component {
     }
 
     toggleListView = () => {
-        this.setState({ listView: true, calendarView: false });
+        this.setState({ activeView: 'LIST' });
     }
 
     toggleCalendarView = () => {
-        this.setState({ listView: false, calendarView: true });
+        this.setState({ activeView: 'CALENDAR' });
     }
 
-    renderEventsListView = () => {
-        if (this.state.listView) {
-            return (
-                <EventsList
-                    events={this.props.events.data || undefined}
-                    wishList={this.props.wishList.data}
-                />
-            );
-        }
-        return (
-            <CalendarList />
-        );
-    }
 
     render() {
         const { error } = this.props.events;
@@ -98,18 +84,25 @@ class HomePage extends Component {
                     <div className="container d-flex py-1">
                         <ListViewIcon
                             isAuthenticated={this.props.auth.isAuthenticated}
-                            isActive={this.state.listView}
+                            activeView={this.state.activeView}
                             onClick={this.toggleListView}
                         />
                         <CalendarViewIcon
                             isAuthenticated={this.props.auth.isAuthenticated}
-                            isActive={this.state.calendarView}
+                            activeView={this.state.activeView}
                             onClick={this.toggleCalendarView}
                         />
                     </div>
                 </div>
 
-                {this.renderEventsListView()}
+                {this.state.activeView === 'LIST' ?
+                    <EventsList
+                        events={this.props.events.data || undefined}
+                        wishList={this.props.wishList.data}
+                    />
+                    :
+                    <CalendarList />
+                }
             </div>
         );
     }

@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 const ListViewIcon = (props) => {
     /**
      * Chooses icon color based on the received props -
-     * isAuthenticated and isActive
+     * isAuthenticated and activeView
      * @return {string}
      */
     const changeIconColor = () => {
         if (props.isAuthenticated) {
-            if (props.isActive) {
+            if (props.activeView === 'LIST') {
                 return '#FFFFFF';
             }
             return '#FFB2B3';
         }
 
-        if (props.isActive) {
+        if (props.activeView === 'LIST') {
             return '#f2706d';
         }
         return '#919193';
@@ -55,7 +55,7 @@ const ListViewIcon = (props) => {
 
 ListViewIcon.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    isActive: PropTypes.bool.isRequired,
+    activeView: PropTypes.string.isRequired,
     onClick: PropTypes.func,
 };
 
