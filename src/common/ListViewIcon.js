@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const ListViewIcon = (props) => {
     /**
-     * Choose icon color based on the received props -
+     * Chooses icon color based on the received props -
      * isAuthenticated and isActive
      * @return {string}
      */

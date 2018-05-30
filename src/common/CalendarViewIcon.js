@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const CalendarViewIcon = (props) => {
     /**
-     * Choose icon color based on the received props -
+     * Chooses icon color based on the received props -
      * isAuthenticated and isActive
      * @return {string}
      */
