@@ -9,10 +9,34 @@ import Card from '../../common/Card';
 import Loading from '../../common/Loading';
 import { fetchConferencesByDate } from './duck';
 import { fetchWishListIfNeeded } from '../WishList/duck';
+import Event from '../Event';
 import eventIcon from '../../assets/images/event-icon.svg';
 import './Calendar.css';
 
 class CalendarList extends Component {
+    static propTypes = {
+        calendarEvents: PropTypes.shape({
+            isFetching: PropTypes.bool,
+            lastFetched: PropTypes.number,
+            data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+            error: PropTypes.number,
+        }).isRequired,
+        authToken: PropTypes.string,
+        wishList: PropTypes.shape({
+            isFetching: PropTypes.bool,
+            lastFetched: PropTypes.number,
+            data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
+        }),
+        fetchConferencesByDate: PropTypes.func.isRequired,
+        fetchWishListIfNeeded: PropTypes.func,
+    };
+
+    static defaultProps = {
+        wishList: {},
+        authToken: '',
+        fetchWishListIfNeeded: () => {},
+    }
+
     constructor(props) {
         super(props);
 
