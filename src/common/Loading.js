@@ -1,12 +1,12 @@
 import React from 'react';
 import './loading.css';
 
-const loading = () => (
+const loading = ({ white }) => (
     <div className="load-wrapp pt-5">
         <div className="load-9">
             <div className="spinner">
-                <div className="bubble-1" />
-                <div className="bubble-2" />
+                <div className={`${white ? 'bubble-1 bg-white' : 'bubble-1'}`} />
+                <div className={`${white ? 'bubble-2 bg-white' : 'bubble-2'}`} />
             </div>
         </div>
     </div>
