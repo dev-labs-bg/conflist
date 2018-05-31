@@ -120,7 +120,7 @@ class CalendarList extends Component {
                             prev2Label={null}
                         />
                     </div>
-                    <div className="col calendar-view-events__wrapper d-flex flex-column justify-content-center py-4">
+                    <div className="col calendar-view-events__wrapper d-flex flex-column justify-content-center py-4 px-4">
                         {this.props.calendarEvents.isFetching || this.props.calendarEvents.isFetching === null ?
                             (<Loading white />)
                             : this.renderCards()
