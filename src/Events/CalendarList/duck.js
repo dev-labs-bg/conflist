@@ -67,7 +67,6 @@ export function fetchConferencesByDate(date) {
         dispatch(requestCalendarList(date));
         API.fetchConferencesByDate(date)
             .then((response) => {
-                console.log(response)
                 dispatch(receiveCalendarList(response.data));
             })
             .catch((error) => {
