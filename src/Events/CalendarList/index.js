@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import moment from 'moment';
 import Calendar from 'react-calendar';
+
+import Card from '../../common/Card';
+import Loading from '../../common/Loading';
+import { fetchConferencesByDate } from './duck';
+import eventIcon from '../../assets/images/event-icon.svg';
 import './Calendar.css';
 
 class CalendarList extends Component {
@@ -12,15 +18,31 @@ class CalendarList extends Component {
         };
     }
 
+    componentDidMount() {
+        const date = moment().format('YYYY-MM-DD');
+        this.props.fetchConferencesByDate(date);
+    }
+
     clickedDaYListener = (value) => {
-        console.log(value)
+        const date = moment(value).format('YYYY-MM-DD');
+        this.props.fetchConferencesByDate(date);
+    }
+
+    renderCards = () => {
+        const cards = [];
+
+        this.props.calendarEvents.data.forEach((event) => {
+            cards.push(<Card key={event.id} event={event} />);
+        });
+
+        return cards;
     }
 
     render() {
         return (
             <div className="container-fluid px-5 pt-3 pb-5">
                 <div className="row px-5">
-                    <div className="col-md-4 bg-white">
+                    <div className="col col-xl-4 bg-white">
                         <Calendar
                             className="mb-5 mt-4"
                             value={this.state.date}
@@ -36,8 +58,19 @@ class CalendarList extends Component {
                             prev2Label={null}
                         />
                     </div>
-                    <div className="col-md calendar-view-events__wrapper">
-                        
+                    <div className="col calendar-view-events__wrapper d-flex flex-column justify-content-center">
+                        {this.props.calendarEvents.isFetching || this.props.calendarEvents.isFetching === null ?
+                            (<Loading white />)
+                            :
+                            this.props.calendarEvents.data.length === 0 ?
+                                    (
+                                    <div className="text-center py-5">
+                                        <img className="mb-4" src={eventIcon} alt="no events" />
+                                        <h4 className="text-white">No conferences available for the chosen date.</h4>
+                                    </div>)
+                                    :
+                                this.renderCards()
+                        }
                     </div>
                 </div>
             </div>
@@ -45,4 +78,14 @@ class CalendarList extends Component {
     }
 }
 
-export default CalendarList;
+const mapStateToProps = ({ calendarEvents }) => {
+    return {
+        calendarEvents,
+    };
+};
+
+const mapDispatchToProps = {
+    fetchConferencesByDate,
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(CalendarList);
