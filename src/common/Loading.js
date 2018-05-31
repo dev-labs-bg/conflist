@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './loading.css';
 
 const loading = ({ white }) => (
@@ -12,5 +13,13 @@ const loading = ({ white }) => (
     </div>
 );
 
+loading.propTypes = {
+    // Changes the color of the loading indicator to white
+    white: PropTypes.bool,
+};
+
+loading.defaultProps = {
+    white: false,
+};
 
 export default loading;
