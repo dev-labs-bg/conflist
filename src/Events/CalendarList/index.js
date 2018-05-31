@@ -59,8 +59,8 @@ class CalendarList extends Component {
     }
 
     /**
-     * Build the JSX cards with wishlisted option or
-     * display message when there is no event data
+     * Get the eventsList data and build the JSX cards with wishlisted option or
+     * display message when there is no data available
      * @return {array}
      */
     renderCards = () => {
@@ -120,7 +120,7 @@ class CalendarList extends Component {
                             prev2Label={null}
                         />
                     </div>
-                    <div className="col calendar-view-events__wrapper d-flex flex-column justify-content-center">
+                    <div className="col calendar-view-events__wrapper d-flex flex-column justify-content-center py-4">
                         {this.props.calendarEvents.isFetching || this.props.calendarEvents.isFetching === null ?
                             (<Loading white />)
                             : this.renderCards()
