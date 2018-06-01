@@ -233,7 +233,7 @@ class ProfileSettings extends Component {
                                             }
                                             return acceptedFiles.length !== 0
                                                 ? 'File is accepted'
-                                                : 'Drop your avatar here or click to select files to upload.';
+                                                : 'Drop your avatar here or click to select file to upload.';
                                         }
                                     }
 
