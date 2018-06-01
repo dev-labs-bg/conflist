@@ -96,6 +96,8 @@ const API = {
         ),
     getEventsBySpeaker: speakerId =>
         instance.get(`speakers/${speakerId}/conferences`),
+    fetchConferencesByDate: date =>
+        instance.get(`conferences/date/${date}`),
 };
 
 export default API;

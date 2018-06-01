@@ -7,6 +7,9 @@ import Event from '../Events/Event';
 import EventsList from '../Events/List';
 import { fetchConferences } from '../Events/List/duck';
 import { fetchWishListIfNeeded } from '../Events/WishList/duck';
+import CalendarList from '../Events/CalendarList';
+import ListViewIcon from '../common/ListViewIcon';
+import CalendarViewIcon from '../common/CalendarViewIcon';
 
 class HomePage extends Component {
     static propTypes = {
@@ -33,6 +36,14 @@ class HomePage extends Component {
         wishList: {},
     }
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            activeView: 'CALENDAR',
+        };
+    }
+
     componentDidMount() {
         this.props.fetchConferences(() => {
             if (this.props.auth.isAuthenticated) {
@@ -40,6 +51,15 @@ class HomePage extends Component {
             }
         });
     }
+
+    toggleListView = () => {
+        this.setState({ activeView: 'LIST' });
+    }
+
+    toggleCalendarView = () => {
+        this.setState({ activeView: 'CALENDAR' });
+    }
+
 
     render() {
         const { error } = this.props.events;
@@ -59,10 +79,31 @@ class HomePage extends Component {
         }
 
         return (
-            <EventsList
-                events={this.props.events.data || undefined}
-                wishList={this.props.wishList.data}
-            />
+            <div>
+                <div className={`${this.props.auth.isAuthenticated ? 'buttons-toggle-view__wrapper button-toggle-view__wrapper--auth' : 'bg-white'} py-2`}>
+                    <div className="container d-flex py-1">
+                        <ListViewIcon
+                            isAuthenticated={this.props.auth.isAuthenticated}
+                            activeView={this.state.activeView}
+                            onClick={this.toggleListView}
+                        />
+                        <CalendarViewIcon
+                            isAuthenticated={this.props.auth.isAuthenticated}
+                            activeView={this.state.activeView}
+                            onClick={this.toggleCalendarView}
+                        />
+                    </div>
+                </div>
+
+                {this.state.activeView === 'LIST' ?
+                    <EventsList
+                        events={this.props.events.data || undefined}
+                        wishList={this.props.wishList.data}
+                    />
+                    :
+                    <CalendarList />
+                }
+            </div>
         );
     }
 }
