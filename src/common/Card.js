@@ -35,8 +35,22 @@ class Card extends Component {
             isActive: this.props.wishListed,
             // Modal component
             isOpen: this.props.wishListed,
+            updateCount: 0,
         };
     }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log(nextState)
+        console.log(nextProps)
+        if (nextState.isActive !== this.state.isActive) {
+            if (nextState.isActive) {
+                this.setState({ updateCount: 1 });
+            } else {
+                this.setState({ updateCount: 0 });
+            }
+        }
+    }
+
     /**
      * Using dangerouslySetInnerHTML
      *
@@ -61,6 +75,9 @@ class Card extends Component {
             isActive: !this.state.isActive,
             isOpen: !this.state.isOpen,
         });
+        if (this.state.isActive) {
+            console.log(this.state.isActive)
+        }
     }
 
     tagClicked = (event) => {
@@ -119,12 +136,14 @@ class Card extends Component {
             }
         }
     }
+
     closeModal = () => {
         this.setState({
             isActive: !this.state.isActive,
             isOpen: !this.state.isOpen,
         });
     }
+
     render() {
         const { event } = this.props;
         return (
@@ -165,7 +184,7 @@ class Card extends Component {
                                     isActive={this.state.isActive}
                                 />
                             </AnimateOnChange>
-                            <span className="font-weight-normal align-top ml-1 card__dates card__attendees">{event.attendees.length}</span>
+                            <span className="font-weight-normal align-top ml-1 card__dates card__attendees">{event.attendees.length + this.state.updateCount}</span>
                         </div>
                     </span>
 
