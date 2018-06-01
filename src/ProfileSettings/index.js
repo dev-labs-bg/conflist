@@ -33,6 +33,7 @@ class ProfileSettings extends Component {
             isValid: false,
             avatar: [],
             avatarBase64: {},
+            maxSize: 5000000,
         };
         this.handleChange = this.handleChange.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
@@ -46,7 +47,11 @@ class ProfileSettings extends Component {
         }
     }
 
-    onDrop = (acceptedFiles) => {
+    onDrop = (acceptedFiles, rejectedFiles) => {
+        if (rejectedFiles.length !== 0) {
+            return;
+        }
+
         this.setState({
             avatar: acceptedFiles[0],
         });
@@ -59,6 +64,7 @@ class ProfileSettings extends Component {
                 },
             });
         };
+
         reader.readAsDataURL(acceptedFiles[0]);
     }
 
@@ -218,11 +224,12 @@ class ProfileSettings extends Component {
                                     multiple={false}
                                     accept="image/jpeg, image/png"
                                     style={dropzoneStyle}
+                                    maxSize={this.state.maxSize}
                                     className="label"
                                 >{
                                         ({ acceptedFiles, rejectedFiles }) => {
                                             if (rejectedFiles.length !== 0) {
-                                                return 'File is rejected';
+                                                return rejectedFiles[0].size > this.state.maxSize ? 'Your file needs to be smaller than 5mb' : 'File is rejected';
                                             }
                                             return acceptedFiles.length !== 0
                                                 ? 'File is accepted'
