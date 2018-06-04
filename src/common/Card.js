@@ -40,13 +40,27 @@ class Card extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if (nextState.isActive !== this.state.isActive) {
-            if (nextState.isActive) {
-                this.setState({ attendeesCount: this.state.attendeesCount + 1 });
-            } else {
-                this.setState({ attendeesCount: this.state.attendeesCount - 1 });
-            }
+        // Detect only when isActive state is changed
+        const isActiveChanged = nextState.isActive === this.state.isActive;
+        if (isActiveChanged) {
+            return;
         }
+
+        if (nextState.isActive) {
+            this.changeAttendeesHandler(this.state.attendeesCount + 1);
+        } else {
+            this.changeAttendeesHandler(this.state.attendeesCount - 1);
+        }
+    }
+
+    /**
+     * Updating the state during the componentWillUpdate step can lead
+     * to indeterminate component state and is not allowed, so it is handled
+     * by this function.
+     * @param  {number} changedValue
+     */
+    changeAttendeesHandler = (changedValue) => {
+        this.setState({ attendeesCount: changedValue });
     }
 
     /**
