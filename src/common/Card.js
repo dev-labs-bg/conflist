@@ -35,8 +35,34 @@ class Card extends Component {
             isActive: this.props.wishListed,
             // Modal component
             isOpen: this.props.wishListed,
+            attendeesCount: this.props.event.attendees.length,
         };
     }
+
+    componentWillUpdate(nextProps, nextState) {
+        // Detect only when isActive state is changed
+        const isActiveChanged = nextState.isActive === this.state.isActive;
+        if (isActiveChanged) {
+            return;
+        }
+
+        if (nextState.isActive) {
+            this.changeAttendeesHandler(this.state.attendeesCount + 1);
+        } else {
+            this.changeAttendeesHandler(this.state.attendeesCount - 1);
+        }
+    }
+
+    /**
+     * Updating the state during the componentWillUpdate step can lead
+     * to indeterminate component state and is not allowed, so it is handled
+     * by this function.
+     * @param  {number} changedValue
+     */
+    changeAttendeesHandler = (changedValue) => {
+        this.setState({ attendeesCount: changedValue });
+    }
+
     /**
      * Using dangerouslySetInnerHTML
      *
@@ -69,7 +95,7 @@ class Card extends Component {
             state: {
                 wishListData: {},
             },
-        })
+        });
     }
 
     renderTags(_tags) {
@@ -119,12 +145,14 @@ class Card extends Component {
             }
         }
     }
+
     closeModal = () => {
         this.setState({
             isActive: !this.state.isActive,
             isOpen: !this.state.isOpen,
         });
     }
+
     render() {
         const { event } = this.props;
         return (
@@ -165,7 +193,7 @@ class Card extends Component {
                                     isActive={this.state.isActive}
                                 />
                             </AnimateOnChange>
-                            <span className="font-weight-normal align-top ml-1 card__dates card__attendees">{event.attendees.length}</span>
+                            <span className="font-weight-normal align-top ml-1 card__dates card__attendees">{this.state.attendeesCount}</span>
                         </div>
                     </span>
 

@@ -264,7 +264,7 @@ class InsidePage extends Component {
                     <div className="mb-4 text-bottom d-flex">
                         <HeartFullIcon style={{ cursor: 'auto' }} />
                         <h4 className="ml-2 font-weight-normal d-inline">Going:
-                            <span className="text-secondary ml-1">{data.attendees.length}</span>
+                            <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
                         </h4>
                     </div>
                     <div dangerouslySetInnerHTML={this.renderDescription()} />
