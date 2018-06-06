@@ -3,6 +3,7 @@ import Event from '../Event';
 
 const initialState = {
     isFetching: null,
+    numberOfEvents: 10,
     lastFetched: null,
     data: null,
     error: null,
@@ -62,10 +63,10 @@ export function failEventsList(error) {
     };
 }
 
-export function fetchConferences(successCb) {
+export function fetchConferences(start, end, successCb) {
     return dispatch => {
         dispatch(requestEventsList());
-        API.fetchConferences()
+        API.fetchConferencesByDesc(start,end)
             .then(response => {
                 dispatch(receiveEventsList(response.data));
                 successCb();
