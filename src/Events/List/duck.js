@@ -3,7 +3,8 @@ import Event from '../Event';
 
 const initialState = {
     isFetching: null,
-    numberOfEvents: 10,
+    numberOfEvents: 7,
+    eventsFetched: null,
     lastFetched: null,
     data: null,
     error: null,
@@ -24,9 +25,12 @@ export default function reducer(state = initialState, action = {}) {
         };
     case RECEIVE: {
         const events = action.data.map(ev => new Event(ev));
+        const eventsFetched = state.eventsFetched + action.data.length;
+        console.log(eventsFetched)
         return {
             ...state,
             isFetching: false,
+            eventsFetched,
             lastFetched: new Date().valueOf(),
             data: events,
             error: null,

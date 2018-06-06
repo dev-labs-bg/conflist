@@ -65,6 +65,28 @@ class CardList extends Component {
         this.props.fetchConferences(0, 2, successCb);
     }
 
+    fetchMoreData = () => {
+        const successCb = () => {
+            this.props.events.data.forEach((event) => {
+                const month = moment(event.start).format('MMMM|YYYY');
+
+                this.eventsGroupedByMonth[month] = {
+                    month: moment(event.start).format('MMMM'),
+                    data: this.eventsGroupedByMonth[month] ?
+                        [...this.eventsGroupedByMonth[month].data, event] : [event],
+                };
+            });
+
+            if (this.props.auth.isAuthenticated) {
+                this.props.fetchWishListIfNeeded(this.props.auth.token);
+            }
+        }
+        const fetchEventsStart = this.props.events.eventsFetched;
+        const fetchEventsEnd = this.props.events.eventsFetched + 2;
+
+        this.props.fetchConferences(fetchEventsStart, fetchEventsEnd, successCb);
+    }
+
     /**
      * Get the cards, ordered by month and build the JSX ordering (by month again.)
      */
@@ -121,7 +143,7 @@ class CardList extends Component {
                 <InfiniteScroll
                     dataLength={this.props.events.numberOfEvents} //This is important field to render the next data
                     next={this.fetchMoreData}
-                    hasMore={true}
+                    hasMore={this.props.events.numberOfEvents > this.props.events.eventsFetched}
                     loader={<Loading />}
                     endMessage={
                         <p style={{ textAlign: 'center' }}>
