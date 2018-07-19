@@ -3,7 +3,7 @@ import Event from '../Event';
 
 const initialState = {
     isFetching: null,
-    numberOfEvents: 7,
+    numberOfEvents: null,
     eventsFetched: null,
     lastFetched: null,
     data: null,
@@ -24,15 +24,15 @@ export default function reducer(state = initialState, action = {}) {
             isFetching: true,
         };
     case RECEIVE: {
-        const events = action.data.map(ev => new Event(ev));
-        const eventsFetched = state.eventsFetched + action.data.length;
-        console.log(eventsFetched)
+        const events = action.data.data.map(ev => new Event(ev));
+        const eventsFetched = state.eventsFetched + action.data.data.length;
         return {
             ...state,
             isFetching: false,
             eventsFetched,
+            numberOfEvents: parseInt(action.data.headers['x-total-count']),
             lastFetched: new Date().valueOf(),
-            data: events,
+            data: state.data !== null && state.data.length !== 0 ? [...state.data, ...events] : events,
             error: null,
         };
     }
@@ -53,29 +53,29 @@ export function requestEventsList() {
     };
 }
 
-export function receiveEventsList(conferences) {
+export function receiveEventsList(data) {
     return {
         type: RECEIVE,
-        data: conferences,
+        data,
     };
 }
 
 export function failEventsList(error) {
     return {
         type: FAIL,
-        error: error,
+        error,
     };
 }
 
 export function fetchConferences(start, end, successCb) {
-    return dispatch => {
+    return (dispatch) => {
         dispatch(requestEventsList());
-        API.fetchConferencesByDesc(start,end)
-            .then(response => {
-                dispatch(receiveEventsList(response.data));
-                successCb();
+        API.fetchConferencesByDesc(start, end)
+            .then((response) => {
+                dispatch(receiveEventsList(response));
+                successCb(response.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 dispatch(failEventsList(error.response));
             });
     };
