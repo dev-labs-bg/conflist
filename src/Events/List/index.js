@@ -16,6 +16,7 @@ class CardList extends Component {
     static propTypes = {
         events: PropTypes.shape({
             numberOfEvents: PropTypes.number,
+            eventsFetched: PropTypes.number,
             isFetching: PropTypes.bool,
             lastFetched: PropTypes.number,
             data: PropTypes.arrayOf(PropTypes.instanceOf(Event)),
@@ -41,6 +42,9 @@ class CardList extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            eventsGroupedByMonth: {},
+        };
         this.eventsGroupedByMonth = {};
         //this.eventsGroupedByMonth = orderEventsByMonthChronologicaly(this.eventsGroupedByMonth);
         this.wishListIds = [];
@@ -56,18 +60,38 @@ class CardList extends Component {
                     data: this.eventsGroupedByMonth[month] ?
                         [...this.eventsGroupedByMonth[month].data, event] : [event],
                 };
+                this.setState({
+                    eventsGroupedByMonth: this.eventsGroupedByMonth,
+                });
             });
 
             if (this.props.auth.isAuthenticated) {
                 this.props.fetchWishListIfNeeded(this.props.auth.token);
             }
-        }
+        };
+
         this.props.fetchConferences(0, 2, successCb);
     }
 
+
     fetchMoreData = () => {
+        console.log('fetchdata')
+        const eventIds = [];
         const successCb = () => {
-            this.props.events.data.forEach((event) => {
+
+            const events = [];
+            _.forEach(this.state.eventsGroupedByMonth, (group, key) => {
+                group.data.map((ev) => {
+                    eventIds.push(ev.id);
+                });
+            });
+
+            this.props.events.data.map(ev => {
+                eventIds.includes(ev.id) ? null : events.push(ev);
+            });
+
+
+            events.forEach((event) => {
                 const month = moment(event.start).format('MMMM|YYYY');
 
                 this.eventsGroupedByMonth[month] = {
@@ -75,12 +99,19 @@ class CardList extends Component {
                     data: this.eventsGroupedByMonth[month] ?
                         [...this.eventsGroupedByMonth[month].data, event] : [event],
                 };
+
+
+                this.setState({
+                    eventsGroupedByMonth: this.eventsGroupedByMonth,
+                });
             });
 
             if (this.props.auth.isAuthenticated) {
                 this.props.fetchWishListIfNeeded(this.props.auth.token);
             }
-        }
+        };
+
+
         const fetchEventsStart = this.props.events.eventsFetched;
         const fetchEventsEnd = this.props.events.eventsFetched + 2;
 
@@ -91,7 +122,7 @@ class CardList extends Component {
      * Get the cards, ordered by month and build the JSX ordering (by month again.)
      */
     renderCards = () => {
-        if (_.isEmpty(this.eventsGroupedByMonth)) {
+        if (_.isEmpty(this.state.eventsGroupedByMonth)) {
             return null;
         }
 
@@ -100,8 +131,8 @@ class CardList extends Component {
         if (this.props.wishList.data !== undefined) {
             this.props.wishList.data.map(ev => this.wishListIds.push(ev.id));
         }
-        console.log(this.eventsGroupedByMonth)
-        _.forEach(this.eventsGroupedByMonth, (group, key) => {
+
+        _.forEach(this.state.eventsGroupedByMonth, (group, key) => {
             cards.push(
                 <div key={key} className="mb-5">
                     <h2 className="cards-date font-weight-normal">
@@ -128,7 +159,8 @@ class CardList extends Component {
             return <Loading />;
         }
 
-        if (isFetching) {
+
+        if ((isFetching || isFetching === null) && this.props.events.data === null) {
             return <Loading />;
         }
 
@@ -137,6 +169,7 @@ class CardList extends Component {
                 return <Loading />;
             }
         }
+
 
         return (
             <div className="container mx-auto pt-5 pb-5">
