@@ -170,11 +170,10 @@ class CardList extends Component {
             }
         }
 
-
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <InfiniteScroll
-                    dataLength={this.props.events.numberOfEvents} //This is important field to render the next data
+                    dataLength={this.props.events.eventsFetched} //This is important field to render the next data
                     next={this.fetchMoreData}
                     hasMore={this.props.events.numberOfEvents > this.props.events.eventsFetched}
                     loader={<Loading />}
