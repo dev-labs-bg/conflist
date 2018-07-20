@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import EventsList from '../Events/List';
+import EventsList from '../Events/InfiniteScrollList';
 import CalendarList from '../Events/CalendarList';
 import ListViewIcon from '../common/ListViewIcon';
 import CalendarViewIcon from '../common/CalendarViewIcon';
