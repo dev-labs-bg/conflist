@@ -14,6 +14,7 @@ const initialState = {
 const REQUEST = 'eventsList/REQUEST';
 const RECEIVE = 'eventsList/RECEIVE';
 const FAIL = 'eventsList/FAIL';
+const RESET = 'eventsList/RESET';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -30,9 +31,10 @@ export default function reducer(state = initialState, action = {}) {
             ...state,
             isFetching: false,
             eventsFetched,
-            numberOfEvents: parseInt(action.data.headers['x-total-count']),
+            numberOfEvents: parseInt(action.data.headers['x-total-count'], 0),
             lastFetched: new Date().valueOf(),
-            data: state.data !== null && state.data.length !== 0 ? [...state.data, ...events] : events,
+            data: state.data !== null && state.data.length !== 0 ?
+                [...state.data, ...events] : events,
             error: null,
         };
     }
@@ -41,6 +43,10 @@ export default function reducer(state = initialState, action = {}) {
             ...state,
             isFetching: false,
             error: action.error,
+        };
+    case RESET:
+        return {
+            ...initialState,
         };
     default: return state;
     }
@@ -67,6 +73,12 @@ export function failEventsList(error) {
     };
 }
 
+export function resetEventsList() {
+    return {
+        type: RESET,
+    }
+}
+
 export function fetchConferences(start, end, successCb) {
     return (dispatch) => {
         dispatch(requestEventsList());
@@ -78,5 +90,11 @@ export function fetchConferences(start, end, successCb) {
             .catch((error) => {
                 dispatch(failEventsList(error.response));
             });
+    };
+}
+
+export function resetConferences() {
+    return (dispatch) => {
+        dispatch(resetEventsList());
     };
 }
