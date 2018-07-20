@@ -76,7 +76,7 @@ export function failEventsList(error) {
 export function resetEventsList() {
     return {
         type: RESET,
-    }
+    };
 }
 
 export function fetchConferences(start, end, successCb) {
