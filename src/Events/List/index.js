@@ -5,10 +5,9 @@ import moment from 'moment';
 import * as _ from 'lodash';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { fetchConferences } from './duck';
+import { fetchConferences, resetConferences } from './duck';
 import { fetchWishListIfNeeded } from '../WishList/duck';
 import Loading from '../../common/Loading';
-import { orderEventsByMonthChronologicaly } from '../../service';
 import Card from '../../common/Card';
 import Event from '../Event';
 
@@ -32,6 +31,7 @@ class CardList extends Component {
             lastFetched: PropTypes.number,
         }),
         fetchConferences: PropTypes.func.isRequired,
+        resetConferences: PropTypes.func.isRequired,
         fetchWishListIfNeeded: PropTypes.func.isRequired,
     };
 
@@ -46,24 +46,12 @@ class CardList extends Component {
             eventsGroupedByMonth: {},
         };
         this.eventsGroupedByMonth = {};
-        //this.eventsGroupedByMonth = orderEventsByMonthChronologicaly(this.eventsGroupedByMonth);
         this.wishListIds = [];
     }
 
     componentDidMount() {
         const successCb = () => {
-            this.props.events.data.forEach((event) => {
-                const month = moment(event.start).format('MMMM|YYYY');
-
-                this.eventsGroupedByMonth[month] = {
-                    month: moment(event.start).format('MMMM'),
-                    data: this.eventsGroupedByMonth[month] ?
-                        [...this.eventsGroupedByMonth[month].data, event] : [event],
-                };
-                this.setState({
-                    eventsGroupedByMonth: this.eventsGroupedByMonth,
-                });
-            });
+            this.groupEventsByMonth(this.props.events.data);
 
             if (this.props.auth.isAuthenticated) {
                 this.props.fetchWishListIfNeeded(this.props.auth.token);
@@ -73,38 +61,38 @@ class CardList extends Component {
         this.props.fetchConferences(0, 2, successCb);
     }
 
+    componentWillUnmount() {
+        this.props.resetConferences();
+    }
+
+    groupEventsByMonth(events) {
+        events.forEach((event) => {
+            const month = moment(event.start).format('MMMM|YYYY');
+
+            this.eventsGroupedByMonth[month] = {
+                month: moment(event.start).format('MMMM'),
+                data: this.eventsGroupedByMonth[month] ?
+                    [...this.eventsGroupedByMonth[month].data, event] : [event],
+            };
+
+            this.setState({
+                eventsGroupedByMonth: this.eventsGroupedByMonth,
+            });
+        });
+    }
+
 
     fetchMoreData = () => {
-        console.log('fetchdata')
         const eventIds = [];
         const successCb = () => {
-
             const events = [];
-            _.forEach(this.state.eventsGroupedByMonth, (group, key) => {
-                group.data.map((ev) => {
-                    eventIds.push(ev.id);
-                });
+            _.forEach(this.state.eventsGroupedByMonth, (group) => {
+                group.data.map(ev => eventIds.push(ev.id));
             });
 
-            this.props.events.data.map(ev => {
-                eventIds.includes(ev.id) ? null : events.push(ev);
-            });
+            this.props.events.data.map(ev => (eventIds.includes(ev.id) ? null : events.push(ev)));
 
-
-            events.forEach((event) => {
-                const month = moment(event.start).format('MMMM|YYYY');
-
-                this.eventsGroupedByMonth[month] = {
-                    month: moment(event.start).format('MMMM'),
-                    data: this.eventsGroupedByMonth[month] ?
-                        [...this.eventsGroupedByMonth[month].data, event] : [event],
-                };
-
-
-                this.setState({
-                    eventsGroupedByMonth: this.eventsGroupedByMonth,
-                });
-            });
+            this.groupEventsByMonth(events);
 
             if (this.props.auth.isAuthenticated) {
                 this.props.fetchWishListIfNeeded(this.props.auth.token);
@@ -173,7 +161,7 @@ class CardList extends Component {
         return (
             <div className="container mx-auto pt-5 pb-5">
                 <InfiniteScroll
-                    dataLength={this.props.events.eventsFetched} //This is important field to render the next data
+                    dataLength={this.props.events.eventsFetched}
                     next={this.fetchMoreData}
                     hasMore={this.props.events.numberOfEvents > this.props.events.eventsFetched}
                     loader={<Loading />}
@@ -198,6 +186,7 @@ const mapStateToProps = ({ events, auth, wishList }) => ({
 
 const mapDispatchToProps = {
     fetchConferences,
+    resetConferences,
     fetchWishListIfNeeded,
 };
 
