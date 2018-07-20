@@ -115,7 +115,7 @@ axios.interceptors.response.use((response) => {
 
     if (error.response.status === 440 || error.response.status === 401) {
         store.dispatch(removeToken());
-        console.log(window.location)
+        window.location.replace('/home');
     }
     // Do something with response error
     return Promise.reject(error.response.data);
