@@ -33,6 +33,7 @@ class ProfileSettings extends Component {
             isValid: false,
             avatar: [],
             avatarBase64: {},
+            maxSize: 5000000,
         };
         this.handleChange = this.handleChange.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
@@ -46,7 +47,11 @@ class ProfileSettings extends Component {
         }
     }
 
-    onDrop = (acceptedFiles) => {
+    onDrop = (acceptedFiles, rejectedFiles) => {
+        if (rejectedFiles.length !== 0) {
+            return;
+        }
+
         this.setState({
             avatar: acceptedFiles[0],
         });
@@ -59,10 +64,22 @@ class ProfileSettings extends Component {
                 },
             });
         };
+
         reader.readAsDataURL(acceptedFiles[0]);
     }
 
     updateAvatar = () => {
+        const successCallback = () => {
+            this.setState({ isUpdated: true });
+
+            this.handleDelayedMessageReset();
+        };
+        const errorCallback = (status) => {
+            this.setState({ error: status });
+
+            this.handleDelayedMessageReset();
+        };
+
         const updateValue = {
             avatar: [
                 {
@@ -74,8 +91,8 @@ class ProfileSettings extends Component {
             this.props.updateCurrentUser(
                 this.props.auth.token,
                 updateValue,
-                () => {},
-                () => {},
+                successCallback,
+                errorCallback,
             );
         }
     }
@@ -168,15 +185,17 @@ class ProfileSettings extends Component {
         const { profileImg, name, email } = this.props.user.data;
         const dropzoneStyle = {
             width: '200px',
-            height: '50px',
+            height: '80px',
+            padding: '2px',
             borderWidth: '1px',
             borderColor: '#717171',
             borderStyle: 'dashed',
             borderRadius: '5px',
-            marginBotton: '15px',
+            marginBottom: '15px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            cursor: 'pointer',
         };
         return (
             <div className="container mx-auto pt-5 pb-5">
@@ -188,6 +207,7 @@ class ProfileSettings extends Component {
                         className="profile-card__content py-5 mb-0"
                         onSubmit={this.updateSettings}
                     >
+
                         <div className="d-flex justify-content-center border border-top-0 border-right-0 border-left-0 mb-3 pb-1">
                             <img
                                 className="mr-3 rounded-circle"
@@ -202,16 +222,19 @@ class ProfileSettings extends Component {
                                 <Dropzone
                                     onDrop={this.onDrop}
                                     multiple={false}
+                                    accept="image/jpeg, image/png"
                                     style={dropzoneStyle}
-                                >
-                                    {this.state.avatar.length === 0 ?
-                                        <span className="label mx-0 my-0">
-                                            Drop your avatar here
-                                        </span>
-                                        :
-                                        <span className="label mx-0 my-0">
-                                            {this.state.avatar.name}
-                                        </span>
+                                    maxSize={this.state.maxSize}
+                                    className="label"
+                                >{
+                                        ({ acceptedFiles, rejectedFiles }) => {
+                                            if (rejectedFiles.length !== 0) {
+                                                return rejectedFiles[0].size > this.state.maxSize ? 'Your file needs to be smaller than 5mb' : 'File is rejected';
+                                            }
+                                            return acceptedFiles.length !== 0
+                                                ? 'File is accepted'
+                                                : 'Drop your avatar here or click to select file to upload.';
+                                        }
                                     }
 
                                 </Dropzone>
@@ -222,7 +245,6 @@ class ProfileSettings extends Component {
                                 >Update
                                 </button>
                             </div>
-
                         </div>
 
 
