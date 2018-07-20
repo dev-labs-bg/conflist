@@ -46,7 +46,7 @@ const reducer = combineReducers({
 });
 
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)));
+export const store = createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)));
 
 const app = (
     <Provider store={store}>
