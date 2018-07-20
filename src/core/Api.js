@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { baseUrl } from '../config';
+import { store } from '../index';
+import { removeToken } from '../Login/duck';
 
 const instance = axios.create({
     baseURL: `${baseUrl}api/v1/`,
@@ -101,5 +103,24 @@ const API = {
     fetchConferencesByDesc: (start, end) =>
         instance.get(`conferences?_sort=start&_order=DESC&_start=${start}&_end=${end}`),
 };
+
+axios.interceptors.response.use((response) => {
+    // Do something with response data
+    return response;
+}, (error) => {
+    if (!error.response) {
+        // Axios error object. Contains it's own "message" in the error object.
+        return Promise.reject(error);
+    }
+
+    if (error.response.status === 440 || error.response.status === 401) {
+        store.dispatch(removeToken());
+        // this.props.history.push('/home');
+        // window.location.reload(true);
+    }
+    // Do something with response error
+    return Promise.reject(error.response.data);
+});
+
 
 export default API;
