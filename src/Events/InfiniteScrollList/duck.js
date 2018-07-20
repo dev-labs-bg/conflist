@@ -25,13 +25,13 @@ export default function reducer(state = initialState, action = {}) {
             isFetching: true,
         };
     case RECEIVE: {
-        const events = action.data.data.map(ev => new Event(ev));
-        const eventsFetched = state.eventsFetched + action.data.data.length;
+        const events = action.data.map(ev => new Event(ev));
+        const eventsFetched = state.eventsFetched + action.data.length;
         return {
             ...state,
             isFetching: false,
             eventsFetched,
-            numberOfEvents: parseInt(action.data.headers['x-total-count'], 0),
+            numberOfEvents: action.numberOfEvents,
             lastFetched: new Date().valueOf(),
             data: state.data !== null && state.data.length !== 0 ?
                 [...state.data, ...events] : events,
@@ -59,10 +59,11 @@ export function requestEventsList() {
     };
 }
 
-export function receiveEventsList(data) {
+export function receiveEventsList(data, numberOfEvents) {
     return {
         type: RECEIVE,
         data,
+        numberOfEvents,
     };
 }
 
@@ -84,7 +85,8 @@ export function fetchConferences(start, end, successCb) {
         dispatch(requestEventsList());
         API.fetchConferencesByDesc(start, end)
             .then((response) => {
-                dispatch(receiveEventsList(response));
+                const numberOfEvents = parseInt(response.headers['x-total-count'], 0);
+                dispatch(receiveEventsList(response.data, numberOfEvents));
                 successCb(response.data);
             })
             .catch((error) => {
