@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import eventsReducer from './Events/List/duck';
+import eventsReducer from './Events/InfiniteScrollList/duck';
 import eventReducer from './Events/Details/duck';
 import authReducer from './Login/duck';
 import wishListReducer from './Events/WishList/duck';

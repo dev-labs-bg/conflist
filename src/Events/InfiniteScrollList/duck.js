@@ -3,6 +3,8 @@ import Event from '../Event';
 
 const initialState = {
     isFetching: null,
+    numberOfEvents: null,
+    eventsFetched: null,
     lastFetched: null,
     data: null,
     error: null,
@@ -12,6 +14,7 @@ const initialState = {
 const REQUEST = 'eventsList/REQUEST';
 const RECEIVE = 'eventsList/RECEIVE';
 const FAIL = 'eventsList/FAIL';
+const RESET = 'eventsList/RESET';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -23,11 +26,15 @@ export default function reducer(state = initialState, action = {}) {
         };
     case RECEIVE: {
         const events = action.data.map(ev => new Event(ev));
+        const eventsFetched = state.eventsFetched + action.data.length;
         return {
             ...state,
             isFetching: false,
+            eventsFetched,
+            numberOfEvents: action.numberOfEvents,
             lastFetched: new Date().valueOf(),
-            data: events,
+            data: state.data !== null && state.data.length !== 0 ?
+                [...state.data, ...events] : events,
             error: null,
         };
     }
@@ -37,6 +44,8 @@ export default function reducer(state = initialState, action = {}) {
             isFetching: false,
             error: action.error,
         };
+    case RESET:
+        return initialState;
     default: return state;
     }
 }
@@ -48,30 +57,44 @@ export function requestEventsList() {
     };
 }
 
-export function receiveEventsList(conferences) {
+export function receiveEventsList(data, numberOfEvents) {
     return {
         type: RECEIVE,
-        data: conferences,
+        data,
+        numberOfEvents,
     };
 }
 
 export function failEventsList(error) {
     return {
         type: FAIL,
-        error: error,
+        error,
     };
 }
 
-export function fetchConferences(successCb) {
-    return dispatch => {
+export function resetEventsList() {
+    return {
+        type: RESET,
+    };
+}
+
+export function fetchConferences(start, end, successCb) {
+    return (dispatch) => {
         dispatch(requestEventsList());
-        API.fetchConferences()
-            .then(response => {
-                dispatch(receiveEventsList(response.data));
-                successCb();
+        API.fetchConferencesByDesc(start, end)
+            .then((response) => {
+                const numberOfEvents = parseInt(response.headers['x-total-count'], 0);
+                dispatch(receiveEventsList(response.data, numberOfEvents));
+                successCb(response.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 dispatch(failEventsList(error.response));
             });
+    };
+}
+
+export function resetConferences() {
+    return (dispatch) => {
+        dispatch(resetEventsList());
     };
 }
