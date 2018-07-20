@@ -98,6 +98,8 @@ const API = {
         instance.get(`speakers/${speakerId}/conferences`),
     fetchConferencesByDate: date =>
         instance.get(`conferences/date/${date}`),
+    fetchConferencesByDesc: (start, end) =>
+        instance.get(`conferences?_sort=start&_order=DESC&_start=${start}&_end=${end}`),
 };
 
 export default API;
