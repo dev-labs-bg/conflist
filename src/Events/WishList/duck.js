@@ -129,7 +129,7 @@ function fetchWishList(_token) {
                 dispatch(receiveWishList(response.data));
             })
             .catch((error) => {
-                dispatch(failWishList(error.message));
+                dispatch(failWishList(error && error.message && error.status));
             });
     };
 }
