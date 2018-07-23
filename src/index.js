@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Router } from 'react-router-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -14,6 +14,7 @@ import searchListReducer from './Events/SearchList/duck';
 import subscriptionsReducer from './MySubscriptions/duck';
 import speakerEvents from './Events/Speakers/duck';
 import calendarEvents from './Events/CalendarList/duck';
+import history from './core/history';
 
 import './index.css';
 import './assets/sass/style.css';
@@ -46,13 +47,13 @@ const reducer = combineReducers({
 });
 
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)));
+export const store = createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)));
 
 const app = (
     <Provider store={store}>
-        <BrowserRouter>
+        <Router history={history}>
             <Route path="/" component={App} />
-        </BrowserRouter>
+        </Router>
     </Provider>
 );
 

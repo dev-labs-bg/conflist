@@ -123,7 +123,7 @@ export function fetchCurrentUser(_token) {
                 dispatch(receiveCurrentUser(response.data));
             })
             .catch((error) => {
-                dispatch(failCurrentUser(error.response.status));
+                dispatch(failCurrentUser(error.message));
             });
     };
 }
