@@ -2,6 +2,7 @@ import axios from 'axios';
 import { baseUrl } from '../config';
 import { store } from '../index';
 import { removeToken } from '../Login/duck';
+import history from '../core/history';
 
 const instance = axios.create({
     baseURL: `${baseUrl}api/v1/`,
@@ -104,6 +105,8 @@ const API = {
         instance.get(`conferences?_sort=start&_order=DESC&_start=${start}&_end=${end}`),
 };
 
+
+
 axios.interceptors.response.use((response) => {
     // Do something with response data
     return response;
@@ -114,8 +117,8 @@ axios.interceptors.response.use((response) => {
     }
 
     if (error.response.status === 440 || error.response.status === 401) {
+        history.push('/');
         store.dispatch(removeToken());
-        window.location.replace('/home');
     }
     // Do something with response error
     return Promise.reject(error.response.data);
