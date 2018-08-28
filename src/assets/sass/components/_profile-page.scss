@@ -21,3 +21,51 @@
 .form-input, .form-input::placeholder {
     font-size: $tertiary-font-size;
 }
+
+.form-check-label {
+    transition: .25s all ease;
+}
+
+/* checkbox styling */
+.checkbox {
+    display: none;
+}
+.form-check-label {
+    position: relative;
+    padding-left: 30px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+
+    &::before {
+        content: '';
+        border: 2px solid #bdc3c7;
+        border-radius: 20%;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        left: 0;
+        width: 1.5em;
+        height: 1.5em;
+        transition: .25s all ease;
+    }
+}
+
+.checkbox + .form-check-label::after {
+    content: "\2714";
+    color: white;
+}
+
+.checkbox:checked + .form-check-label::before {
+    background: $cyan;
+    border-color: $cyan;
+}
+.checkbox + .form-check-label::after {
+    transform: scale(0);
+}
+.checkbox:checked + .form-check-label::after {
+    transform: scale(1);
+}

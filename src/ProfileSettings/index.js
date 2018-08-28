@@ -14,6 +14,7 @@ class ProfileSettings extends Component {
                 name: PropTypes.string,
                 profileImg: PropTypes.string,
                 email: PropTypes.string,
+                newsletterSubscription: PropTypes.bool,
             }),
             error: PropTypes.number,
             isFetching: PropTypes.bool,
@@ -34,6 +35,7 @@ class ProfileSettings extends Component {
             avatar: [],
             avatarBase64: {},
             maxSize: 5000000,
+            newsletterSubscription: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
@@ -41,6 +43,11 @@ class ProfileSettings extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.user.isFetching === false) {
+            if (this.state.newsletterSubscription !== nextProps.user.data.newsletterSubscription) {
+                this.setState({
+                    newsletterSubscription: nextProps.user.data.newsletterSubscription,
+                });
+            }
             if (nextProps.user.data.name !== this.props.user.data.name) {
                 this.setState({ isUpdated: true });
             }
@@ -112,6 +119,10 @@ class ProfileSettings extends Component {
         return isValid;
     }
 
+    handleCheckboxChange = (event) => {
+        this.setState({ newsletterSubscription: event.target.checked });
+    }
+
     updateSettings(event) {
         const successCallback = () => {
             this.setState({ isUpdated: true });
@@ -126,6 +137,7 @@ class ProfileSettings extends Component {
 
         const updateValue = {
             name: this.state.name,
+            newsletterSubscription: this.state.newsletterSubscription,
         };
 
         if (this.state.isValid) {
@@ -146,6 +158,7 @@ class ProfileSettings extends Component {
             this.setState({ error: null, isUpdated: null });
         }, 10000);
     }
+
 
     renderMessage(_error, _isUpdated) {
         if (_isUpdated) {
@@ -181,8 +194,10 @@ class ProfileSettings extends Component {
             return <h4 className="text-danger text-center">Error fetching user data!</h4>;
         }
 
+        const {
+            profileImg, name, email,
+        } = this.props.user.data;
 
-        const { profileImg, name, email } = this.props.user.data;
         const dropzoneStyle = {
             width: '200px',
             height: '80px',
@@ -279,6 +294,20 @@ class ProfileSettings extends Component {
                             placeholder={email}
                             disabled
                         />
+
+                        <br />
+                        <Input
+                            type="checkbox"
+                            name="checkbox"
+                            id="checkbox"
+                            checked={this.state.newsletterSubscription}
+                            onChange={this.handleCheckboxChange}
+                            className="checkbox"
+                        />
+                        <Label for="checkbox" check>
+                            Email newsletter subscription
+                        </Label>
+
 
                         <div className="text-center mt-5">
                             <button
