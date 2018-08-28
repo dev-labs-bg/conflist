@@ -158,7 +158,6 @@ class ProfileSettings extends Component {
             this.setState({ error: null, isUpdated: null });
         }, 10000);
     }
-    // this.setState({ newsletterSubscription: this.props.user.data.newsletterSubscription });
 
 
     renderMessage(_error, _isUpdated) {
@@ -196,10 +195,9 @@ class ProfileSettings extends Component {
         }
 
         const {
-            profileImg, name, email, newsletterSubscription
+            profileImg, name, email,
         } = this.props.user.data;
 
-        console.log(this.state.newsletterSubscription)
         const dropzoneStyle = {
             width: '200px',
             height: '80px',
