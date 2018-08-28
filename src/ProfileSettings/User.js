@@ -6,6 +6,7 @@ class User {
         email = '',
         twitterId = '',
         subscriptions = [],
+        newsletterSubscription = false,
     }) {
         this.id = _id;
         this.profileImg = profileImg;
@@ -13,6 +14,7 @@ class User {
         this.email = email;
         this.twitterId = twitterId;
         this.subscriptions = subscriptions;
+        this.newsletterSubscription = newsletterSubscription;
     }
 }
 
