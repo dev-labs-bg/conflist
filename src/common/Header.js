@@ -57,17 +57,17 @@ class Header extends Component {
         event.preventDefault();
     }
 
+    logOut = () => {
+        this.props.removeToken();
+        window.location.reload(true);
+    }
+
     renderNavClass = (isAuthenticated) => {
         if (isAuthenticated) {
             return 'navbar-light bg-white';
         }
 
         return 'navbar-dark';
-    }
-
-    logOut = () => {
-        this.props.removeToken();
-        window.location.reload(true);
     }
 
     renderDropdown = (_isAuthenticated, _userData) => {
@@ -125,21 +125,16 @@ class Header extends Component {
 
     render() {
         const registerBkg = (
-            <div className="text-center xs-mb-3 mt-4">
+            <div className="text-center xs-mb-3 pt-4">
                 <h2 className="register__title mx-auto font-weight-bold mt-4">
                     Discover your next conference you wanna go!
                 </h2>
-                <p className="register__text mx-auto font-weight-normal mt-3">
+                <p className="register__text mx-auto font-weight-normal mt-3 mb-0">
                     Conf List surfaces the best international conferences, worldwide.
                     It  &#39;s a place for conference-loving enthusiasts to collect
                     conferences and to subscribe for upcoming events related to the #tags
                     they care about.
                 </p>
-                <Link
-                    to="/login"
-                    className="btn btn-primary font-weight-bold align-self-start"
-                >Register
-                </Link>
                 <picture>
                     <source
                         media="(min-width: 900px)"
