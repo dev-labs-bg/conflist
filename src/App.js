@@ -16,6 +16,7 @@ import WishList from './Events/WishList';
 import MySubscriptions from './MySubscriptions';
 import SearchList from './Events/SearchList';
 import SuggestConference from './SuggestConference';
+import Feedback from './Feedback';
 import { getToken } from './Login/duck';
 import { fetchCurrentUser } from './ProfileSettings/duck';
 
@@ -72,6 +73,7 @@ class App extends Component {
                         <Route path="/search" component={SearchList} />
                         <Route path="/my-subscriptions" component={MySubscriptions} />
                         <Route path="/conference-suggest" component={SuggestConference} />
+                        <Route path="/feedback" component={Feedback} />
                         <Route path="*" component={PageNotFound} />
                     </Switch>
                 </Wrapper>
@@ -89,6 +91,7 @@ class App extends Component {
                     <Route path="/gate" component={Gate} />
                     <Route path="/search" component={SearchList} />
                     <Route path="/conference-suggest" component={SuggestConference} />
+                    <Route path="/feedback" component={Feedback} />
                     <Route path="*" component={PageNotFound} />
                 </Switch>
             </Wrapper>
