@@ -166,7 +166,12 @@ const mapStateToProps = ({ search, wishList }) => {
         } else if (data.resourceType === 'conference') {
             suggestions[1].data.push({ name: data.name, alias: data.alias });
         } else if (data.resourceType === 'speaker') {
-            suggestions[2].data.push({ name: data.name, pictureUrl: data.pictureUrl, id: data._id });
+            suggestions[2].data.push({
+                name: data.name,
+                pictureUrl: data.pictureUrl,
+                id: data._id,
+                twitterName: data.twitterName
+            });
         }
     });
     return {
