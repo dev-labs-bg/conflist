@@ -1,3 +1,4 @@
+import moment from 'moment';
 import API from '../../core/Api';
 import Event from '../Event';
 
@@ -79,9 +80,12 @@ export function resetEventsList() {
 }
 
 export function fetchConferences(start, end, successCb) {
+    const startDateSearch = moment().format('YYYY-MM');
+    const endDateSearch = moment().add(3, 'months').format('YYYY-MM-DD');
+
     return (dispatch) => {
         dispatch(requestEventsList());
-        API.fetchConferencesByDesc(start, end)
+        API.fetchConferencesinThreeMonthPeriod(start, end, startDateSearch, endDateSearch)
             .then((response) => {
                 const numberOfEvents = parseInt(response.headers['x-total-count'], 0);
                 dispatch(receiveEventsList(response.data, numberOfEvents));
