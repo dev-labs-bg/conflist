@@ -82,7 +82,7 @@ class SearchList extends Component {
             <div>
                 <h2
                     className="text-center mt-5"
-                >Results
+                >Results for #{this.props.searchTag}
                 </h2>
                 <EventsList
                     events={data || undefined}
