@@ -57,8 +57,15 @@ class CardList extends Component {
                 this.props.fetchWishListIfNeeded(this.props.auth.token);
             }
         };
+        let fetchEventsEnd = 2;
+        // Fetch more events initially if screen height is too big, since the
+        // InfiniteScroll plugin doesn't fetch more data if there is no scroll initially.
+        const { clientHeight } = document.documentElement;
 
-        this.props.fetchConferences(0, 2, successCb);
+        if (clientHeight > 1000) {
+            fetchEventsEnd = 5;
+        }
+        this.props.fetchConferences(0, fetchEventsEnd, successCb);
     }
 
     componentWillUnmount() {
