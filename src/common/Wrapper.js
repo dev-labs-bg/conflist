@@ -6,11 +6,13 @@ import Footer from './Footer';
 
 const Wrapper = (props) => {
     return (
-        <div>
+        <React.Fragment>
             <Header />
-            {props.children}
+            <div className="content">
+                {props.children}
+            </div>
             <Footer />
-        </div>
+        </React.Fragment>
     );
 };
 
