@@ -3,12 +3,17 @@ html {
     min-height: 100%;
 }
 
-/**
- * Added margin-bottom for sticky footer
- *
- * {@link http://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/}
- */
 body {
-    margin-bottom: $footer-height;
     padding-top: 4rem;
+    height: 100vh;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 4rem);
+}
+
+.content {
+    flex: 1;
 }

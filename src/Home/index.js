@@ -34,7 +34,7 @@ class HomePage extends Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <div className={`${this.props.auth.isAuthenticated ? 'buttons-toggle-view__wrapper button-toggle-view__wrapper--auth' : 'bg-white'} py-2`}>
                     <div className="container d-flex py-1">
                         <ListViewIcon
@@ -55,7 +55,7 @@ class HomePage extends Component {
                     :
                     <CalendarList />
                 }
-            </div>
+            </React.Fragment>
         );
     }
 }
