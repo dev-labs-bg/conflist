@@ -6,6 +6,7 @@ class PopoverItem extends Component {
     static propTypes = {
         item: PropTypes.shape({
             name: PropTypes.string,
+            twitterId: PropTypes.string,
         }).isRequired,
         id: PropTypes.string.isRequired,
         shouldTogglePopover: PropTypes.bool,
@@ -68,9 +69,14 @@ class PopoverItem extends Component {
         const style = { cursor: 'pointer' };
         return (
             <span>
-                <span style={style} role="button" id={'Popover-' + this.props.id} onClick={this.toggle}>
-                    {this.props.children}
-                </span>
+                {this.props.item.twitterId ?
+                    <a style={style} target="_blank" role="button" id={'Popover-' + this.props.id} onClick={this.toggle} href={`https://twitter.com/@${this.props.item.twitterName}`}>
+                        {this.props.children}
+                    </a> : <span style={style} role="button" id={'Popover-' + this.props.id} onClick={this.toggle}>
+                        {this.props.children}
+                    </span>
+                }
+
                 <Popover
                     className="mb-3"
                     placement="top"

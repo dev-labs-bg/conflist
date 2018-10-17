@@ -7,6 +7,7 @@ import EventsList from '../List';
 import Loading from '../../common/Loading';
 import { fetchWishListIfNeeded } from '../WishList/duck';
 import { getEventsBySpeaker } from './duck';
+import twitterLogo from '../../assets/images/twitter-logo.svg';
 
 class Speakers extends Component {
     static propTypes = {
@@ -21,6 +22,7 @@ class Speakers extends Component {
             id: PropTypes.string,
             name: PropTypes.string,
             pictureUrl: PropTypes.string,
+            twitterName: PropTypes.string,
         }).isRequired,
         speakerEvents: PropTypes.shape({
             isFetching: PropTypes.bool,
@@ -68,15 +70,26 @@ class Speakers extends Component {
         return (
             <div className="pb-5 pt-5 container">
                 <h2 className="text-center">Conferences attended by speaker</h2>
-                <div className="text-center d-flex justify-content-center align-items-center">
+                <div className="text-center d-flex justify-content-center align-items-center my-3">
                     <img
                         src={this.props.speaker.pictureUrl}
-                        className="rounded-circle mr-2"
-                        width="60"
-                        height="60"
+                        className="rounded-circle"
+                        width="150"
+                        height="150"
                         alt={this.props.speaker.name}
                     />
-                    <h2 className="d-inline">{this.props.speaker.name}</h2>
+                </div>
+                <div className="text-center d-flex justify-content-center align-items-center">
+                    <h2 className="d-inline mr-3">{this.props.speaker.name}</h2>
+
+                    <a target="_blank" href={`https://twitter.com/@${this.props.speaker.twitterName}`}>
+                        <img
+                            src={twitterLogo}
+                            width="30"
+                            height="30"
+                            alt={this.props.speaker.twitterName}
+                        />
+                    </a>
                 </div>
                 {
                     data.length !== 0 ?
@@ -87,7 +100,7 @@ class Speakers extends Component {
                             />
                         </div>
                         :
-                        <div className="mt-2">
+                        <div className="mt-3">
                             <h4 className="text-center">
                                 This speaker is not attending any conferences!
                             </h4>
