@@ -91,6 +91,7 @@ class Search extends Component {
 
         // Section title, when multiSection={true}.
         renderSectionTitle = (section) => {
+            if (section.data.length === 0) { return; }
             return (
                 <strong>{section.title}</strong>
             );
