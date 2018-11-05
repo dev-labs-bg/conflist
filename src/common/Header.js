@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
     Collapse,
@@ -32,6 +32,11 @@ class Header extends Component {
             isFetching: PropTypes.bool,
         }),
         removeToken: PropTypes.func.isRequired,
+        history: PropTypes.shape({
+            location: PropTypes.shape({
+                pathname: PropTypes.string.isRequired,
+            }),
+        }).isRequired,
     };
 
     static defaultProps = {
@@ -151,14 +156,16 @@ class Header extends Component {
             </div>
         );
 
-        const { isAuthenticated } = this.props;
+        const { isAuthenticated, history } = this.props;
 
         const style = {
             zIndex: '1',
         };
 
+        const isOnHomePage = history.location.pathname === '/' || history.location.pathname === '/home';
+
         return (
-            <div className={!isAuthenticated ? 'register' : null}>
+            <div className={!isAuthenticated && isOnHomePage ? 'register' : ''}>
                 <Navbar
                     style={style}
                     className={`p-relative navbar fixed-top navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
@@ -200,7 +207,7 @@ class Header extends Component {
                     </Collapse>
                 </Navbar>
 
-                {!isAuthenticated ? registerBkg : null}
+                {!isAuthenticated && isOnHomePage ? registerBkg : null}
 
             </div>
         );
@@ -216,4 +223,4 @@ const mapDispatchToProps = {
     removeToken,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
