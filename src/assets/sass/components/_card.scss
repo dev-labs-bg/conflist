@@ -38,10 +38,17 @@
 .badge-light {
     color: #747474;
     border: 1px solid #e6e6e6;
+    background-color: #fff;
+    padding: 0.8rem;
+    border-radius: 0.25rem;
+    font-size: 12px;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
 }
 
 .badge-light:hover {
-    box-shadow:  #cccccc 0 0px 9px 3px;
+    border: 1px solid #F27066;
+    color: #F27066;
 }
 
 .card-subscription {

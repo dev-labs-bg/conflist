@@ -2,13 +2,6 @@
  * heartbeat animation from
  * https://codepen.io/asraven/pen/RrEXXV?depth=everything&order=popularity&page=8&q=heart+animation&show_forks=false
  */
-.attend {
-  padding: 5px;
-  border-radius: 3px;
-  position: absolute;
-  right: 10%;
-  top: 6%;
-}
 .attend--bounce{
   animation: heartbeat 2.5s ease-in-out;
 }

@@ -177,9 +177,8 @@ class Card extends Component {
                                 <span className="card__dates"> {event.venue}, {event.city}, {event.country}</span>
                             </div>
                         </div>
-                        <div className="card__button position-relative">
+                        <div className="d-flex flex-column align-items-center">
                             <AnimateOnChange
-                                baseClassName="attend"
                                 animationClassName="attend--bounce"
                                 animate={this.state.isActive}
                             >
@@ -193,7 +192,7 @@ class Card extends Component {
                                     isActive={this.state.isActive}
                                 />
                             </AnimateOnChange>
-                            <span className="font-weight-normal align-top ml-1 card__dates card__attendees">{this.state.attendeesCount}</span>
+                            <span className="font-weight-normal">{this.state.attendeesCount}</span>
                         </div>
                     </span>
 
