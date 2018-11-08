@@ -23,6 +23,7 @@
         .nav-item .nav-link {
             padding-right: 1rem;
             padding-left: 1rem;
+            transition: 0.3s ease-in-out;
         }
     }
 }
@@ -63,5 +64,5 @@
 
 .register__text {
     max-width: 49.3125rem;
-    font-size: $tertiary-font-size;
+    font-size: 1.25rem;
 }

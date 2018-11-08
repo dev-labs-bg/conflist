@@ -86,7 +86,7 @@ class Header extends Component {
                     </NavItem>
                     <Link
                         to="/login"
-                        className="btn btn-primary font-weight-bold align-self-start"
+                        className="btn btn-primary font-weight-bold ml-3"
                     >Register
                     </Link>
 
@@ -134,7 +134,7 @@ class Header extends Component {
                 <h2 className="register__title mx-auto font-weight-bold mt-4">
                     Discover your next conference you wanna go!
                 </h2>
-                <p className="register__text mx-auto font-weight-normal mt-3 mb-0">
+                <p className="register__text mx-auto font-weight-light mt-3 mb-0">
                     Conf List surfaces the best international conferences, worldwide.
                     It  &#39;s a place for conference-loving enthusiasts to collect
                     conferences and to subscribe for upcoming events related to the #tags
@@ -185,7 +185,7 @@ class Header extends Component {
 
                         <form
                             onSubmit={this.handleSubmit}
-                            className="form-inline mt-xs-2 mx-auto"
+                            className="form-inline flex-grow-1 mt-xs-2 mx-auto"
                         >
                             <Search />
                         </form>

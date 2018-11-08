@@ -169,8 +169,7 @@ class InsidePage extends Component {
     renderSpeakers() {
         const renderImages = [];
         this.props.event.data.speakers.map((speaker, key) => {
-            renderImages.push(
-                <div className="d-inline" key={key} >
+            renderImages.push(<div className="d-inline mr-2" key={key} >
                     <PopoverItem shouldTogglePopover key={key} item={speaker} id={`p${key}`}>
                         <img
                             className="rounded-circle mr-2"
@@ -193,7 +192,7 @@ class InsidePage extends Component {
             state: {
                 wishListData: {},
             },
-        })
+        });
     }
 
     renderTags() {
@@ -211,7 +210,7 @@ class InsidePage extends Component {
                     this.tagClicked
                 }
             >{tag}
-            </span>);
+                            </span>);
         });
         return renderTags;
     }
@@ -257,22 +256,24 @@ class InsidePage extends Component {
                         <span className="text-info"> | </span> {data.venue}, {data.city}, {data.country}
                     </h4>
 
-                    <div className="mb-2 mt-2">
-                        {this.renderTags()}
+                    <div className="d-flex justify-content-between align-items-center mb-4 mt-4">
+                        <div>
+                            {this.renderTags()}
+                        </div>
+                        <div className="text-bottom d-flex">
+                            <HeartFullIcon style={{ cursor: 'auto' }} />
+                            <h4 className="ml-3 font-weight-normal">Going:
+                                <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
+                            </h4>
+                        </div>
                     </div>
 
-                    <div className="mb-4 text-bottom d-flex">
-                        <HeartFullIcon style={{ cursor: 'auto' }} />
-                        <h4 className="ml-2 font-weight-normal d-inline">Going:
-                            <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
-                        </h4>
-                    </div>
                     <div dangerouslySetInnerHTML={this.renderDescription()} />
 
                 </div>
 
                 <div className="mb-5">
-                    <h4 className="mb-2">Speakers:</h4>
+                    <h4 className="mb-3">Speakers:</h4>
                     {this.renderSpeakers()}
                 </div>
 

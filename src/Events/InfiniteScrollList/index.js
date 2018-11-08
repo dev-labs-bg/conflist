@@ -165,7 +165,7 @@ class CardList extends Component {
         }
 
         return (
-            <div className="container mx-auto pt-5 pb-5">
+            <div className="container mx-auto pb-5">
                 <InfiniteScroll
                     dataLength={this.props.events.eventsFetched}
                     next={this.fetchMoreData}
