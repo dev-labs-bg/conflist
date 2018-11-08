@@ -21,7 +21,7 @@
 @include media-breakpoint-up(lg) {
     .navbar {
         .form-inline .form-control {
-            width: 30rem;
+            width: 100%;
         }
 
         .nav-item .nav-link {
