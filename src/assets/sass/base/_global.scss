@@ -6,6 +6,9 @@ html {
 body {
     padding-top: 6rem;
     height: 100vh;
+    @include media-breakpoint-down(sm) {
+        padding-top: 5rem;
+    }
 }
 
 #root {
