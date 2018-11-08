@@ -4,14 +4,14 @@ html {
 }
 
 body {
-    padding-top: 8rem;
+    padding-top: 6rem;
     height: 100vh;
 }
 
 #root {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 8rem);
+    min-height: calc(100vh - 6rem);
 }
 
 .content {
