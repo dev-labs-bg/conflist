@@ -181,6 +181,7 @@ class Card extends Component {
                         </div>
                         <div className="d-flex flex-column align-items-center mr-2">
                             <AnimateOnChange
+                                baseClassName="attend"
                                 animationClassName="attend--bounce"
                                 animate={this.state.isActive}
                             >
