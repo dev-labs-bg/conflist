@@ -173,37 +173,41 @@ class Header extends Component {
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                     <Collapse
-                        className="justify-content-between text-left"
+                        className="justify-content-between"
                         isOpen={!this.state.collapsed}
                         navbar
                     >
-                        <Link className="" href="#home" to="/home">
-                            <Logo
-                                authentication={isAuthenticated}
-                            />
-                        </Link>
+                        <div className="navbar-item">
+                            <Link className="" href="#home" to="/home">
+                                <Logo
+                                    authentication={isAuthenticated}
+                                />
+                            </Link>
+                        </div>
+                        <div className="navbar-item text-center">
+                            <form
+                                onSubmit={this.handleSubmit}
+                                className="form-inline mt-xs-2 mx-auto"
+                            >
+                                <Search />
+                            </form>
+                        </div>
+                        <div className="navbar-item">
+                            <Nav className="nav navbar-nav justify-content-end">
+                                <NavItem>
+                                    <Link className="nav-link" to="/home">
+                                        Home
+                                    </Link>
+                                </NavItem>
 
-                        <form
-                            onSubmit={this.handleSubmit}
-                            className="form-inline flex-grow-1 mt-xs-2 mx-auto"
-                        >
-                            <Search />
-                        </form>
-
-                        <Nav className="nav navbar-nav justify-content-end">
-                            <NavItem>
-                                <Link className="nav-link" to="/home">
-                                    Home
-                                </Link>
-                            </NavItem>
-
-                            <NavItem>
-                                <Link className="nav-link" to="/conference-suggest">
-                                    Suggest a conference
-                                </Link>
-                            </NavItem>
-                            { this.renderDropdown(isAuthenticated, this.props.user.data) }
-                        </Nav>
+                                <NavItem>
+                                    <Link className="nav-link" to="/conference-suggest">
+                                        Suggest a conference
+                                    </Link>
+                                </NavItem>
+                                { this.renderDropdown(isAuthenticated, this.props.user.data) }
+                            </Nav>
+                        </div>
                     </Collapse>
                 </Navbar>
 
