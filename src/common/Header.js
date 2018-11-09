@@ -96,7 +96,7 @@ class Header extends Component {
                             width="28"
                             height="28"
                             alt="profile avatar"
-                        /> {_userData.name}
+                        />
                     </DropdownToggle>
                     <DropdownMenu >
                         <Link className="dropdown-item" to="/profile-settings">
@@ -176,7 +176,7 @@ class Header extends Component {
                                 />
                             </Link>
                         </div>
-                        <div className="navbar-item text-center">
+                        <div className="navbar-item">
                             <form
                                 onSubmit={this.handleSubmit}
                                 className="form-inline mt-xs-2 mx-auto"
@@ -186,12 +186,6 @@ class Header extends Component {
                         </div>
                         <div className="navbar-item">
                             <Nav className="nav navbar-nav justify-content-end">
-                                <NavItem>
-                                    <Link className="nav-link" to="/home">
-                                        Home
-                                    </Link>
-                                </NavItem>
-
                                 <NavItem>
                                     <Link className="nav-link" to="/conference-suggest">
                                         Suggest a conference
