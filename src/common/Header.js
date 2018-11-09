@@ -78,19 +78,11 @@ class Header extends Component {
     renderDropdown = (_isAuthenticated, _userData) => {
         if (!_isAuthenticated) {
             return (
-                <div className="d-flex flex-md-row register__navitems">
-                    <NavItem>
-                        <Link className="nav-link" to="/login">
-                            Login
-                        </Link>
-                    </NavItem>
-                    <Link
-                        to="/login"
-                        className="btn btn-primary font-weight-bold ml-3"
-                    >Register
-                    </Link>
-
-                </div>
+                <Link
+                    to="/login"
+                    className="btn btn-primary font-weight-bold ml-3"
+                >Login
+                </Link>
             );
         }
 
