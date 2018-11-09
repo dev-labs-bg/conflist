@@ -30,7 +30,7 @@ class SubscribeCard extends Component {
 
         this.timeout = setTimeout(() => {
             this.setState({ error: null, isUpdated: null, isNotAuth: null });
-        }, 1000);
+        }, 10000);
     }
 
     tagSubscribe = () => {
