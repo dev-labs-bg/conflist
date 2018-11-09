@@ -102,9 +102,9 @@ class CalendarList extends Component {
         }
 
         return (
-            <div className="container-fluid px-5 pt-3 pb-5">
+            <div className="container-fluid pt-3 pb-5">
                 <div className="row px-5">
-                    <div className="col col-xl-4 bg-white">
+                    <div className="col-xl-4 col-lg-5 col-md-12 col-xs-12 bg-white">
                         <Calendar
                             className="mb-5 mt-4"
                             value={this.state.date}
@@ -120,7 +120,7 @@ class CalendarList extends Component {
                             prev2Label={null}
                         />
                     </div>
-                    <div className="col calendar-view-events__wrapper d-flex flex-column justify-content-center py-4 px-4">
+                    <div className="col-xl-8 col-lg-7 col-md-12 col-xs-12 calendar-view-events__wrapper d-flex flex-column justify-content-center py-4 px-4">
                         {this.props.calendarEvents.isFetching || this.props.calendarEvents.isFetching === null ?
                             (<Loading white />)
                             : this.renderCards()
