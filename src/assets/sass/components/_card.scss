@@ -1,20 +1,35 @@
 .card {
     font-size: $primary-font-size;
+    box-shadow: 0 10px 20px -10px #00000010;
+    transition: 0.3s ease-in-out;
+    transform: scale(0.97);
+    backface-visibility: visible;
 }
-
+.card:hover {
+    box-shadow: 0 10px 30px -10px #00000020;
+    transform: scale(1);
+}
+.card-img-holder {
+    flex: 1;
+    object-fit: cover;
+    min-height: 100%;
+    background-size: 100% 100%;
+    border-radius: 5px 0 0px 5px;
+}
 .card-img {
-    width: 15.1875rem;
     height: 100%;
-    border-radius: calc(0.25rem);
-    object-fit: scale-down;
+    object-fit: cover;
 }
 
 .card-body {
     flex: 2;
+    padding: 1.5rem 1.25rem 1.25rem 1.75rem;
 }
 
 .card__info {
-    flex: 7;
+    flex: 1;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 20px;
 }
 
 .card__button {
@@ -35,13 +50,28 @@
     font-weight: $font-weight-light;
 }
 
+.card-title {
+    transition: 0.3s ease-in-out;
+    &:hover {
+        color: #F27069;
+        text-decoration: none;
+    }
+}
+
 .badge-light {
     color: #747474;
     border: 1px solid #e6e6e6;
+    background-color: #fff;
+    padding: 0.8rem;
+    border-radius: 0.25rem;
+    font-size: 12px;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
 }
 
 .badge-light:hover {
-    box-shadow:  #cccccc 0 0px 9px 3px;
+    border: 1px solid #F27066;
+    color: #F27066;
 }
 
 .card-subscription {

@@ -4,19 +4,22 @@
     color: #fff;
     cursor: pointer;
     border: 1px solid $cyan;
+    min-width: 140px;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-primary:hover {
     color: $cyan;
-    background-color: #fff;
+    background-color: transparent;
     border: 1px solid $cyan;
 }
 
 .btn-secondary {
-    background-color: white;
+    background-color: transparent;
     color: $cyan;
     border: 1px solid $cyan;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-secondary:hover {

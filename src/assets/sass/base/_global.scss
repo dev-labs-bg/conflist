@@ -4,16 +4,23 @@ html {
 }
 
 body {
-    padding-top: 4rem;
+    padding-top: 6rem;
     height: 100vh;
+    @include media-breakpoint-down(sm) {
+        padding-top: 5rem;
+    }
 }
 
 #root {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 4rem);
+    min-height: calc(100vh - 6rem);
 }
 
 .content {
     flex: 1;
+}
+
+a:hover {
+    text-decoration: none;
 }

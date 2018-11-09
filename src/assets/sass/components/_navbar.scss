@@ -2,6 +2,10 @@
     outline:none;
 }
 
+.nav-item .nav-link {
+    transition: 0.3s ease-in-out;
+}
+
 .dropdown-item {
     cursor: pointer;
 }
@@ -17,12 +21,15 @@
 @include media-breakpoint-up(lg) {
     .navbar {
         .form-inline .form-control {
-            width: 18.25rem;
+            width: 100%;
         }
 
         .nav-item .nav-link {
             padding-right: 1rem;
             padding-left: 1rem;
+        }
+        .navbar-item {
+            flex: 1;
         }
     }
 }
@@ -31,14 +38,21 @@
     .navbar {
         padding-top: 0.8125rem;
         padding-bottom: 0.8125rem;
+        box-shadow: 0px 0px 30px 5px #00000073;
 
         .conflist__logo {
-            margin-right: -28px;
+            margin: 1.5rem 0;
         }
 
         .form-inline .form-control {
             width: 100%;
             margin-top: $spacer * .5;
+        }
+        .btn-primary {
+            margin: 1rem 0 !important;
+        }
+        .navbar-nav {
+            margin-top: 1rem;
         }
     }
 
@@ -51,7 +65,7 @@
     }
 
     .register__navitems {
-        flex-direction: column;
+        flex-direction: column !important;
     }
 
 }
@@ -63,5 +77,5 @@
 
 .register__text {
     max-width: 49.3125rem;
-    font-size: $tertiary-font-size;
+    font-size: 1.25rem;
 }

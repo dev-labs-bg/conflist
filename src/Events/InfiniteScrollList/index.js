@@ -130,7 +130,7 @@ class CardList extends Component {
         _.forEach(this.state.eventsGroupedByMonth, (group, key) => {
             cards.push(
                 <div key={key} className="mb-5">
-                    <h2 className="cards-date font-weight-normal">
+                    <h2 className="font-weight-normal font-size-small ml-2 mb-4">
                         { group.month }
                     </h2>
                     {
@@ -165,7 +165,7 @@ class CardList extends Component {
         }
 
         return (
-            <div className="container mx-auto pt-5 pb-5">
+            <div className="container mx-auto pb-5">
                 <InfiniteScroll
                     dataLength={this.props.events.eventsFetched}
                     next={this.fetchMoreData}
@@ -173,7 +173,7 @@ class CardList extends Component {
                     loader={<Loading />}
                     endMessage={
                         <p style={{ textAlign: 'center' }}>
-                            <b>Yay! You have seen it all</b>
+                            Yay! You have seen it all
                         </p>
                     }
                 >

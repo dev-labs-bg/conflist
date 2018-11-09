@@ -156,9 +156,9 @@ class Card extends Component {
     render() {
         const { event } = this.props;
         return (
-            <div className="card mb-2 flex-sm-row">
+            <div className="card mb-4 flex-sm-row">
                 {this.renderModal()}
-                <Link to={`/event/${event.alias}`} className="text-center">
+                <Link to={`/event/${event.alias}`} className="card-img-holder">
                     <img
                         className="card-img"
                         src={event.pictureUrl}
@@ -169,15 +169,17 @@ class Card extends Component {
                 <div className="card-body">
                     <span className="d-flex justify-content-between">
                         <div className="card__info">
-                            <img src={this.props.past ? calendarPassed : calendar} className="mr-1" alt="small calendar" />
-                            <span className="card__dates"> {getFormattedDate(event.start, event.end)}
-                            </span>
+                            <div className="mb-2">
+                                <img src={this.props.past ? calendarPassed : calendar} className="mr-1" alt="small calendar" />
+                                <span className="card__dates"> {getFormattedDate(event.start, event.end)}
+                                </span>
+                            </div>
                             <div className="mt-1">
                                 <img className="mr-1" width="19" height="19" src={this.props.past ? placeHolderPassed : placeHolder} alt="placeholder" />
                                 <span className="card__dates"> {event.venue}, {event.city}, {event.country}</span>
                             </div>
                         </div>
-                        <div className="card__button position-relative">
+                        <div className="d-flex flex-column align-items-center mr-2">
                             <AnimateOnChange
                                 baseClassName="attend"
                                 animationClassName="attend--bounce"
@@ -193,12 +195,12 @@ class Card extends Component {
                                     isActive={this.state.isActive}
                                 />
                             </AnimateOnChange>
-                            <span className="font-weight-normal align-top ml-1 card__dates card__attendees">{this.state.attendeesCount}</span>
+                            <span className="font-weight-normal">{this.state.attendeesCount}</span>
                         </div>
                     </span>
 
                     <Link className="text-dark" to={`/event/${event.alias}`}>
-                        <h4 className="card-title font-weight-normal mt-3">
+                        <h4 className="card-title font-weight-normal mt-3 mb-1">
                             {event.name}
                         </h4>
                     </Link>
