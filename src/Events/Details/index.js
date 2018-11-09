@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
 import Loading from '../../common/Loading';
-import HeartFullIcon from '../../common/HeartFullIcon';
+import going from '../../assets/images/going.svg';
 import PopoverItem from '../../common/PopoverItem';
 import Event from '../Event';
 import { getFormattedDate } from '../../core/Dates';
@@ -261,8 +261,8 @@ class InsidePage extends Component {
                             {this.renderTags()}
                         </div>
                         <div className="text-bottom d-flex">
-                            <HeartFullIcon style={{ cursor: 'auto' }} />
-                            <h4 className="ml-3 font-weight-normal">Going:
+                            <img src={going} alt="People Going" className="" />
+                            <h4 className="ml-3 mb-0 font-weight-normal">Going:
                                 <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
                             </h4>
                         </div>
