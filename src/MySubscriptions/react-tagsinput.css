@@ -1,27 +1,27 @@
 .react-tagsinput {
     background-color: #fff;
     border: 1px solid #ccc;
-    padding-left: 5px;
-    padding-top: 5px;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: 0.3s ease-in-out;
 }
 
 .react-tagsinput--focused {
-    border-color: #a5d24a;
+    border-color: #f2706d;
 }
 
 .react-tagsinput-tag {
     color: #747474;
     border: 1px solid #e6e6e6;
-    padding-right: 0.6em;
-    padding-left: 0.6em;
-    border-radius: 0.125rem;
+    padding: 0.8rem;
+    border-radius: 0.25rem;
     display: inline-block;
-    padding: 0.25em 0.4em;
-    font-size: 0.75rem;
-    font-weight: bold;
+    font-size: 12px;
+    font-weight: 500;
     line-height: 1;
     background-color: #F8F9F8;
     margin-right: 0.25rem;
+    transition: 0.3s ease-in-out;
 }
 
 .react-tagsinput-remove {

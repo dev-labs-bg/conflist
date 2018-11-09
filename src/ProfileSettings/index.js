@@ -224,7 +224,7 @@ class ProfileSettings extends Component {
 
                         <div className="d-flex justify-content-center align-items-center mb-3">
                             <img
-                                className="mr-3 rounded-circle"
+                                className="mr-4 rounded-circle"
                                 src={this.state.avatar.length === 0 ?
                                     profileImg : this.state.avatar.preview}
                                 width="100"
@@ -263,9 +263,9 @@ class ProfileSettings extends Component {
                         <br />
                         <Input
                             className={this.state.isValid ?
-                                'border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0'
+                                'border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0 mb-3'
                                 :
-                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0'}
+                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0 mb-3'}
                             type="text"
                             name="name"
                             minLength="4"
@@ -281,7 +281,7 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0 rounded-0"
+                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0 rounded-0 mb-3"
                             type="Email"
                             name="email"
                             placeholder={email}

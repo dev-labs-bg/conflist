@@ -109,7 +109,7 @@ class Header extends Component {
                             Wanna go list
                         </Link>
                         <DropdownItem divider />
-                        <DropdownItem onClick={this.logOut}>
+                        <DropdownItem className="color-primary" onClick={this.logOut}>
                             Log out
                         </DropdownItem>
                     </DropdownMenu>
