@@ -201,12 +201,11 @@ class ProfileSettings extends Component {
         const dropzoneStyle = {
             width: '200px',
             height: '80px',
-            padding: '2px',
+            textAlign: 'center',
             borderWidth: '1px',
             borderColor: '#717171',
             borderStyle: 'dashed',
             borderRadius: '5px',
-            marginBottom: '15px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -223,7 +222,7 @@ class ProfileSettings extends Component {
                         onSubmit={this.updateSettings}
                     >
 
-                        <div className="d-flex justify-content-center border border-top-0 border-right-0 border-left-0 mb-3 pb-1">
+                        <div className="d-flex justify-content-center align-items-center mb-3">
                             <img
                                 className="mr-3 rounded-circle"
                                 src={this.state.avatar.length === 0 ?
@@ -233,8 +232,7 @@ class ProfileSettings extends Component {
                                 alt="profile avatar"
                             />
 
-                            <div className="d-flex flex-column w-50 justify-content-around align-items-center text-center">
-                                <Dropzone
+                            <Dropzone
                                     onDrop={this.onDrop}
                                     multiple={false}
                                     accept="image/jpeg, image/png"
@@ -248,18 +246,13 @@ class ProfileSettings extends Component {
                                             }
                                             return acceptedFiles.length !== 0
                                                 ? 'File is accepted'
-                                                : 'Drop your avatar here or click to select file to upload.';
+                                                : 'Drop your avatar here or click to select file';
                                         }
                                     }
 
                                 </Dropzone>
-                                <button
-                                    className="btn btn-secondary w-50"
-                                    type="button"
-                                    onClick={this.updateAvatar}
-                                >Update
-                                </button>
-                            </div>
+
+                            
                         </div>
 
 
@@ -313,6 +306,7 @@ class ProfileSettings extends Component {
                             <button
                                 className="btn btn-primary"
                                 type="submit"
+                                onClick={this.updateAvatar}
                             >
                             Update Settings
                             </button>

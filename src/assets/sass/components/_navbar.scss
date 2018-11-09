@@ -18,6 +18,9 @@
     background-color: $blue-base-color;
 }
 
+.navbar.fixed-top.bg-white {
+    box-shadow: 0px 0px 30px 5px #0000001a;
+}
 @include media-breakpoint-up(xxl) {
     .navbar {
         .form-inline .form-control {
@@ -38,7 +41,7 @@
     .navbar {
         padding-top: 0.8125rem;
         padding-bottom: 0.8125rem;
-        box-shadow: 0px 0px 30px 5px #00000073;
+        box-shadow: 0px 0px 30px 5px #0000001a;
 
         .conflist__logo {
             margin: 1.5rem 0;

@@ -37,3 +37,8 @@
 @import "bootstrap/scss/popover";
 @import "bootstrap/scss/carousel";
 @import "bootstrap/scss/utilities";
+
+// Overwritting default popover z-index
+.popover {
+    z-index: 100;
+}

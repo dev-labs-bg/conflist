@@ -4,14 +4,8 @@
 }
 
 .profile-card__content {
-    width: 26.0625rem;
+    width: 75%;
 
-}
-
-@include media-breakpoint-down(sm) {
-    .profile-card__content {
-        width: 80%;
-    }
 }
 .label {
     color: $dropdown-link-color;
