@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from '../config';
-import { store } from '../index';
+import store from '../index';
 import { removeToken } from '../Login/duck';
 import history from '../core/history';
 
