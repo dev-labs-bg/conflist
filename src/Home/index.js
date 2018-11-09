@@ -35,15 +35,13 @@ class HomePage extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className={`${this.props.auth.isAuthenticated ? 'buttons-toggle-view__wrapper button-toggle-view__wrapper--auth' : ''} py-2`}>
+                <div className={`${this.props.auth.isAuthenticated} py-2`}>
                     <div className="container d-flex justify-content-end pr-4 mt-4">
                         <ListViewIcon
-                            isAuthenticated={this.props.auth.isAuthenticated}
                             activeView={this.state.activeView}
                             onClick={this.toggleListView}
                         />
                         <CalendarViewIcon
-                            isAuthenticated={this.props.auth.isAuthenticated}
                             activeView={this.state.activeView}
                             onClick={this.toggleCalendarView}
                         />
