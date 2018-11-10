@@ -40,13 +40,16 @@ class ProfileSettings extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        const { user } = nextProps;
+
+        if (user.data) {
+            this.setState({
+                newsletterSubscription: user.data.newsletterSubscription,
+            });
+        }
+
         if (this.props.user.isFetching === false) {
-            if (this.state.newsletterSubscription !== nextProps.user.data.newsletterSubscription) {
-                this.setState({
-                    newsletterSubscription: nextProps.user.data.newsletterSubscription,
-                });
-            }
-            if (nextProps.user.data.name !== this.props.user.data.name) {
+            if (user.data.name !== this.props.user.data.name) {
                 this.setState({ isUpdated: true });
             }
         }
