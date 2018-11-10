@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
+import * as _ from 'lodash';
 
 import Loading from '../common/Loading';
 import { updateCurrentUser } from './duck';
@@ -31,7 +32,7 @@ class ProfileSettings extends Component {
             name: '',
             isUpdated: false,
             error: null,
-            isValid: false,
+            isValid: true,
             avatar: [],
             avatarBase64: {},
             maxSize: 5000000,
@@ -76,44 +77,18 @@ class ProfileSettings extends Component {
         reader.readAsDataURL(acceptedFiles[0]);
     }
 
-    updateAvatar = () => {
-        const successCallback = () => {
-            this.setState({ isUpdated: true });
-
-            this.handleDelayedMessageReset();
-        };
-        const errorCallback = (status) => {
-            this.setState({ error: status });
-
-            this.handleDelayedMessageReset();
-        };
-
-        const updateValue = {
-            avatar: [
-                {
-                    ...this.state.avatarBase64,
-                },
-            ],
-        };
-        if (this.state.avatar.length !== 0) {
-            this.props.updateCurrentUser(
-                this.props.auth.token,
-                updateValue,
-                successCallback,
-                errorCallback,
-            );
-        }
-    }
-
-
     handleChange = (event) => {
         this.setState({ name: event.target.value });
 
         let isValid = false;
-        if (event.target.value.length >= event.target.minLength) {
-            if (event.target.value.length <= event.target.maxLength) {
-                isValid = true;
+        if (event.target.value) {
+            if (event.target.value.length >= event.target.minLength) {
+                if (event.target.value.length <= event.target.maxLength) {
+                    isValid = true;
+                }
             }
+        } else {
+            isValid = true;
         }
 
         this.setState({ isValid });
@@ -136,12 +111,28 @@ class ProfileSettings extends Component {
             this.handleDelayedMessageReset();
         };
 
-        const updateValue = {
-            name: this.state.name,
-            newsletterSubscription: this.state.newsletterSubscription,
-        };
+        const updateValue = {};
 
-        if (this.state.isValid) {
+        if (this.state.avatar.length !== 0) {
+            updateValue.avatar = [
+                {
+                    ...this.state.avatarBase64,
+                },
+            ];
+        }
+
+        if (this.state.name && this.state.isValid) {
+            updateValue.name = this.state.name;
+        }
+
+        if (this.state.newsletterSubscription !== this.props.user.data.newsletterSubscription) {
+            updateValue.newsletterSubscription = this.state.newsletterSubscription;
+        }
+
+        if (_.isEmpty(updateValue)) {
+            this.setState({ error: 'You need to change at least one field!' });
+            this.handleDelayedMessageReset();
+        } else {
             this.props.updateCurrentUser(
                 this.props.auth.token,
                 updateValue,
@@ -149,6 +140,7 @@ class ProfileSettings extends Component {
                 errorCallback,
             );
         }
+
         event.preventDefault();
     }
 
@@ -160,8 +152,7 @@ class ProfileSettings extends Component {
         }, 10000);
     }
 
-
-    renderMessage(_error, _isUpdated) {
+    renderMessage = (_error, _isUpdated) => {
         if (_isUpdated) {
             return (
                 <h4 className="text-danger text-center">
@@ -252,7 +243,6 @@ class ProfileSettings extends Component {
                                 }
                             </Dropzone>
 
-
                         </div>
 
 
@@ -301,12 +291,10 @@ class ProfileSettings extends Component {
                             Email newsletter subscription
                         </Label>
 
-
                         <div className="text-center mt-5">
                             <button
                                 className="btn btn-primary"
                                 type="submit"
-                                onClick={this.updateAvatar}
                             >
                             Update Settings
                             </button>
