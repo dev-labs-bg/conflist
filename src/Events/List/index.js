@@ -48,9 +48,12 @@ class CardList extends Component {
                     </h2>
                     {
                         group.data.map((event) => {
-                            return _.indexOf(this.wishListIds, event.id) !== -1 ?
-                                <Card key={event.id} event={event} wishListed /> :
-                                <Card key={event.id} event={event} />;
+                            if (moment().isAfter(event.start)) {
+                                return <Card key={event.id} event={event} past />;
+                            } else if (_.indexOf(this.wishListIds, event.id) !== -1) {
+                                return <Card key={event.id} event={event} wishListed />;
+                            }
+                            return <Card key={event.id} event={event} />;
                         })
                     }
                 </div>);
