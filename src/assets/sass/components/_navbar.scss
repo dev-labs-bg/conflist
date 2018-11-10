@@ -9,13 +9,6 @@
 .dropdown-item {
     cursor: pointer;
     transition: 0.3s ease-in-out;
-    &:hover {
-        background-color: transparent;
-    }
-}
-
-.dropdown-item:active {
-    background-color: $blue-base-color;
 }
 
 .navbar-dark {
