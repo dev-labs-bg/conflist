@@ -36,6 +36,7 @@ class Header extends Component {
             location: PropTypes.shape({
                 pathname: PropTypes.string.isRequired,
             }),
+            listen: PropTypes.func.isRequired,
         }).isRequired,
     };
 
@@ -51,6 +52,16 @@ class Header extends Component {
             dropdownOpen: false,
         };
     }
+
+    componentDidMount() {
+        // On route change, close navbar
+        this.props.history.listen((location, action) => {
+            this.setState({
+                collapsed: true,
+            });
+        });
+    }
+
 
     toggleNavbar = () => {
         this.setState({
@@ -106,17 +117,26 @@ class Header extends Component {
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem>
-                            <Link className="dropdown-item px-0" to="/profile-settings">
+                            <Link
+                                className="dropdown-item px-0"
+                                to="/profile-settings"
+                            >
                                 Profile Settings
                             </Link>
                         </DropdownItem>
                         <DropdownItem>
-                            <Link className="dropdown-item px-0" to="/my-subscriptions">
+                            <Link
+                                className="dropdown-item px-0"
+                                to="/my-subscriptions"
+                            >
                                 My Subscriptions
                             </Link>
                         </DropdownItem>
                         <DropdownItem>
-                            <Link className="dropdown-item px-0" to="/wanna-go-list">
+                            <Link
+                                className="dropdown-item px-0"
+                                to="/wanna-go-list"
+                            >
                                 Wanna go list
                             </Link>
                         </DropdownItem>
@@ -204,7 +224,10 @@ class Header extends Component {
                         <div className="navbar-item">
                             <Nav className="nav navbar-nav justify-content-end">
                                 <NavItem>
-                                    <Link className="nav-link" to="/conference-suggest">
+                                    <Link
+                                        className="nav-link"
+                                        to="/conference-suggest"
+                                    >
                                         Suggest a conference
                                     </Link>
                                 </NavItem>
