@@ -98,24 +98,11 @@ class Card extends Component {
         });
     }
 
-    renderTags(_tags) {
-        const renderTags = [];
-        const style = {
-            cursor: 'pointer',
-        };
-
-        _tags.map((tag) => {
-            renderTags.push(<span
-                key={tag}
-                className="badge badge-pill badge-light mr-2"
-                style={style}
-                onClick={
-                    this.tagClicked
-                }
-            >{tag}
-            </span>);
+    closeModal = () => {
+        this.setState({
+            isActive: !this.state.isActive,
+            isOpen: !this.state.isOpen,
         });
-        return renderTags;
     }
 
     renderModal = () => {
@@ -146,12 +133,26 @@ class Card extends Component {
         }
     }
 
-    closeModal = () => {
-        this.setState({
-            isActive: !this.state.isActive,
-            isOpen: !this.state.isOpen,
+    renderTags(_tags) {
+        const renderTags = [];
+        const style = {
+            cursor: 'pointer',
+        };
+
+        _tags.map((tag) => {
+            renderTags.push(<span
+                key={tag}
+                className="badge badge-pill badge-light mr-2"
+                style={style}
+                onClick={
+                    this.tagClicked
+                }
+            >{tag}
+            </span>);
         });
+        return renderTags;
     }
+
 
     render() {
         const { event } = this.props;
