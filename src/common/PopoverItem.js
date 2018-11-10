@@ -10,7 +10,7 @@ class PopoverItem extends Component {
         }).isRequired,
         id: PropTypes.string.isRequired,
         shouldTogglePopover: PropTypes.bool,
-        children: PropTypes.object,
+        children: PropTypes.node.isRequired,
 
         // received from parent component Attend
         onClick: PropTypes.func,
@@ -20,6 +20,7 @@ class PopoverItem extends Component {
     static defaultProps = {
         onClick: () => {},
         isActive: true,
+        shouldTogglePopover: false,
     };
 
     constructor(props) {
@@ -69,19 +70,15 @@ class PopoverItem extends Component {
         const style = { cursor: 'pointer' };
         return (
             <span>
-                {this.props.item.twitterId ?
-                    <a style={style} target="_blank" role="button" id={'Popover-' + this.props.id} onClick={this.toggle} href={`https://twitter.com/@${this.props.item.twitterName}`}>
-                        {this.props.children}
-                    </a> : <span style={style} role="button" id={'Popover-' + this.props.id} onClick={this.toggle}>
-                        {this.props.children}
-                    </span>
-                }
+                <span style={style} role="button" id={'Popover-' + this.props.id} onClick={this.toggle}>
+                    {this.props.children}
+                </span>
 
                 <Popover
                     className="mb-3"
                     placement="top"
                     isOpen={this.state.popoverOpen}
-                    target={'Popover-' + this.props.id}
+                    target={`Popover-${this.props.id}`}
                     toggle={this.toggle}
                 >
                     <PopoverBody>{this.props.item.name}</PopoverBody>
