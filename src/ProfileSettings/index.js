@@ -37,8 +37,6 @@ class ProfileSettings extends Component {
             maxSize: 5000000,
             newsletterSubscription: false,
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.updateSettings = this.updateSettings.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -105,7 +103,7 @@ class ProfileSettings extends Component {
     }
 
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({ name: event.target.value });
 
         let isValid = false;
@@ -123,7 +121,7 @@ class ProfileSettings extends Component {
         this.setState({ newsletterSubscription: event.target.checked });
     }
 
-    updateSettings(event) {
+    updateSettings = (event) => {
         const successCallback = () => {
             this.setState({ isUpdated: true });
 
@@ -222,9 +220,9 @@ class ProfileSettings extends Component {
                         onSubmit={this.updateSettings}
                     >
 
-                        <div className="d-flex justify-content-center align-items-center mb-3">
+                        <div className="d-flex justify-content-center align-items-center flex-column flex-sm-row mb-3">
                             <img
-                                className="mr-4 rounded-circle"
+                                className="mb-2 mb-sm-0 mr-sm-4 rounded-circle"
                                 src={this.state.avatar.length === 0 ?
                                     profileImg : this.state.avatar.preview}
                                 width="100"
@@ -233,26 +231,25 @@ class ProfileSettings extends Component {
                             />
 
                             <Dropzone
-                                    onDrop={this.onDrop}
-                                    multiple={false}
-                                    accept="image/jpeg, image/png"
-                                    style={dropzoneStyle}
-                                    maxSize={this.state.maxSize}
-                                    className="label"
-                                >{
-                                        ({ acceptedFiles, rejectedFiles }) => {
-                                            if (rejectedFiles.length !== 0) {
-                                                return rejectedFiles[0].size > this.state.maxSize ? 'Your file needs to be smaller than 5mb' : 'File is rejected';
-                                            }
-                                            return acceptedFiles.length !== 0
-                                                ? 'File is accepted'
-                                                : 'Drop your avatar here or click to select file';
+                                onDrop={this.onDrop}
+                                multiple={false}
+                                accept="image/jpeg, image/png"
+                                style={dropzoneStyle}
+                                maxSize={this.state.maxSize}
+                                className="label"
+                            >{
+                                    ({ acceptedFiles, rejectedFiles }) => {
+                                        if (rejectedFiles.length !== 0) {
+                                            return rejectedFiles[0].size > this.state.maxSize ? 'Your file needs to be smaller than 5mb' : 'File is rejected';
                                         }
+                                        return acceptedFiles.length !== 0
+                                            ? 'File is accepted'
+                                            : 'Drop your avatar here or click to select file';
                                     }
+                                }
+                            </Dropzone>
 
-                                </Dropzone>
 
-                            
                         </div>
 
 
