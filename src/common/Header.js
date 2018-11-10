@@ -97,6 +97,7 @@ class Header extends Component {
                             height="28"
                             alt="profile avatar"
                         />
+                        {_userData.name}
                     </DropdownToggle>
                     <DropdownMenu >
                         <Link className="dropdown-item" to="/profile-settings">
@@ -160,7 +161,7 @@ class Header extends Component {
             <div className={!isAuthenticated && isOnHomePage ? 'register' : ''}>
                 <Navbar
                     style={style}
-                    className={`p-relative navbar fixed-top navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
+                    className={`p-relative navbar fixed-top navbar-expand-lg py-4 px-4 px-xxxl-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
 
                     <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
@@ -179,7 +180,7 @@ class Header extends Component {
                         <div className="navbar-item">
                             <form
                                 onSubmit={this.handleSubmit}
-                                className="form-inline mt-xs-2 mx-auto"
+                                className="form-inline"
                             >
                                 <Search />
                             </form>
