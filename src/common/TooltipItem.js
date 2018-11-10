@@ -27,8 +27,8 @@ class TooltipItem extends React.Component {
 
   render() {
       return (
-          <span>
-              <span id={`Tooltip-${this.props.id}`}>
+          <React.Fragment>
+              <span className="d-inline-block" id={`Tooltip-${this.props.id}`}>
                   {this.props.children}
               </span>
 
@@ -40,7 +40,7 @@ class TooltipItem extends React.Component {
               >
                   {this.props.speaker.name}
               </Tooltip>
-          </span>
+          </React.Fragment>
       );
   }
 }

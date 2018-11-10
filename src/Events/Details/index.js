@@ -169,11 +169,15 @@ class InsidePage extends Component {
     renderSpeakers() {
         const renderImages = [];
         this.props.event.data.speakers.map((speaker, key) => {
-            renderImages.push(<div className="d-inline mr-2" key={speaker.twitterId} >
+            renderImages.push(<div className="mr-2" key={speaker.twitterId} >
                 <TooltipItem speaker={speaker} id={speaker.twitterId}>
-                    <a style={{ cursor: 'pointer' }} target="_blank" href={`https://twitter.com/@${speaker.twitterName}`} >
+                    <a
+                        style={{ cursor: 'pointer', display: 'inline-block' }}
+                        target="_blank"
+                        href={`https://twitter.com/@${speaker.twitterName}`}
+                    >
                         <img
-                            className="rounded-circle mr-2"
+                            className="rounded-circle"
                             src={speaker.pictureUrl}
                             width="40"
                             height="40"
@@ -275,7 +279,9 @@ class InsidePage extends Component {
 
                 <div className="mb-5">
                     <h4 className="mb-3">Speakers:</h4>
-                    {this.renderSpeakers()}
+                    <div style={{ display: 'flex' }}>
+                        {this.renderSpeakers()}
+                    </div>
                 </div>
 
                 <div className="text-center">
