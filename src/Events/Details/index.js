@@ -279,7 +279,7 @@ class InsidePage extends Component {
 
                 <div className="text-center">
                     <a
-                        className="btn btn-primary mr-2 mr-sm-5"
+                        className="btn btn-primary mb-2 mb-sm-0 mr-sm-5"
                         onClick={this.checkEventInWishList}
                         tabIndex="0"
                     >Wanna go
