@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import Loading from '../../common/Loading';
 import HeartFullIcon from '../../common/HeartFullIcon';
-import PopoverItem from '../../common/PopoverItem';
+import TooltipItem from '../../common/TooltipItem';
 import Event from '../Event';
 import { getFormattedDate } from '../../core/Dates';
 import { fetchConferenceDeatails } from './duck';
@@ -169,18 +169,19 @@ class InsidePage extends Component {
     renderSpeakers() {
         const renderImages = [];
         this.props.event.data.speakers.map((speaker, key) => {
-            renderImages.push(<div className="d-inline mr-2" key={key} >
-                    <PopoverItem shouldTogglePopover key={key} item={speaker} id={`p${key}`}>
+            renderImages.push(<div className="d-inline mr-2" key={speaker.twitterId} >
+                <TooltipItem speaker={speaker} id={speaker.twitterId}>
+                    <a style={{ cursor: 'pointer' }} target="_blank" href={`https://twitter.com/@${speaker.twitterName}`} >
                         <img
                             className="rounded-circle mr-2"
-                            key={key}
                             src={speaker.pictureUrl}
                             width="40"
                             height="40"
                             alt={speaker.name}
                         />
-                    </PopoverItem>
-                </div>);
+                    </a>
+                </TooltipItem>
+            </div>);
             return key;
         });
         return renderImages;
