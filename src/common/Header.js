@@ -9,7 +9,7 @@ import {
     NavbarToggler,
     Nav,
     NavItem,
-    UncontrolledDropdown,
+    Dropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
@@ -36,6 +36,7 @@ class Header extends Component {
             location: PropTypes.shape({
                 pathname: PropTypes.string.isRequired,
             }),
+            listen: PropTypes.func.isRequired,
         }).isRequired,
     };
 
@@ -46,15 +47,31 @@ class Header extends Component {
     constructor(props) {
         super(props);
 
-        this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
             collapsed: true,
+            dropdownOpen: false,
         };
     }
 
-    toggleNavbar() {
+    componentDidMount() {
+        // On route change, close navbar
+        this.props.history.listen((location, action) => {
+            this.setState({
+                collapsed: true,
+            });
+        });
+    }
+
+
+    toggleNavbar = () => {
         this.setState({
             collapsed: !this.state.collapsed,
+        });
+    }
+
+    toggleDropdown = () => {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen,
         });
     }
 
@@ -88,7 +105,7 @@ class Header extends Component {
 
         if (!_.isEmpty(_userData)) {
             return (
-                <UncontrolledDropdown nav>
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} nav>
                     <DropdownToggle nav caret>
                         <img
                             className="mr-1 rounded-circle"
@@ -98,22 +115,37 @@ class Header extends Component {
                             alt="profile avatar"
                         /> {_userData.name}
                     </DropdownToggle>
-                    <DropdownMenu >
-                        <Link className="dropdown-item" to="/profile-settings">
-                            Profile Settings
-                        </Link>
-                        <Link className="dropdown-item" to="/my-subscriptions">
-                        My Subscriptions
-                        </Link>
-                        <Link className="dropdown-item" to="/wanna-go-list">
-                            Wanna go list
-                        </Link>
+                    <DropdownMenu>
+                        <DropdownItem>
+                            <Link
+                                className="dropdown-item px-0"
+                                to="/profile-settings"
+                            >
+                                Profile Settings
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link
+                                className="dropdown-item px-0"
+                                to="/my-subscriptions"
+                            >
+                                My Subscriptions
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link
+                                className="dropdown-item px-0"
+                                to="/wanna-go-list"
+                            >
+                                Wanna go list
+                            </Link>
+                        </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem onClick={this.logOut}>
                             Log out
                         </DropdownItem>
                     </DropdownMenu>
-                </UncontrolledDropdown>
+                </Dropdown>
             );
         }
 
@@ -162,15 +194,20 @@ class Header extends Component {
                     style={style}
                     className={`p-relative navbar fixed-top navbar-expand-lg py-4 px-5 ${this.renderNavClass(isAuthenticated)}`}
                 >
-
-                    <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                    <NavbarToggler
+                        onClick={this.toggleNavbar}
+                        className="mr-2"
+                    />
                     <Collapse
                         className="justify-content-between"
                         isOpen={!this.state.collapsed}
                         navbar
                     >
                         <div className="navbar-item">
-                            <Link className="" href="#home" to="/home">
+                            <Link
+                                href="#home"
+                                to="/home"
+                            >
                                 <Logo
                                     authentication={isAuthenticated}
                                 />
@@ -187,13 +224,10 @@ class Header extends Component {
                         <div className="navbar-item">
                             <Nav className="nav navbar-nav justify-content-end">
                                 <NavItem>
-                                    <Link className="nav-link" to="/home">
-                                        Home
-                                    </Link>
-                                </NavItem>
-
-                                <NavItem>
-                                    <Link className="nav-link" to="/conference-suggest">
+                                    <Link
+                                        className="nav-link"
+                                        to="/conference-suggest"
+                                    >
                                         Suggest a conference
                                     </Link>
                                 </NavItem>
