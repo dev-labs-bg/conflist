@@ -279,7 +279,7 @@ class InsidePage extends Component {
 
                 <div className="mb-5">
                     <h4 className="mb-3">Speakers:</h4>
-                    <div style={{ display: 'flex' }}>
+                    <div className='d-flex'>
                         {this.renderSpeakers()}
                     </div>
                 </div>
