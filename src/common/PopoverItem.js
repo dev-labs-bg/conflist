@@ -10,7 +10,7 @@ class PopoverItem extends Component {
         }).isRequired,
         id: PropTypes.string.isRequired,
         shouldTogglePopover: PropTypes.bool,
-        children: PropTypes.object,
+        children: PropTypes.node.isRequired,
 
         // received from parent component Attend
         onClick: PropTypes.func,
@@ -20,6 +20,7 @@ class PopoverItem extends Component {
     static defaultProps = {
         onClick: () => {},
         isActive: true,
+        shouldTogglePopover: false,
     };
 
     constructor(props) {
@@ -77,7 +78,7 @@ class PopoverItem extends Component {
                     className="mb-3"
                     placement="top"
                     isOpen={this.state.popoverOpen}
-                    target={'Popover-' + this.props.id}
+                    target={`Popover-${this.props.id}`}
                     toggle={this.toggle}
                 >
                     <PopoverBody>{this.props.item.name}</PopoverBody>
