@@ -133,6 +133,35 @@ class InsidePage extends Component {
         }, 10000);
     }
 
+    renderSpeakers() {
+        const renderImages = [];
+        this.props.event.data.speakers.map((speaker, key) => {
+            renderImages.push(<div className="d-inline mr-2" key={key} >
+                    <PopoverItem shouldTogglePopover key={key} item={speaker} id={`p${key}`}>
+                        <img
+                            className="rounded-circle mr-2"
+                            key={key}
+                            src={speaker.pictureUrl}
+                            width="40"
+                            height="40"
+                            alt={speaker.name}
+                        />
+                    </PopoverItem>
+                </div>);
+            return key;
+        });
+        return renderImages;
+    }
+
+    tagClicked = (event) => {
+        this.props.history.push({
+            pathname: `/search/${event.target.textContent}`,
+            state: {
+                wishListData: {},
+            },
+        });
+    }
+
     renderMessage() {
         if (this.state.isUpdated) {
             return (
@@ -166,35 +195,6 @@ class InsidePage extends Component {
         return null;
     }
 
-    renderSpeakers() {
-        const renderImages = [];
-        this.props.event.data.speakers.map((speaker, key) => {
-            renderImages.push(<div className="d-inline mr-2" key={key} >
-                    <PopoverItem shouldTogglePopover key={key} item={speaker} id={`p${key}`}>
-                        <img
-                            className="rounded-circle mr-2"
-                            key={key}
-                            src={speaker.pictureUrl}
-                            width="40"
-                            height="40"
-                            alt={speaker.name}
-                        />
-                    </PopoverItem>
-                </div>);
-            return key;
-        });
-        return renderImages;
-    }
-
-    tagClicked = (event) => {
-        this.props.history.push({
-            pathname: `/search/${event.target.textContent}`,
-            state: {
-                wishListData: {},
-            },
-        });
-    }
-
     renderTags() {
         const renderTags = [];
         const style = {
@@ -210,7 +210,7 @@ class InsidePage extends Component {
                     this.tagClicked
                 }
             >{tag}
-                            </span>);
+            </span>);
         });
         return renderTags;
     }
@@ -261,7 +261,7 @@ class InsidePage extends Component {
                             {this.renderTags()}
                         </div>
                         <div className="text-bottom d-flex">
-                            <img src={going} alt="People Going" className="" />
+                            <img src={going} alt="People Going" />
                             <h4 className="ml-3 mb-0 font-weight-normal">Going:
                                 <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
                             </h4>
