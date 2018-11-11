@@ -199,7 +199,7 @@ class WishList extends Component {
             return <Loading />;
         }
 
-        if (this.props.wishList.isFetching && this.props.wishList.isFetching === null) {
+        if (this.props.wishList.isFetching || this.props.wishList.isFetching === null) {
             return <Loading />;
         }
 
