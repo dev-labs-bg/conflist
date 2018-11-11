@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
     Collapse,
@@ -95,11 +95,11 @@ class Header extends Component {
     renderDropdown = (_isAuthenticated, _userData) => {
         if (!_isAuthenticated) {
             return (
-                <Link
+                <NavLink
                     to="/login"
                     className="btn btn-primary font-weight-bold ml-3"
                 >Login
-                </Link>
+                </NavLink>
             );
         }
 
@@ -118,28 +118,31 @@ class Header extends Component {
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem>
-                            <Link
+                            <NavLink
+                                activeClassName="color-primary"
                                 className="dropdown-item px-0"
                                 to="/profile-settings"
                             >
                                 Profile Settings
-                            </Link>
+                            </NavLink>
                         </DropdownItem>
                         <DropdownItem>
-                            <Link
+                            <NavLink
+                                activeClassName="color-primary"
                                 className="dropdown-item px-0"
                                 to="/my-subscriptions"
                             >
                                 My Subscriptions
-                            </Link>
+                            </NavLink>
                         </DropdownItem>
                         <DropdownItem>
-                            <Link
+                            <NavLink
+                                activeClassName="color-primary"
                                 className="dropdown-item px-0"
                                 to="/wanna-go-list"
                             >
                                 Wanna go list
-                            </Link>
+                            </NavLink>
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem className="color-primary" onClick={this.logOut}>
@@ -205,14 +208,14 @@ class Header extends Component {
                         navbar
                     >
                         <div className="navbar-item">
-                            <Link
+                            <NavLink
                                 href="#home"
                                 to="/home"
                             >
                                 <Logo
                                     authentication={isAuthenticated}
                                 />
-                            </Link>
+                            </NavLink>
                         </div>
                         <div className="navbar-item">
                             <form
@@ -225,12 +228,13 @@ class Header extends Component {
                         <div className="navbar-item">
                             <Nav className="nav navbar-nav justify-content-end">
                                 <NavItem>
-                                    <Link
+                                    <NavLink
+                                        activeClassName="color-primary"
                                         className="nav-link"
                                         to="/conference-suggest"
                                     >
                                         Suggest a conference
-                                    </Link>
+                                    </NavLink>
                                 </NavItem>
                                 { this.renderDropdown(isAuthenticated, this.props.user.data) }
                             </Nav>
