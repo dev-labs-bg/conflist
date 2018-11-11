@@ -43,14 +43,17 @@ class CardList extends Component {
         _.forEach(this.eventsGroupedByMonth, (group, key) => {
             cards.push(
                 <div key={key} className="mb-5">
-                    <h2 className="cards-date font-weight-normal">
+                    <h2 className="cards-date font-weight-normal font-size-small ml-2 mb-4">
                         { group.month }
                     </h2>
                     {
                         group.data.map((event) => {
-                            return _.indexOf(this.wishListIds, event.id) !== -1 ?
-                                <Card key={event.id} event={event} wishListed /> :
-                                <Card key={event.id} event={event} />;
+                            if (moment().isAfter(event.start)) {
+                                return <Card key={event.id} event={event} past />;
+                            } else if (_.indexOf(this.wishListIds, event.id) !== -1) {
+                                return <Card key={event.id} event={event} wishListed />;
+                            }
+                            return <Card key={event.id} event={event} />;
                         })
                     }
                 </div>);

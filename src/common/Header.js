@@ -141,7 +141,7 @@ class Header extends Component {
                                 className="dropdown-item px-0"
                                 to="/wanna-go-list"
                             >
-                                Wanna go list
+                                Wanna Go List
                             </NavLink>
                         </DropdownItem>
                         <DropdownItem divider />
