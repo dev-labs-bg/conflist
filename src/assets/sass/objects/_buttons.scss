@@ -20,6 +20,7 @@
     border: 1px solid $cyan;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    min-width: 140px;
 }
 
 .btn-secondary:hover {

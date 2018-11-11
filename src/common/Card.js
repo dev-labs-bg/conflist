@@ -109,7 +109,7 @@ class Card extends Component {
         _tags.map((tag) => {
             renderTags.push(<span
                 key={tag}
-                className="badge badge-pill badge-light mr-2"
+                className="badge badge-pill badge-light mr-2 mb-2"
                 style={style}
                 onClick={
                     this.tagClicked
@@ -212,7 +212,7 @@ class Card extends Component {
                         dangerouslySetInnerHTML={this.eventDescription()}
                     />
 
-                    <div className="d-md-flex justify-content-end">
+                    <div className="d-md-flex justify-content-end flex-wrap">
                         {this.renderTags(event.tags)}
                     </div>
 

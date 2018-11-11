@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import Loading from '../../common/Loading';
 import HeartFullIcon from '../../common/HeartFullIcon';
 import TooltipItem from '../../common/TooltipItem';
+import going from '../../assets/images/going.svg';
 import Event from '../Event';
 import { getFormattedDate } from '../../core/Dates';
 import { fetchConferenceDeatails } from './duck';
@@ -133,6 +134,40 @@ class InsidePage extends Component {
         }, 10000);
     }
 
+    tagClicked = (event) => {
+        this.props.history.push({
+            pathname: `/search/${event.target.textContent}`,
+            state: {
+                wishListData: {},
+            },
+        });
+    }
+
+    renderSpeakers() {
+        const renderImages = [];
+        this.props.event.data.speakers.map((speaker, key) => {
+            renderImages.push(<div className="mr-2" key={speaker.twitterId} >
+                <TooltipItem speaker={speaker} id={speaker.twitterId}>
+                    <a
+                        style={{ cursor: 'pointer', display: 'inline-block' }}
+                        target="_blank"
+                        href={`https://twitter.com/@${speaker.twitterName}`}
+                    >
+                        <img
+                            className="rounded-circle"
+                            src={speaker.pictureUrl}
+                            width="40"
+                            height="40"
+                            alt={speaker.name}
+                        />
+                    </a>
+                </TooltipItem>
+            </div>);
+            return key;
+        });
+        return renderImages;
+    }
+
     renderMessage() {
         if (this.state.isUpdated) {
             return (
@@ -166,40 +201,6 @@ class InsidePage extends Component {
         return null;
     }
 
-    renderSpeakers() {
-        const renderImages = [];
-        this.props.event.data.speakers.map((speaker, key) => {
-            renderImages.push(<div className="mr-2" key={speaker.twitterId} >
-                <TooltipItem speaker={speaker} id={speaker.twitterId}>
-                    <a
-                        style={{ cursor: 'pointer', display: 'inline-block' }}
-                        target="_blank"
-                        href={`https://twitter.com/@${speaker.twitterName}`}
-                    >
-                        <img
-                            className="rounded-circle"
-                            src={speaker.pictureUrl}
-                            width="40"
-                            height="40"
-                            alt={speaker.name}
-                        />
-                    </a>
-                </TooltipItem>
-            </div>);
-            return key;
-        });
-        return renderImages;
-    }
-
-    tagClicked = (event) => {
-        this.props.history.push({
-            pathname: `/search/${event.target.textContent}`,
-            state: {
-                wishListData: {},
-            },
-        });
-    }
-
     renderTags() {
         const renderTags = [];
         const style = {
@@ -215,7 +216,7 @@ class InsidePage extends Component {
                     this.tagClicked
                 }
             >{tag}
-                            </span>);
+            </span>);
         });
         return renderTags;
     }
@@ -266,8 +267,8 @@ class InsidePage extends Component {
                             {this.renderTags()}
                         </div>
                         <div className="text-bottom d-flex">
-                            <HeartFullIcon style={{ cursor: 'auto' }} />
-                            <h4 className="ml-3 font-weight-normal">Going:
+                            <img src={going} alt="People Going" />
+                            <h4 className="ml-3 mb-0 font-weight-normal">Going:
                                 <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
                             </h4>
                         </div>
@@ -286,7 +287,7 @@ class InsidePage extends Component {
 
                 <div className="text-center">
                     <a
-                        className="btn btn-primary mr-2 mr-sm-5"
+                        className="btn btn-primary mb-2 mb-sm-0 mr-sm-5"
                         onClick={this.checkEventInWishList}
                         tabIndex="0"
                     >Wanna go
