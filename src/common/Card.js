@@ -60,7 +60,9 @@ class Card extends Component {
      * @param  {number} changedValue
      */
     changeAttendeesHandler = (changedValue) => {
-        this.setState({ attendeesCount: changedValue });
+        if (this.props.authToken) {
+            this.setState({ attendeesCount: changedValue });
+        }
     }
 
     /**
