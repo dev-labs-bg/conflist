@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 import { withRouter } from 'react-router-dom';
-
 import './Search.css';
 import { searchTags, clearSuggestions, updateInputValue } from './duck';
 
@@ -37,30 +36,6 @@ class Search extends Component {
             this.props.updateInputValue(value);
         };
 
-        // Calculate suggestions for any given input value.
-        getSuggestions = (value) => {
-            return this.props.suggestions
-                    .map(section => {
-                      return {
-                        title: section.title,
-                        data: section.data.filter(suggestion => suggestion.name)
-                      };
-                    })
-                    .filter(section => section.data.length > 0);
-        }
-
-        // When suggestion is clicked, Autosuggest needs to populate the input
-        // based on the clicked suggestion.
-        getSuggestionValue = (suggestion) => {
-            return suggestion.name;
-        }
-
-        // Teach Autosuggest where to find the suggestions for every section,
-        // when multiSection={true}.
-        getSectionSuggestions = (section) => {
-            return section.data;
-        }
-
         onSuggestionSelected = (event, {
             suggestion,
             suggestionValue,
@@ -87,6 +62,30 @@ class Search extends Component {
                     }
                 })
             }
+        }
+
+        // When suggestion is clicked, Autosuggest needs to populate the input
+        // based on the clicked suggestion.
+        getSuggestionValue = (suggestion) => {
+            return suggestion.name;
+        }
+
+        // Teach Autosuggest where to find the suggestions for every section,
+        // when multiSection={true}.
+        getSectionSuggestions = (section) => {
+            return section.data;
+        }
+
+        // Calculate suggestions for any given input value.
+        getSuggestions = (value) => {
+            return this.props.suggestions
+                    .map(section => {
+                      return {
+                        title: section.title,
+                        data: section.data.filter(suggestion => suggestion.name)
+                      };
+                    })
+                    .filter(section => section.data.length > 0);
         }
 
         // Section title, when multiSection={true}.
@@ -159,6 +158,10 @@ const mapStateToProps = ({ search, wishList }) => {
             title: 'speakers',
             data: [],
         },
+        {
+            title: 'empty',
+            data: [],
+        },
     ];
 
     search.suggestions.forEach((data) => {
@@ -175,6 +178,7 @@ const mapStateToProps = ({ search, wishList }) => {
             });
         }
     });
+
     return {
         search,
         suggestions,
