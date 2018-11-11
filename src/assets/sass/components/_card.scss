@@ -6,7 +6,7 @@
     backface-visibility: visible;
 }
 .card:hover {
-    box-shadow: 0 10px 30px -10px #00000020;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12549019607843137);
     transform: scale(1);
 }
 .card-img-holder {
