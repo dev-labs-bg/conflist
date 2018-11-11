@@ -11,6 +11,14 @@ import moment from 'moment';
 export const getFormattedDate = (start, end) => {
     const endDate = moment(end).format('Do MMM, YYYY');
     let startDate;
+
+    /**
+     * Return only end date if start and end date are both the same
+     */
+    if (moment(end).isSame(start)) {
+        return endDate;
+    }
+
     /**
      * Compares start and end date months
      */
