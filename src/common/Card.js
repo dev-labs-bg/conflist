@@ -60,7 +60,9 @@ class Card extends Component {
      * @param  {number} changedValue
      */
     changeAttendeesHandler = (changedValue) => {
-        this.setState({ attendeesCount: changedValue });
+        if (this.props.authToken) {
+            this.setState({ attendeesCount: changedValue });
+        }
     }
 
     /**
@@ -102,6 +104,25 @@ class Card extends Component {
         this.setState({
             isActive: !this.state.isActive,
             isOpen: !this.state.isOpen,
+        });
+    }
+
+    renderTags(_tags) {
+        const renderTags = [];
+        const style = {
+            cursor: 'pointer',
+        };
+
+        _tags.map((tag) => {
+            renderTags.push(<span
+                key={tag}
+                className="badge badge-pill badge-light mr-2 mb-2"
+                style={style}
+                onClick={
+                    this.tagClicked
+                }
+            >{tag}
+            </span>);
         });
     }
 
@@ -211,7 +232,7 @@ class Card extends Component {
                         dangerouslySetInnerHTML={this.eventDescription()}
                     />
 
-                    <div className="d-md-flex justify-content-end">
+                    <div className="d-md-flex justify-content-end flex-wrap">
                         {this.renderTags(event.tags)}
                     </div>
 

@@ -8,13 +8,6 @@ const ListViewIcon = (props) => {
      * @return {string}
      */
     const changeIconColor = () => {
-        if (props.isAuthenticated) {
-            if (props.activeView === 'LIST') {
-                return '#FFFFFF';
-            }
-            return '#FFB2B3';
-        }
-
         if (props.activeView === 'LIST') {
             return '#f2706d';
         }
@@ -54,7 +47,6 @@ const ListViewIcon = (props) => {
 };
 
 ListViewIcon.propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
     activeView: PropTypes.string.isRequired,
     onClick: PropTypes.func,
 };

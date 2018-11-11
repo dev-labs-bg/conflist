@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import EventsList from '../Events/InfiniteScrollList';
 import CalendarList from '../Events/CalendarList';
@@ -8,14 +6,6 @@ import ListViewIcon from '../common/ListViewIcon';
 import CalendarViewIcon from '../common/CalendarViewIcon';
 
 class HomePage extends Component {
-    static propTypes = {
-        auth: PropTypes.shape({
-            isAuthenticated: PropTypes.bool,
-            token: PropTypes.string,
-        }).isRequired,
-    };
-
-
     constructor(props) {
         super(props);
 
@@ -35,15 +25,13 @@ class HomePage extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className={`${this.props.auth.isAuthenticated ? 'buttons-toggle-view__wrapper button-toggle-view__wrapper--auth' : ''} py-2`}>
+                <div className="py-2">
                     <div className="container d-flex justify-content-end pr-4 mt-4">
                         <ListViewIcon
-                            isAuthenticated={this.props.auth.isAuthenticated}
                             activeView={this.state.activeView}
                             onClick={this.toggleListView}
                         />
                         <CalendarViewIcon
-                            isAuthenticated={this.props.auth.isAuthenticated}
                             activeView={this.state.activeView}
                             onClick={this.toggleCalendarView}
                         />
@@ -60,8 +48,4 @@ class HomePage extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => ({
-    auth,
-});
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

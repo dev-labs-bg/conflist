@@ -154,14 +154,14 @@ class MySubscriptions extends Component {
                 <h1 className="text-center mb-5">My Subscriptions</h1>
 
                 <div className="bg-white card-subscription mx-auto px-5 py-5">
-                    <div className="card-subscription__content mx-auto">
+                    <div className="card-subscription__content text-center mx-auto">
                         <h4 className="mb-4">
                             You can always manage your
-                            <span className="text-primary"> #tag </span>
+                            <span className="color-primary"> #tag </span>
                             subscriptions.
                         </h4>
 
-                        <div className="text-center mb-5">
+                        <div className="text-center mb-4">
                             {this.renderMessage()}
                             <TagsInput
                                 renderInput={autocompleteRenderInput}
@@ -169,7 +169,7 @@ class MySubscriptions extends Component {
                                 onChange={this.handleChange}
                             />
                         </div>
-                        <h6 className="mb-4">
+                        <h6 className="">
                             Once in a month you will receive an update about
                             the upcoming and the new conferences matching
                             these tags.

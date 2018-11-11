@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Label, Input } from 'reactstrap';
+import * as _ from 'lodash';
 
 import Loading from '../common/Loading';
 import { updateCurrentUser } from './duck';
@@ -31,14 +32,12 @@ class ProfileSettings extends Component {
             name: '',
             isUpdated: false,
             error: null,
-            isValid: false,
+            isValid: true,
             avatar: [],
             avatarBase64: {},
             maxSize: 5000000,
             newsletterSubscription: false,
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.updateSettings = this.updateSettings.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -78,43 +77,18 @@ class ProfileSettings extends Component {
         reader.readAsDataURL(acceptedFiles[0]);
     }
 
-    updateAvatar = () => {
-        const successCallback = () => {
-            this.setState({ isUpdated: true });
-
-            this.handleDelayedMessageReset();
-        };
-        const errorCallback = (status) => {
-            this.setState({ error: status });
-
-            this.handleDelayedMessageReset();
-        };
-
-        const updateValue = {
-            avatar: [
-                {
-                    ...this.state.avatarBase64,
-                },
-            ],
-        };
-        if (this.state.avatar.length !== 0) {
-            this.props.updateCurrentUser(
-                this.props.auth.token,
-                updateValue,
-                successCallback,
-                errorCallback,
-            );
-        }
-    }
-
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({ name: event.target.value });
 
         let isValid = false;
-        if (event.target.value.length >= event.target.minLength) {
-            if (event.target.value.length <= event.target.maxLength) {
-                isValid = true;
+        if (event.target.value) {
+            if (event.target.value.length >= event.target.minLength) {
+                if (event.target.value.length <= event.target.maxLength) {
+                    isValid = true;
+                }
             }
+        } else {
+            isValid = true;
         }
 
         this.setState({ isValid });
@@ -125,7 +99,7 @@ class ProfileSettings extends Component {
         this.setState({ newsletterSubscription: event.target.checked });
     }
 
-    updateSettings(event) {
+    updateSettings = (event) => {
         const successCallback = () => {
             this.setState({ isUpdated: true });
 
@@ -137,12 +111,28 @@ class ProfileSettings extends Component {
             this.handleDelayedMessageReset();
         };
 
-        const updateValue = {
-            name: this.state.name,
-            newsletterSubscription: this.state.newsletterSubscription,
-        };
+        const updateValue = {};
 
-        if (this.state.isValid) {
+        if (this.state.avatar.length !== 0) {
+            updateValue.avatar = [
+                {
+                    ...this.state.avatarBase64,
+                },
+            ];
+        }
+
+        if (this.state.name && this.state.isValid) {
+            updateValue.name = this.state.name;
+        }
+
+        if (this.state.newsletterSubscription !== this.props.user.data.newsletterSubscription) {
+            updateValue.newsletterSubscription = this.state.newsletterSubscription;
+        }
+
+        if (_.isEmpty(updateValue)) {
+            this.setState({ error: 'You need to change at least one field!' });
+            this.handleDelayedMessageReset();
+        } else {
             this.props.updateCurrentUser(
                 this.props.auth.token,
                 updateValue,
@@ -150,6 +140,7 @@ class ProfileSettings extends Component {
                 errorCallback,
             );
         }
+
         event.preventDefault();
     }
 
@@ -161,8 +152,7 @@ class ProfileSettings extends Component {
         }, 10000);
     }
 
-
-    renderMessage(_error, _isUpdated) {
+    renderMessage = (_error, _isUpdated) => {
         if (_isUpdated) {
             return (
                 <h4 className="text-danger text-center">
@@ -197,18 +187,17 @@ class ProfileSettings extends Component {
         }
 
         const {
-            profileImg, name, email
+            profileImg, name, email,
         } = this.props.user.data;
 
         const dropzoneStyle = {
             width: '200px',
             height: '80px',
-            padding: '2px',
+            textAlign: 'center',
             borderWidth: '1px',
             borderColor: '#717171',
             borderStyle: 'dashed',
             borderRadius: '5px',
-            marginBottom: '15px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -225,9 +214,9 @@ class ProfileSettings extends Component {
                         onSubmit={this.updateSettings}
                     >
 
-                        <div className="d-flex justify-content-center border border-top-0 border-right-0 border-left-0 mb-3 pb-1">
+                        <div className="d-flex justify-content-center align-items-center flex-column flex-sm-row mb-3">
                             <img
-                                className="mr-3 rounded-circle"
+                                className="mb-2 mb-sm-0 mr-sm-4 rounded-circle"
                                 src={this.state.avatar.length === 0 ?
                                     profileImg : this.state.avatar.preview}
                                 width="100"
@@ -235,33 +224,25 @@ class ProfileSettings extends Component {
                                 alt="profile avatar"
                             />
 
-                            <div className="d-flex flex-column w-50 justify-content-around align-items-center text-center">
-                                <Dropzone
-                                    onDrop={this.onDrop}
-                                    multiple={false}
-                                    accept="image/jpeg, image/png"
-                                    style={dropzoneStyle}
-                                    maxSize={this.state.maxSize}
-                                    className="label"
-                                >{
-                                        ({ acceptedFiles, rejectedFiles }) => {
-                                            if (rejectedFiles.length !== 0) {
-                                                return rejectedFiles[0].size > this.state.maxSize ? 'Your file needs to be smaller than 5mb' : 'File is rejected';
-                                            }
-                                            return acceptedFiles.length !== 0
-                                                ? 'File is accepted'
-                                                : 'Drop your avatar here or click to select file to upload.';
+                            <Dropzone
+                                onDrop={this.onDrop}
+                                multiple={false}
+                                accept="image/jpeg, image/png"
+                                style={dropzoneStyle}
+                                maxSize={this.state.maxSize}
+                                className="label"
+                            >{
+                                    ({ acceptedFiles, rejectedFiles }) => {
+                                        if (rejectedFiles.length !== 0) {
+                                            return rejectedFiles[0].size > this.state.maxSize ? 'Your file needs to be smaller than 5mb' : 'File is rejected';
                                         }
+                                        return acceptedFiles.length !== 0
+                                            ? 'File is accepted'
+                                            : 'Drop your avatar here or click to select file';
                                     }
+                                }
+                            </Dropzone>
 
-                                </Dropzone>
-                                <button
-                                    className="btn btn-secondary w-50"
-                                    type="button"
-                                    onClick={this.updateAvatar}
-                                >Update
-                                </button>
-                            </div>
                         </div>
 
 
@@ -272,9 +253,9 @@ class ProfileSettings extends Component {
                         <br />
                         <Input
                             className={this.state.isValid ?
-                                'border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0'
+                                'border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0 mb-3'
                                 :
-                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0'}
+                                'border-danger border-top-0 border-right-0 border-left-0 w-100 pl-0 rounded-0 mb-3'}
                             type="text"
                             name="name"
                             minLength="4"
@@ -290,7 +271,7 @@ class ProfileSettings extends Component {
                         </Label>
                         <br />
                         <Input
-                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0 rounded-0"
+                            className="border-top-0 border-right-0 border-left-0 w-100 bg-white pl-0 rounded-0 mb-3"
                             type="Email"
                             name="email"
                             placeholder={email}
@@ -309,7 +290,6 @@ class ProfileSettings extends Component {
                         <Label for="checkbox" check>
                             Email newsletter subscription
                         </Label>
-
 
                         <div className="text-center mt-5">
                             <button
