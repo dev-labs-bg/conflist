@@ -43,7 +43,7 @@ class CardList extends Component {
         _.forEach(this.eventsGroupedByMonth, (group, key) => {
             cards.push(
                 <div key={key} className="mb-5">
-                    <h2 className="cards-date font-weight-normal">
+                    <h2 className="cards-date font-weight-normal font-size-small ml-2 mb-4">
                         { group.month }
                     </h2>
                     {
