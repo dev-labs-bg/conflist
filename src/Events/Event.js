@@ -15,6 +15,7 @@ class Event {
         website = '',
         speakers = [],
         attendees = null,
+        attendable = false,
     }) {
         this.id = _id;
         this.name = name;
@@ -31,6 +32,7 @@ class Event {
         this.website = website;
         this.speakers = speakers;
         this.attendees = attendees;
+        this.attendable = attendable;
     }
 }
 
