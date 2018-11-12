@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
 import Loading from '../../common/Loading';
-import HeartFullIcon from '../../common/HeartFullIcon';
 import TooltipItem from '../../common/TooltipItem';
 import going from '../../assets/images/going.svg';
 import Event from '../Event';
@@ -268,7 +267,7 @@ class InsidePage extends Component {
                         </div>
                         <div className="text-bottom d-flex">
                             <img src={going} alt="People Going" />
-                            <h4 className="ml-3 mb-0 font-weight-normal">Going:
+                            <h4 className="ml-3 mb-0 font-weight-normal">{data.attendable ? 'Going:' : 'Visited:'}
                                 <span className="text-secondary ml-1">{data.attendees.length + this.state.updateCount}</span>
                             </h4>
                         </div>
@@ -286,12 +285,17 @@ class InsidePage extends Component {
                 </div>
 
                 <div className="text-center">
-                    <a
-                        className="btn btn-primary mb-2 mb-sm-0 mr-sm-5"
-                        onClick={this.checkEventInWishList}
-                        tabIndex="0"
-                    >Wanna go
-                    </a>
+                    {
+                        data.attendable && (
+                            <a
+                                className="btn btn-primary mb-2 mb-sm-0 mr-sm-5"
+                                onClick={this.checkEventInWishList}
+                                tabIndex="0"
+                            >
+                                Wanna go
+                            </a>
+                        )
+                    }
                     <a
                         className="btn btn-secondary"
                         href={data.website}
