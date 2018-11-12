@@ -1,7 +1,7 @@
 .react-tagsinput {
     background-color: #fff;
     border: 1px solid #ccc;
-    padding: 0.5rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
     border-radius: 0.25rem;
     transition: 0.3s ease-in-out;
 }
@@ -21,6 +21,8 @@
     line-height: 1;
     background-color: #F8F9F8;
     margin-right: 0.25rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
     transition: 0.3s ease-in-out;
 }
 
