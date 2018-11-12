@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
     Collapse,
@@ -95,11 +95,11 @@ class Header extends Component {
     renderDropdown = (_isAuthenticated, _userData) => {
         if (!_isAuthenticated) {
             return (
-                <NavLink
+                <Link
                     to="/login"
                     className="btn btn-primary font-weight-bold ml-3"
                 >Login
-                </NavLink>
+                </Link>
             );
         }
 
