@@ -109,7 +109,7 @@ class WishList extends Component {
         cards.push(
             <div key={`firstPastEvent`} className="mb-5">
                 {
-                    <Card event={firstEvent} past />
+                    <Card event={firstEvent} />
                 }
                 {this.countPastEvents()}
             </div>);
@@ -141,7 +141,7 @@ class WishList extends Component {
             <div>
                 {
                     _.tail(firstEventsObject.data).map(event =>
-                        <Card event={event} past />)
+                        <Card event={event} />)
                 }
             </div>);
 
@@ -153,7 +153,7 @@ class WishList extends Component {
                 <div key={`pastEvents-${key}`} className="mb-5">
                     {
                         group.data.map(event =>
-                            <Card key={event.id} event={event} past />)
+                            <Card key={event.id} event={event} />)
                     }
                 </div>);
         });
