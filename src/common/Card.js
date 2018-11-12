@@ -193,12 +193,12 @@ class Card extends Component {
                     <span className="d-flex justify-content-between">
                         <div className="card__info">
                             <div className="mb-2">
-                                <img src={this.props.past || !event.attendable ? calendarPassed : calendar} className="mr-1" alt="small calendar" />
+                                <img src={!event.attendable ? calendarPassed : calendar} className="mr-1" alt="small calendar" />
                                 <span className="card__dates"> {getFormattedDate(event.start, event.end)}
                                 </span>
                             </div>
                             <div className="mt-1">
-                                <img className="mr-1" width="19" height="19" src={this.props.past || !event.attendable ? placeHolderPassed : placeHolder} alt="placeholder" />
+                                <img className="mr-1" width="19" height="19" src={!event.attendable ? placeHolderPassed : placeHolder} alt="placeholder" />
                                 <span className="card__dates"> {event.venue}, {event.city}, {event.country}</span>
                             </div>
                         </div>
@@ -212,7 +212,7 @@ class Card extends Component {
                                     className="attend"
                                     id={event.id}
                                     token={this.props.authToken}
-                                    past={this.props.past || !event.attendable ? true : false}
+                                    past={!event.attendable}
                                     wishListed={this.props.wishListed}
                                     onClick={this.handleAttendClick}
                                     isActive={this.state.isActive}
