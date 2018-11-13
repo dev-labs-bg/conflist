@@ -209,12 +209,13 @@ class InsidePage extends Component {
         this.props.event.data.tags.map((tag) => {
             renderTags.push(<span
                 key={tag}
-                className="badge badge-pill badge-light mr-2"
+                className="badge badge-pill badge-light mb-2 mb-sm-0 mr-2"
                 style={style}
                 onClick={
                     this.tagClicked
                 }
-            >{tag}
+            >
+                {tag}
             </span>);
         });
         return renderTags;
