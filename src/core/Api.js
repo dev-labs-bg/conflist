@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from '../config';
-import store from '../index';
+import getStore from '../getStore';
 import { removeToken } from '../Login/duck';
 import history from '../core/history';
 
@@ -105,8 +105,6 @@ const API = {
         instance.get(`conferences?_sort=start&_order=DESC&_start=${start}&_end=${end}&_after=${startDateSearch}&_before=${endDateSearch}`),
 };
 
-
-
 axios.interceptors.response.use((response) => {
     // Do something with response data
     return response;
@@ -118,7 +116,7 @@ axios.interceptors.response.use((response) => {
 
     if (error.response.status === 440 || error.response.status === 401) {
         history.push('/');
-        store.dispatch(removeToken());
+        getStore().dispatch(removeToken());
     }
     // Do something with response error
     return Promise.reject(error.response.data);
