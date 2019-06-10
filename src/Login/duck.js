@@ -8,12 +8,12 @@ const initialState = {
 };
 
 // Actions
-const REQUEST = 'jwtToken/REQUEST';
-const RECEIVE = 'jwtToken/RECEIVE';
-const FAIL = 'jwtToken/FAIL';
-const SET = 'jwtToken/SET';
-const GET = 'jwtToken/GET';
-const REMOVE = 'jwtToken/REMOVE';
+export const REQUEST = 'jwtToken/REQUEST';
+export const RECEIVE = 'jwtToken/RECEIVE';
+export const FAIL = 'jwtToken/FAIL';
+export const SET = 'jwtToken/SET';
+export const GET = 'jwtToken/GET';
+export const REMOVE = 'jwtToken/REMOVE';
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
