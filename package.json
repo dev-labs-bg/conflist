@@ -7,7 +7,7 @@
     "axios": "0.17.1",
     "bootstrap": "4.1.2",
     "history": "4.7.2",
-    "jquery": "3.2.1",
+    "jquery": "3.5.0",
     "lodash": "4.17.11",
     "moment": "2.20.1",
     "node-sass-chokidar": "0.0.3",
