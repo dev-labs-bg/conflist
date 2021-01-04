@@ -4,7 +4,7 @@
   "author": "Dev Labs",
   "private": true,
   "dependencies": {
-    "axios": "0.17.1",
+    "axios": "0.21.1",
     "bootstrap": "4.1.2",
     "history": "4.7.2",
     "jquery": "3.2.1",
